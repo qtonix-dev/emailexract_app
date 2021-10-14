@@ -1,0 +1,78 @@
+.btn211{
+    border: 1px solid #e1e1e1;
+    background-color: white;
+    padding: 0px 26px;
+    font-size: 17px;
+}
+.button.ui.button.btn211{
+    height: 53px !important;
+    background-color: #0495fd !important;
+    color: white;
+    border: none;
+}
+button.ui.button.btn211 {
+    border: 1px solid #d9d9d9;
+}
+
+.foundLink{
+    margin-top: 27px;
+    margin-bottom: 27px;
+
+    &_verifiedemail{
+        float: none;
+        color: #4caf50 !important;
+        font-size: 14px !important;
+        margin-top: 2px !important;
+        position: absolute;
+        margin-left: 3px;
+    }
+    &_invalidemail{
+        float: none;
+        color: red !important;
+        font-size: 14px !important;
+        margin-top: 2px !important;
+        position: absolute;
+        margin-left: 3px;
+    }
+    h5{
+        font-size: 16px;
+        span{
+            color: #5e5e5e;
+            font-weight: 100;
+            font-size: 12px;
+            float: right;
+            cursor: pointer;
+            
+    margin-top: 7px;
+
+            span{
+                font-size: 20px;
+                margin-top: 0px;
+            }
+        }
+    }
+    p{
+        line-height: 18px;
+    color: royalblue;
+    padding: 0px 20px;
+    }
+    
+}
+
+
+.recentsearches2{
+    margin-top: 30px;
+    border-radius: 4px;
+    &_block{
+        padding: 8px 50px;
+    background: #f1f1f1c9;
+    border-radius: 20px;
+    margin-top: 9px;
+
+        &_span{
+            margin-left: 20px;
+            font-size: 15px;
+        font-weight: 700;
+        }
+    }
+}

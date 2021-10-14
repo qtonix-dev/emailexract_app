@@ -1,0 +1,265 @@
+
+
+
+@import '_home';
+@import '_emailverifier';
+@import '_bulks';
+@import '_emailfinder';
+@import '_account';
+
+
+
+body{
+    background-color: #fafbfb !important;
+}
+
+.bgmblue{
+    background-color: #0495fd !important;
+}
+.text-white{
+    color: white !important;
+}
+.text-black{
+    color: rgba(0,0,0,.87) !important;
+}
+
+
+.cursor-pointer{
+    cursor: pointer !important;
+}
+
+.w-100{
+    width: 100% !important;
+}
+
+.text-success{
+    color: #01cd01 !important;
+}
+.text-danger{
+    color: red !important;
+}
+
+.input55 .ui.input {
+    height: 53px;
+}
+
+.dropdownitems{
+    padding: 0px 20px;
+
+    h6{
+        color: black;
+        font-weight: 500; 
+        font-size: 13px;
+    }
+
+    p{
+        color: black;
+        font-weight: 500;
+        line-height: 2px;
+
+
+
+    span{
+        color: black;
+        font-weight: 500;
+        text-align: center;
+        font-size: 14px;
+        }
+    }
+}
+
+.ui.orange.progress .bar {
+    background-color: #0495fd;
+}
+
+
+.dpsubbtn{
+    padding: 11px 5px !important;
+    border-radius: 3px !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+}
+
+
+.ui.menu .dropdown.item .menu {
+    min-width: auto;
+}
+.menu.transition.visible {
+    margin-right: 13px !important;
+}
+
+.navsitem {
+    // padding: 20px 16px!important;
+    // margin: 0px 13px !important;
+    margin-top: 11px;
+}
+
+
+
+.ui.secondary.pointing.menu .active.item {
+    border-color: #febd0c;
+     font-weight: 500;
+    color: #1eb1fe;
+}
+.ui.secondary.pointing.menu .active.item:hover {
+    border-color: #00a7ff;
+    font-weight: 500;
+    color: #00a7ff;
+}
+
+
+
+.ui.secondary.pointing.menu .item {
+    margin: -11px 2px -2px;
+    height: 64px;
+    font-size: 16px;
+}
+
+
+.float-right{
+    float: right !important;
+}
+
+.ui.secondary.pointing.menu {
+    background-color: white;
+}
+
+
+.navbprgs{
+    h6{
+        margin-top: 12px;
+        margin-bottom: -1px;
+    }
+    p{
+        margin-top: -15px;
+        margin-bottom: 23px;
+        font-size: 12px;
+    
+    }
+    
+}
+
+
+.cuscontainer{
+    background-color: #fff;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    font-size: 14px;
+    margin-bottom: 30px;
+    padding: 30px 28px 28px;
+    text-align: left;
+    border: 1px solid #e1e1e1;
+    -webkit-box-shadow: 0px 3px 8px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 8px -4px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 8px -4px rgba(0,0,0,0.75);
+
+    h3{
+        margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: 600 !important;
+    color: #0495fd;
+    font-size: 20px;
+    }
+    h6{
+        margin-top: -17px;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: -5px;
+
+    }
+}
+
+
+.cusbackbtn{
+    position: absolute;
+    font-size: 35px;
+    margin-left: -44px;
+    color: #0495fd;
+}
+
+.accountcontainer{
+    background-color: #fff;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    font-size: 14px;
+    margin-bottom: 30px;
+    padding: 30px 28px 28px;
+    text-align: left;
+    border: 1px solid #e1e1e1;
+
+    h2{
+        margin-bottom: 2px;
+    }
+
+    h3{
+        margin-bottom: 20px;
+    }
+}
+
+
+
+.upgradewarning{
+    center{
+        padding: 21px 45px;
+        background-color: antiquewhite;
+
+        p{
+            font-size: 14px;
+            font-weight: 600;
+            b{
+                color: #0495fd;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+
+
+.recentsearches{
+    margin-top: -12px;
+    h4{
+        font-size: 14px;
+        font-weight: 500;
+        color: gray  !important;
+    }
+    p{
+        font-weight: 500;
+        margin-top: -10px !important;
+        cursor: pointer;
+    }
+}
+
+
+
+.paymentsuccess{
+    &_icon{
+        color: #4caf50;
+        font-size: 140px;
+    }
+    h1{
+        margin-top: 2px;
+    text-align: center;
+    color: #4caf50;
+    }
+
+    p{
+        font-size: 15px;
+    }
+
+    &_box{
+        background-color: #fafbfb;
+    margin: 2rem 7rem;
+    padding: 2rem;
+    }
+}
+
+@media only screen and (min-width: 1200px){
+    .ui.container {
+        width: 899px;
+    }
+
+}
+

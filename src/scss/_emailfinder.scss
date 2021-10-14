@@ -1,0 +1,33 @@
+.findbyname{
+    h1{
+        font-size: 21px;
+        span{
+            color: #01cd01;
+            position: absolute;
+            margin-top: 3px;
+        }
+    }
+    &_foundperson{
+        h5{
+            font-size: 19px;
+        }
+        h6{
+            font-size: 14px;
+            margin-top: -16px;
+            color: #6b6b6b;
+        }
+    }
+    &_links{
+        margin-top: 20px;
+        h6{
+            font-size: 15px;
+            margin-top: -15px;
+            margin-bottom: 10px !important;
+        }
+        a{
+    line-height: 31px;
+    color: royalblue;
+    padding: 0px 20px;
+        }
+    }
+}

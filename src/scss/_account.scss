@@ -1,0 +1,267 @@
+.accountsidenav{
+
+    &_active{
+        background-color: #e4e4e4;
+        border-radius: 3px;
+    
+    }
+
+    &_icon{
+        position: relative;
+        top: 4px;
+        font-size: 20px;
+        color: #0495fd;
+
+
+        &_active{
+            color: #0495fd;
+            position: relative;
+            top: 4px;
+            font-size: 20px;
+        }
+    }
+
+    h5{
+        font-size: 19px;
+    }
+    p{
+    font-size: 16px;
+    padding: 9px 10px;
+    margin: 3px;
+    
+    
+        a{
+            color: black;
+        }
+    }
+
+    
+}
+
+
+.accountcontainer{
+
+    
+    &_box{
+
+        margin: 20px 0px;
+
+        &_linkbox{
+            padding: 10px 0px;
+
+            &_center{
+                margin-top: 8px;
+            }
+
+            &_icon{
+                font-size: 30px;
+                margin-top: 8px;
+                color: #0495fd;
+            }
+
+            h5{
+                font-size: 18px;
+                margin-bottom: 4px;
+
+                span{
+                    float: right;
+                }
+                
+            }
+
+            p{
+                font-size: 15px;
+                color: #757575
+            }
+
+        }
+
+    }
+}
+
+
+
+.subscription{
+    &_box{
+        h5{
+            font-size: 15px;
+        }
+        p{
+            line-height: 10px;
+
+            span{
+                font-size: 15px;
+                position: relative;
+                top: 3px;
+            
+            }
+        }
+    }
+}
+
+
+.chartbox{
+    &_listtext{
+        padding: 5px 20px;
+    }
+}
+
+
+
+
+.subscription{
+    h1{
+
+    }
+    h3{
+        line-height: 30px;
+        font-weight: 500;
+        span{
+            color: #01cd01 !important;
+            position: relative;
+            top: 3px;
+            margin-right: 10px;
+        }
+    }
+
+    &_time{
+        font-size: 15px;
+        font-weight: 600;
+        padding: 20px;
+
+        &_check{
+            position: absolute;
+            font-size: 30px;
+            margin-left: 4px;
+            color: green;
+            margin-top: -6px;
+        }
+
+        &_uncheck{
+            position: relative;
+            font-size: 23px;
+            top: 6px;
+            margin-right: 4px;
+            color: gray;
+        }
+    }
+
+    
+}
+
+
+.subsdetone{
+    h4{
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #0495fd;
+    }
+    p{
+        color: #737373;
+        line-height: 13px;
+        
+    }
+}
+
+.subsdettwo{
+    h4{
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 2px;
+        color: #0495fd;
+    }
+    p{
+        color: #737373;
+        font-size: 13px;
+        font-weight: 500;
+
+    }
+}
+
+.subscriptiontwo{
+
+    &_appliedcoupon{
+        float: right;
+
+        p{
+            margin-top: -3px;
+    margin-bottom: 22px;
+    font-size: 17px;
+    color: white;
+    background-color: #0495fd;
+    padding: 6px 12px;
+        }
+    }
+
+
+    &_head{
+        h2{
+            font-size: 22px;
+            font-weight: 500;
+        }
+        p{
+            color: #737373;
+            font-size: 15px;
+            margin-top: 3px;
+        }
+    }
+
+    &_body{
+        h5{
+            font-size: 17px;
+            font-weight: 600;
+            margin: 30px 0 15px;
+
+            span{
+                background-color: #0495fd;
+                font-size: 15px;
+                font-weight: 700;
+                margin-right: 8px;
+                border-radius: 50%;
+                padding: 6px 10px;
+                color: white;
+            }
+        }
+    }
+
+    &_coupon{
+        margin-top: 10px;
+        margin-bottom: 20px;
+        float: right;
+
+        h4{
+
+            span{
+                font-weight: 500;
+                font-size: 14px;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+
+
+.payandupgradebtn{
+    width: 100%;
+    font-size: 20px;
+    font-weight: 500 !important;;
+    padding: 14px 0px !important;;
+    background-color: #0495fd !important;
+    color: white !important;
+
+    span{
+        
+        margin-right: 5px;
+        position: absolute;
+        margin-top: -4px;
+        font-size: 21px !important;
+        margin-left: -26px;
+
+    }
+}
+
+.listitem122{
+    line-height: 24px !important;
+}
