@@ -13,6 +13,7 @@ import Moment from 'react-moment';
 import percentage from 'calculate-percentages'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {navbarProgressInfo} from '../../../actions';
+import cookie from 'react-cookies'
 
 import { toast } from 'react-toastify';
 
@@ -44,14 +45,17 @@ export class BulkDomainView extends Component {
         var dataprops=this.props;
         
 
-        API_BULK_EXTRACT_ROUTING_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}`)
+        API_BULK_EXTRACT_ROUTING_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
         .then(response=>{
             this.setState({
                 pageLoading:false,
                 domainextractinfo:response.data.domainextractinfo,
                 bulkdomainextract:response.data.bulkdomainextract,
                 bulkdomainextractemails:response.data.bulkdomainextractemails,
-                bulkdomainextractcount:response.data.bulkdomainextractcount
+                bulkdomainextractcount:response.data.bulkdomainextractcount,
+                userinfo:response.data.userinfo,
+                userpackageinfo:response.data.userpackageinfo,
+
 
             })
             if(this.state.bulkdomainextractcount.length=== this.state.domainextractinfo.totaldomains){
@@ -59,18 +63,21 @@ export class BulkDomainView extends Component {
                     isExtractionComplete:true
                 })
             }else{
+                this.timer = setInterval(() => {
+                    this.getData(dataprops,cookie.load('qtonixemailextractweb_userid'));
+                }, this.state.userpackageinfo.mainspeed);
 
             }
             // console.log(response.data)
         })
 
-        if(this.state.isExtractionComplete){
+        // if(this.state.isExtractionComplete){
             
-        }else{
-            this.timer = setInterval(() => {
-                this.getData(dataprops);
-            }, 2000);
-        }
+        // }else{
+        //     // this.timer = setInterval(() => {
+        //     //     this.getData(dataprops,cookie.load('qtonixemailextractweb_userid'));
+        //     // }, 4000);
+        // }
 
         
 
@@ -104,7 +111,7 @@ export class BulkDomainView extends Component {
 
     
 
-    getData(dataprops) {
+    getData(dataprops,userid) {
 
         if(this.state.isExtractionComplete){
 
@@ -117,7 +124,7 @@ export class BulkDomainView extends Component {
                 if(this.state.isExtractionComplete){
                 }else{
                     if(window.location.pathname===`/bulks/domainextract/view/${this.state.id}`){
-                        API_BULK_EXTRACT_ROUTING_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.state.id}`)
+                        API_BULK_EXTRACT_ROUTING_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.state.id}/${userid}`)
                         .then(response=>{
                             this.setState({
                                 pageLoading:false,
@@ -187,7 +194,6 @@ export class BulkDomainView extends Component {
 
 
     render() {
-        console.log(this.props.navbarprogress.packageinfo.type)
         return (
             <Body>
                 <section>
