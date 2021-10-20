@@ -48,15 +48,13 @@ export class BulkDomainView extends Component {
         API_BULK_EXTRACT_ROUTING_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
         .then(response=>{
             this.setState({
-                pageLoading:false,
                 domainextractinfo:response.data.domainextractinfo,
                 bulkdomainextract:response.data.bulkdomainextract,
                 bulkdomainextractemails:response.data.bulkdomainextractemails,
                 bulkdomainextractcount:response.data.bulkdomainextractcount,
                 userinfo:response.data.userinfo,
                 userpackageinfo:response.data.userpackageinfo,
-
-
+                pageLoading:false,
             })
             if(this.state.bulkdomainextractcount.length=== this.state.domainextractinfo.totaldomains){
                 this.setState({
@@ -70,42 +68,6 @@ export class BulkDomainView extends Component {
             }
             // console.log(response.data)
         })
-
-        // if(this.state.isExtractionComplete){
-            
-        // }else{
-        //     // this.timer = setInterval(() => {
-        //     //     this.getData(dataprops,cookie.load('qtonixemailextractweb_userid'));
-        //     // }, 4000);
-        // }
-
-        
-
-
-        // var socket = io(process.env.REACT_APP_BACKENDURL, {     
-        //     query: {
-        //         uuid: this.props.match.params.id,
-        //     }              
-        // });
-        // socket.connect();
-       
-
-        // socket.on('domain_data_by_id',data=>{
-        //     // console.log(data)
-        //     this.setState({
-        //         bulkdomainextractemails:data
-        //     })
-        //     console.log(this.state.bulkdomainextractemails)
-        // })
-
-
-
-        
-
-
-
-
-
     }
 
 
@@ -127,11 +89,11 @@ export class BulkDomainView extends Component {
                         API_BULK_EXTRACT_ROUTING_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.state.id}/${userid}`)
                         .then(response=>{
                             this.setState({
-                                pageLoading:false,
                                 domainextractinfo:response.data.domainextractinfo,
                                 bulkdomainextract:response.data.bulkdomainextract,
                                 bulkdomainextractemails:response.data.bulkdomainextractemails,
-                                bulkdomainextractcount:response.data.bulkdomainextractcount
+                                bulkdomainextractcount:response.data.bulkdomainextractcount,
+                                pageLoading:false,
                             })
                             if(this.state.bulkdomainextractcount.length=== this.state.domainextractinfo.totaldomains){
                                 this.setState({
@@ -194,6 +156,7 @@ export class BulkDomainView extends Component {
 
 
     render() {
+        console.log(this.state.userpackageinfo)
         return (
             <Body>
                 <section>
@@ -233,13 +196,21 @@ export class BulkDomainView extends Component {
                                 :
                                 <> */}
                                 {/* EXPORT TO EXCEL */}
+
+                                {this.state.userpackageinfo.name==='Free'
+                                ?<></>
+                                :
                                 <ReactHTMLTableToExcel
                                     id="test-table-xls-button"
                                     className="ui button float-right bgmblue text-white"
                                     table="table-to-xls"
                                     filename={this.state.domainextractinfo.listname}
                                     sheet="tablexls"
-                                    buttonText="Download as XLS"/>
+                                    buttonText="Download as XLS"
+                                />
+                                }
+                                
+                                
                                     <table id="table-to-xls" style={{display:'none'}}>
                                         <tr>
                                             <th>Domain</th>
@@ -273,53 +244,7 @@ export class BulkDomainView extends Component {
                                 <br />
                                 
                                 <Grid columns='equal' className="bulksecview">
-                                    {/* <Grid.Column width={8}>
-                                        <h4><b>Total Domains:</b> {this.state.domainextractinfo.totaldomains}</h4>
-                                        <h4><b>No of Domain Extracted:</b> {this.state.bulkdomainextractcount.length}</h4>
-
-                                        <h4><b>Total Emails Found:</b> {this.state.bulkdomainextractemails.length}</h4>
-
-
-                                    </Grid.Column>
-                                    <Grid.Column width={8}>
-                                        <Progress percent={percentage.calculate(this.state.bulkdomainextractcount.length, this.state.domainextractinfo.totaldomains)} color='blue' active success={this.state.isExtractionComplete}>
-                                            {this.state.isExtractionComplete?<>
-                                            Completed
-                                            <Moment duration={this.state.bulkdomainextractcount[0].createdAt}
-                                                    date={this.state.bulkdomainextractcount[this.state.bulkdomainextractcount.length-1].createdAt}
-                                                   
-                                            />
-                                            
-                                            </>:<>Processing</>}
-                                        </Progress>
-
-
-                                    </Grid.Column> */}
-
-
-
                                     <Grid.Column>
-                                        {/* <h4> 
-                                            <b>Total Domains:</b> {this.state.domainextractinfo.totaldomains}
-                                            <br />
-                                            <b>Total Emails Found:</b> {this.state.bulkdomainextractemails.length}
-                                            <br />
-                                            <b>Status:</b> {this.state.isExtractionComplete?`Completed`:`Processing`}
-                                            
-                                            {this.state.isExtractionComplete?
-                                            <>
-                                            <br />
-                                            <b>Execution Time: <Moment duration={this.state.bulkdomainextractcount[0].createdAt}
-                                                    date={this.state.bulkdomainextractcount[this.state.bulkdomainextractcount.length-1].createdAt}
-                                                   
-                                            /></b>
-                                            </>
-                                            :
-                                            <>
-                                            </>}
-
-
-                                        </h4> */}
 
 
 
