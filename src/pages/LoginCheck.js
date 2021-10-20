@@ -34,15 +34,22 @@ export const LoginCheck = (props) => {
                 cookie.remove('qtonixemailextractweb_userlogin', { path: '/' })
                 cookie.remove('qtonixemailextractweb_userid', { path: '/' })
                 cookie.remove('qtonixemailextractweb_navbarprogress', { path: '/' });
+                cookie.remove('qtonixemailextractweb_emailverification', { path: '/' });
+
 
 
                 var expires = new Date();
                 expires.setSeconds(21600);
                 cookie.save('qtonixemailextractweb_userdata', response.data.user, { path: '/',expires });
                 cookie.save('qtonixemailextractweb_userid', response.data.user._id, { path: '/',expires });
-                cookie.save('qtonixemailextractweb_userlogin',true, { path: '/',expires })
+                cookie.save('qtonixemailextractweb_userlogin',true, { path: '/',expires });
+                cookie.save('qtonixemailextractweb_emailverification', response.data.user.emailverification, { path: '/' });
+
 
                 props.history.push('/')
+
+                // console.log(response.data.user)
+
 
             }else{
                 toast.success('Login Failed', {

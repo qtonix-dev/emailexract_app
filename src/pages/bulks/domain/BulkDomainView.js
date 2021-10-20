@@ -156,7 +156,7 @@ export class BulkDomainView extends Component {
 
 
     render() {
-        console.log(this.state.userpackageinfo)
+        console.log(this.state.bulkdomainextract)
         return (
             <Body>
                 <section>
@@ -211,7 +211,7 @@ export class BulkDomainView extends Component {
                                 }
                                 
                                 
-                                    <table id="table-to-xls" style={{display:'none'}}>
+                                    {/* <table id="table-to-xls" style={{display:'none'}}>
                                         <tr>
                                             <th>Domain</th>
                                             <th>Email</th>
@@ -226,7 +226,34 @@ export class BulkDomainView extends Component {
                                                     )
                                         })}
                                         
-                                </table>
+                                    </table> */}
+
+                            <table id="table-to-xls" style={{display:'none'}}>
+                                        <tr>
+                                            <th>Domain</th>
+                                            <th>Status</th>
+                                            <th>Email</th>
+                                        </tr>
+
+                                        {this.state.bulkdomainextract.map((dta)=>{
+                                                    return(
+                                                        <tr key={dta._id}>
+                                                            <td>{dta.domainname}</td>
+                                                            <td>{dta.isfoundemails?'Found':'Not Found'}</td>
+                                                            <td>{dta.isfoundemails
+                                                            ?
+                                                            dta.domainemails.map((da)=>{
+                                                                return(
+                                                                    <span>{da.email}, </span>
+                                                                )
+                                                            })
+                                                            :<></>}</td>
+
+                                                            <td>{dta.email}</td>
+                                                        </tr>
+                                                    )
+                                        })}
+                                    </table>
                                 {/* EXPORT TO EXCEL */}
                                 {/* </> */}
                                 {/* } */}
@@ -300,8 +327,6 @@ export class BulkDomainView extends Component {
                                             <Table.HeaderCell>Email Score</Table.HeaderCell>
 
                                             <Table.HeaderCell>Extract Time</Table.HeaderCell>
-                                            {/* <Table.HeaderCell>Verified</Table.HeaderCell> */}
-                                            {/* <Table.HeaderCell>Sources</Table.HeaderCell> */}
                                         </Table.Row>
                                         </Table.Header>
                                         <Table.Body>
@@ -334,15 +359,45 @@ export class BulkDomainView extends Component {
                                                         <Table.Cell>{dta.emailquality}/100 </Table.Cell>
 
                                                         <Table.Cell><Moment format="YYYY-MM-DD dddd  HH:mm:ss">{dta.createdAt}</Moment></Table.Cell>
-                                                        {/* <Table.Cell className="text-success"><MdVerifiedUser /></Table.Cell> */}
-                                                        {/* <Table.Cell><Link exact to='/'>11</Link></Table.Cell> */}
+                                                       
+                                                    </Table.Row>
+                                                )
+                                            })}
+                                        </Table.Body>
+                                    </Table>
+
+
+                                    
+
+
+
+                                    {/* <Table basic='very'>
+                                        <Table.Header>
+                                        <Table.Row>
+                                            <Table.HeaderCell>Domain</Table.HeaderCell>
+                                            <Table.HeaderCell>Status</Table.HeaderCell>
+                                            <Table.HeaderCell>Emails</Table.HeaderCell>
+                                        </Table.Row>
+                                        </Table.Header>
+
+                                        <Table.Body>
+                                            {this.state.bulkdomainextract.map((dta)=>{
+                                                return(
+                                                    <Table.Row key={dta._id}>
+                                                        <Table.Cell>{dta.domainname}</Table.Cell>
+                                                        <Table.Cell>{dta.isfoundemails?'Found':'Not Found'}</Table.Cell>
+                                                        <Table.Cell>
+                                                            <span>sss</span> <br /> 
+                                                            <span>222</span> <br />
+                                                            <span>33</span>
+
+                                                        </Table.Cell>
                                                     </Table.Row>
                                                 )
                                             })}
                                             
-                                            
                                         </Table.Body>
-                                    </Table>
+                                    </Table> */}
 
                                     </Grid.Column>
                                 </Grid>

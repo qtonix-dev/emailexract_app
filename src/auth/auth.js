@@ -13,24 +13,16 @@ export const ProtectedRouteUser = ({
       {...rest}
       render={props => {
 
-        // const logindata = localStorage.getItem('aquastorelogin') === 'true'
         const logindata = cookie.load('qtonixemailextractweb_userlogin') === 'true';
-
-        // const navbarprofress = cookie.load('qtonixemailextractweb_navbarprogress');
-
-        // console.log(navbarprofress)
       
         if (logindata) {
           
-
-          //Check Email Verify
-          // var data = JSON.parse(localStorage.getItem('qbuserdata'));
-          // var data = localStorage.getItem('qbuseremailverify');
-          // var data=cookie.load('qbuserdata');
+          // // Check Email Verify
+          // var data=cookie.load('qtonixemailextractweb_emailverification');
 
 
-          // if(localStorage.getItem('aquastoreemailverify') !=='Verified'){
-          //   return <Redirect to="/emailverify" />
+          // if(data !=='Verified'){
+          //   return <Redirect to="/verifyemail" />
           // }else{
           //   return <Component {...props} />;
           // }

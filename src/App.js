@@ -53,7 +53,7 @@ import UsageBulkDomainExtract from './pages/account/usage/UsageBulkDomainExtract
 
 
 import LoginCheck from './pages/LoginCheck'
-
+import EmailVerification from './pages/EmailVerification'
 
 import PlanActivatedSuccess from './pages/PlanActivatedSuccess'
 import PlanActivationFailed from './pages/PlanActivationFailed'
@@ -67,6 +67,9 @@ export default function App() {
           <Switch>
             <ProtectedRouteUser exact path='/' component={Home} />
             <ProtectedRouteUser exact path='/verify' component={EmailVerifier} />
+            <Route exact path='/verifyemail' component={EmailVerification} />
+
+            
 
             <ProtectedRouteUser exact path='/bulks' component={Bulks} />
             <ProtectedRouteUser exact path='/bulks/domainextract' component={BulkDomain} />
