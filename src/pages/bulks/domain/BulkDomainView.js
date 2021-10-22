@@ -13,7 +13,7 @@ import percentage from 'calculate-percentages'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {navbarProgressInfo} from '../../../actions';
 import cookie from 'react-cookies'
-import _ from 'lodash';
+// import _ from 'lodash';
 import { toast } from 'react-toastify';
 
 export class BulkDomainView extends Component {
@@ -81,8 +81,8 @@ export class BulkDomainView extends Component {
         }else{
 
 
-            var bdec = this.state.bulkdomainextractcount;
-            var ctt = _.filter(bdec, function(dta) { return dta.status === 'Success'});
+            // var bdec = this.state.bulkdomainextractcount;
+            // var ctt = _.filter(bdec, function(dta) { return dta.status === 'Success'});
 
             if(this.state.domainextractinfo.status==='Success'){
                 // if(this.state.bulkdomainextractcount.length === this.state.domainextractinfo.totaldomains){
@@ -104,8 +104,8 @@ export class BulkDomainView extends Component {
                                 pageLoading:false,
                             })
 
-                            var bdec = this.state.bulkdomainextractcount;
-                            var ctt = _.filter(bdec, function(dta) { return dta.status === 'Success'});
+                            // var bdec = this.state.bulkdomainextractcount;
+                            // var ctt = _.filter(bdec, function(dta) { return dta.status === 'Success'});
 
                             // if(this.state.bulkdomainextractcount.length=== this.state.domainextractinfo.totaldomains){
                             if(this.state.domainextractinfo.status==='Success'){
