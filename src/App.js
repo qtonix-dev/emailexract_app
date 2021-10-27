@@ -28,6 +28,8 @@ import BulkDomain from './pages/bulks/domain/BulkDomain'
 import BulkDomainCreate from './pages/bulks/domain/BulkDomainCreate'
 import BulkDomainView from './pages/bulks/domain/BulkDomainView'
 
+import BulkDomainCreateNew from './pages/bulks/domain/BulkDomainCreateNew'
+
 
 
 import AccountHome from './pages/account/AccountHome'
@@ -73,7 +75,13 @@ export default function App() {
 
             <ProtectedRouteUser exact path='/bulks' component={Bulks} />
             <ProtectedRouteUser exact path='/bulks/domainextract' component={BulkDomain} />
-            <ProtectedRouteUser exact path='/bulks/domainextract/new' component={BulkDomainCreate} />
+            <ProtectedRouteUser exact path='/bulks/domainextract/new(oldversion)' component={BulkDomainCreate} />
+
+            <ProtectedRouteUser exact path='/bulks/domainextract/new' component={BulkDomainCreateNew} />
+
+
+            
+
             <ProtectedRouteUser exact path='/bulks/domainextract/view/:id' component={BulkDomainView} />
 
 

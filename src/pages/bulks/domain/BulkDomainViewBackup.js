@@ -7,14 +7,13 @@ import { Grid, Button, Confirm, Table, Progress,Popup } from 'semantic-ui-react'
 import { MdVerifiedUser,MdErrorOutline } from "react-icons/md";
 import API from '../../../api/API'
 import API_BULK_EXTRACT_ROUTING_BULK_EXTRACT_ROUTING from '../../../api/API_BULK_EXTRACT_ROUTING'
-
 import Loader from "react-loader-spinner";
 import Moment from 'react-moment';
 import percentage from 'calculate-percentages'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {navbarProgressInfo} from '../../../actions';
 import cookie from 'react-cookies'
-
+// import _ from 'lodash';
 import { toast } from 'react-toastify';
 
 export class BulkDomainView extends Component {
@@ -56,7 +55,7 @@ export class BulkDomainView extends Component {
                 userpackageinfo:response.data.userpackageinfo,
                 pageLoading:false,
             })
-            if(this.state.bulkdomainextractcount.length=== this.state.domainextractinfo.totaldomains){
+            if(this.state.domainextractinfo.status==='Success'){
                 this.setState({
                     isExtractionComplete:true
                 })
@@ -75,10 +74,19 @@ export class BulkDomainView extends Component {
 
     getData(dataprops,userid) {
 
+        
+
         if(this.state.isExtractionComplete){
 
         }else{
-            if(this.state.bulkdomainextractcount.length === this.state.domainextractinfo.totaldomains){
+
+
+            // var bdec = this.state.bulkdomainextractcount;
+            // var ctt = _.filter(bdec, function(dta) { return dta.status === 'Success'});
+
+            if(this.state.domainextractinfo.status==='Success'){
+                // if(this.state.bulkdomainextractcount.length === this.state.domainextractinfo.totaldomains){
+            
                 this.setState({
                     isExtractionComplete:true
                 })
@@ -95,7 +103,13 @@ export class BulkDomainView extends Component {
                                 bulkdomainextractcount:response.data.bulkdomainextractcount,
                                 pageLoading:false,
                             })
-                            if(this.state.bulkdomainextractcount.length=== this.state.domainextractinfo.totaldomains){
+
+                            // var bdec = this.state.bulkdomainextractcount;
+                            // var ctt = _.filter(bdec, function(dta) { return dta.status === 'Success'});
+
+                            // if(this.state.bulkdomainextractcount.length=== this.state.domainextractinfo.totaldomains){
+                            if(this.state.domainextractinfo.status==='Success'){
+
                                 this.setState({
                                     isExtractionComplete:true
                                 })
@@ -156,7 +170,7 @@ export class BulkDomainView extends Component {
 
 
     render() {
-        console.log(this.state.bulkdomainextract)
+        console.log(this.state)
         return (
             <Body>
                 <section>
@@ -277,7 +291,9 @@ export class BulkDomainView extends Component {
 
                                         <div className="bulkdetailsss">
                                             <p><b>Total Domains:</b> {this.state.domainextractinfo.totaldomains}</p>
-                                            <p><b>Total Domain Scanned:</b> {this.state.bulkdomainextractcount.length}</p>
+                                            <p><b>Total Domain Scanned:</b> {this.state.domainextractinfo.totaldomains-this.state.domainextractinfo.domainscannedleft}</p>
+
+                                            {/* <p><b>Total Domain Scanned:</b> {this.state.bulkdomainextractcount.length}</p> */}
                                             <p><b>Total Email Found:</b> {this.state.bulkdomainextractemails.length}</p>
 
 
@@ -302,8 +318,8 @@ export class BulkDomainView extends Component {
                                         :
                                         <>
                                         <br />
-                                        <Progress percent={percentage.calculate(this.state.bulkdomainextractcount.length, this.state.domainextractinfo.totaldomains)} color='blue' active >
-                                            {this.state.bulkdomainextractcount.length}/{this.state.domainextractinfo.totaldomains} processing...
+                                        <Progress percent={percentage.calculate(this.state.domainextractinfo.totaldomains-this.state.domainextractinfo.domainscannedleft, this.state.domainextractinfo.totaldomains)} color='blue' active >
+                                            {this.state.domainextractinfo.totaldomains-this.state.domainextractinfo.domainscannedleft}/{this.state.domainextractinfo.totaldomains} processing...
                                         </Progress>
                                         </>
                                         }
