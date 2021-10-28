@@ -213,13 +213,20 @@ export class BulkDomainCreate extends Component {
                                 <h3>Bulk Domain Search</h3>
                                 <h6>Find email addresses from a list of websites or companies.</h6>
                                 <br />
-                                <p>Max upload limit: {this.props.navbarprogress.packageinfo.bulkuploaddomainatatime}</p>
+                                {/* <p>Max upload limit: {this.props.navbarprogress.packageinfo.bulkuploaddomainatatime}</p>
                                 <p>Limit: {this.props.navbarprogress.packageinfo.totalbuldomainkextract}</p>
                                 <p>Credit Left: {this.props.navbarprogress.packageinfo.totalbuldomainkextract-this.props.navbarprogress.bulk_domain_search}</p>
                                 <p>Status: {this.state.domainextractprocess}</p>
 
                                 <p>Total Input Domains: {this.state.totaldomain}</p>
-                                <p>Domain Extracted: {this.state.counter}</p>
+                                <p>Domain Extracted: {this.state.counter}</p> */}
+
+                                <br />
+                                <div className="bulkdetailsss">
+                                            <p><b>Total Input Domains:</b> {this.state.totaldomain}</p>
+                                            <p><b>Domain Extracted:</b> {this.state.counter}</p>
+                                            <p><b>Status:</b> {this.state.domainextractprocess}</p>
+                                </div>  
 
 
 
@@ -262,33 +269,54 @@ websitetwo.com' />
                     ?
                     <></>
                     :
-                    <Table unstackable>
-                        <Table.Header>
-                        <Table.Row>
-                        <Table.HeaderCell>Domain</Table.HeaderCell>
-                            <Table.HeaderCell>Emails</Table.HeaderCell>
-                            <Table.HeaderCell>Facebook</Table.HeaderCell>
-                            <Table.HeaderCell>Instagram</Table.HeaderCell>
-                            <Table.HeaderCell>Twitter</Table.HeaderCell>
-                            <Table.HeaderCell>LinkedIn</Table.HeaderCell>
-                            <Table.HeaderCell>GooglePlus</Table.HeaderCell>
-                            <Table.HeaderCell>Youtube</Table.HeaderCell>
-                            <Table.HeaderCell>WhatsApp</Table.HeaderCell>
-                            <Table.HeaderCell>Tel</Table.HeaderCell>
-                            <Table.HeaderCell></Table.HeaderCell>
+                    // <Table unstackable>
+                    //     <Table.Header>
+                    //     <Table.Row>
+                    //     <Table.HeaderCell>Domain</Table.HeaderCell>
+                    //         <Table.HeaderCell>Emails</Table.HeaderCell>
+                    //         <Table.HeaderCell>Facebook</Table.HeaderCell>
+                    //         <Table.HeaderCell>Instagram</Table.HeaderCell>
+                    //         <Table.HeaderCell>Twitter</Table.HeaderCell>
+                    //         <Table.HeaderCell>LinkedIn</Table.HeaderCell>
+                    //         <Table.HeaderCell>GooglePlus</Table.HeaderCell>
+                    //         <Table.HeaderCell>Youtube</Table.HeaderCell>
+                    //         <Table.HeaderCell>WhatsApp</Table.HeaderCell>
+                    //         <Table.HeaderCell>Tel</Table.HeaderCell>
+                    //         <Table.HeaderCell></Table.HeaderCell>
 
-                        </Table.Row>
-                        </Table.Header>
+                    //     </Table.Row>
+                    //     </Table.Header>
 
-                        <Table.Body>
-                            {this.state.bulkdomainextratdata.map((data,key)=>{
-                                return(
-                                    <TableRowView data={data} key={key} />
-                                )
-                            })}
+                    //     <Table.Body>
+                    //         {this.state.bulkdomainextratdata.map((data,key)=>{
+                    //             return(
+                    //                 <TableRowView data={data} key={key} />
+                    //             )
+                    //         })}
                             
-                        </Table.Body>
-                    </Table>
+                    //     </Table.Body>
+                    // </Table>
+
+                    <Table  basic='very'>
+                                        <Table.Header>
+                                        <Table.Row>
+                                        <Table.HeaderCell>Domain</Table.HeaderCell>
+                                            <Table.HeaderCell>Emails</Table.HeaderCell>
+                                            <Table.HeaderCell>Tel</Table.HeaderCell>
+                                            <Table.HeaderCell></Table.HeaderCell>
+
+                                        </Table.Row>
+                                        </Table.Header>
+
+                                        <Table.Body>
+                                            {this.state.bulkdomainextratdata.map((data,key)=>{
+                                                return(
+                                                    <TableRowView data={data} key={key} />
+                                                )
+                                            })}
+                                            
+                                        </Table.Body>
+                                    </Table>
                     }
                     
                     </>

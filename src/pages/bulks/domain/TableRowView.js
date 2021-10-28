@@ -1,38 +1,71 @@
 import React from 'react'
 import { Table, Button, Modal } from 'semantic-ui-react'
+import { FiEye } from "react-icons/fi";
 
 
 export default function TableRowView({data,key}) {
     const [open, setOpen] = React.useState(false)
-    
+    console.log(data)
 
     return (
         <>
         <Table.Row>
                 <Table.Cell> {key} {data.domain}</Table.Cell>
-                <Table.Cell> {data.response?<> {data.email.length} </>:<>N/A</>} </Table.Cell>
-                <Table.Cell> {data.response?<> {data.facebook.length} </>:<>N/A</>} </Table.Cell>
-                <Table.Cell> {data.response?<> {data.instagram.length} </>:<>N/A</>} </Table.Cell>
-                <Table.Cell> {data.response?<> {data.twitter.length} </>:<>N/A</>} </Table.Cell>
-                <Table.Cell> {data.response?<> {data.linkedin.length} </>:<>N/A</>} </Table.Cell>
-                <Table.Cell> {data.response?<> {data.googleplus.length} </>:<>N/A</>} </Table.Cell>
-                <Table.Cell> {data.response?<> {data.youtube.length} </>:<>N/A</>} </Table.Cell>
-                <Table.Cell> {data.response?<> {data.whatsapp.length} </>:<>N/A</>} </Table.Cell>
-                <Table.Cell> {data.response?<> {data.tel.length} </>:<>N/A</>} </Table.Cell>
+
+                <Table.Cell> 
+                    {data.response
+                    ?
+                    data.email.length>2
+                        ?
+                        <>
+                            {data.email[0]}, {data.email[1]} and {data.email.length-2} more...
+                        </>
+                        :
+                            data.email.map((ds)=>{
+                            return(
+                                <>
+                                {ds}, &nbsp;
+                                </>
+                            )
+                        })
+                    :
+                    <>-</>
+                    }
+                </Table.Cell>
+
+                <Table.Cell> 
+                    {data.response
+                    ?
+                    data.tel.length>2
+                        ?
+                        <>
+                            {data.tel[0]}, {data.tel[1]} and {data.tel.length-2} more...
+                        </>
+                        :
+                            data.tel.map((ds)=>{
+                            return(
+                                <>
+                                {ds}, &nbsp;
+                                </>
+                            )
+                        })
+                    :
+                    <>-</>
+                    }
+                </Table.Cell>
                 <Table.Cell>
                 <Modal
                     onClose={() => setOpen(false)}
                     onOpen={() => setOpen(true)}
                     open={open}
                     size='tiny'
-                    trigger={<Button className='ui button float-right bgmblue text-white' size='mini'>I</Button>}
+                    trigger={<FiEye />}
                     >
-                    <Modal.Header>Domain Details</Modal.Header>
                     <Modal.Content image>
                         <Modal.Description>
-                            <p>Domain: {data.domain}</p>
+                            <p className="domainmodal"><b>Domain:</b> <br /> <span>{data.domain}</span></p>
 
-                            <p>Emails: <br />
+                            <p className="domainmodal"><b>Emails:</b> <br />
                             {data.response?
                             <>
                                 {data.email.map((mm)=>{
@@ -48,7 +81,7 @@ export default function TableRowView({data,key}) {
                             }
                             </p>
 
-                            <p>Facebook: <br />
+                            <p className="domainmodal"><b>Facebook:</b> <br />
                             {data.response?
                             <>
                                 {data.facebook.map((mm)=>{
@@ -64,7 +97,7 @@ export default function TableRowView({data,key}) {
                             } 
                             </p>
 
-                            <p>Instagram: <br />
+                            <p className="domainmodal"><b>Instagram:</b> <br />
                             {data.response?
                             <>
                                 {data.instagram.map((mm)=>{
@@ -80,7 +113,7 @@ export default function TableRowView({data,key}) {
                             } 
                             </p>
 
-                            <p>Twitter: <br />
+                            <p className="domainmodal"><b>Twitter:</b> <br />
                             {data.response?
                             <>
                                 {data.twitter.map((mm)=>{
@@ -96,7 +129,7 @@ export default function TableRowView({data,key}) {
                             } 
                             </p>
 
-                            <p>LinkedIn: <br />
+                            <p className="domainmodal"><b>LinkedIn:</b> <br />
                             {data.response?
                             <>
                                 {data.linkedin.map((mm)=>{
@@ -112,7 +145,7 @@ export default function TableRowView({data,key}) {
                             } 
                             </p>
 
-                            <p>GooglePlus: <br />
+                            <p className="domainmodal"><b>GooglePlus:</b> <br />
                             {data.response?
                             <>
                                 {data.googleplus.map((mm)=>{
@@ -128,7 +161,7 @@ export default function TableRowView({data,key}) {
                             } 
                             </p>
 
-                            <p>YouTube: <br />
+                            <p className="domainmodal"><b>YouTube:</b> <br />
                             {data.response?
                             <>
                                 {data.youtube.map((mm)=>{
@@ -144,7 +177,7 @@ export default function TableRowView({data,key}) {
                             } 
                             </p>
 
-                            <p>WhatsApp: <br />
+                            <p className="domainmodal"><b>WhatsApp:</b> <br />
                             {data.response?
                             <>
                                 {data.whatsapp.map((mm)=>{
@@ -160,7 +193,7 @@ export default function TableRowView({data,key}) {
                             } 
                             </p>
 
-                            <p>Tel: <br />
+                            <p className="domainmodal"><b>Tel:</b> <br />
                             {data.response?
                             <>
                                 {data.tel.map((mm)=>{
@@ -175,14 +208,14 @@ export default function TableRowView({data,key}) {
                             <>N/A</>
                             } 
                             </p>
+                            <br />
+                            <Button color='black' size='mini' className="float-right" onClick={() => setOpen(false)}>
+                            Close
+                            </Button>
+                            <br />
 
                         </Modal.Description>
                     </Modal.Content>
-                    <Modal.Actions>
-                        <Button color='black' size='mini' onClick={() => setOpen(false)}>
-                        Close
-                        </Button>
-                    </Modal.Actions>
                 </Modal>
 
                 </Table.Cell>
