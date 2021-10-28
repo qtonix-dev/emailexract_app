@@ -112,7 +112,7 @@ export class BulkDomainView extends Component {
                                                                     dta.domainemails.map((dt)=>{
                                                                             return(
                                                                                 <>
-                                                                                {dt} <br />
+                                                                                {dt},
                                                                                 </>
                                                                             )
                                                                         })
