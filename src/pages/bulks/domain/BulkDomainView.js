@@ -6,7 +6,7 @@ import { Grid,  Table} from 'semantic-ui-react'
 // import io from "socket.io-client";
 // import { MdVerifiedUser,MdErrorOutline } from "react-icons/md";
 // import API from '../../../api/API'
-import API_BULK_EXTRACT_ROUTING_BULK_EXTRACT_ROUTING from '../../../api/API_BULK_EXTRACT_ROUTING'
+import API from '../../../api/API'
 import Loader from "react-loader-spinner";
 import Moment from 'react-moment';
 // import percentage from 'calculate-percentages'
@@ -28,7 +28,7 @@ export class BulkDomainView extends Component {
 
 
     componentDidMount(){
-        API_BULK_EXTRACT_ROUTING_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
+        API.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
         .then(response=>{
 
             this.setState({
