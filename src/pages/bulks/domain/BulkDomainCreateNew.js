@@ -166,7 +166,7 @@ export class BulkDomainCreate extends Component {
 
     fetchRecord(domain){
         this.setState({currentextractdomainname:domain})
-        axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/testdomainextrat/${domain}`,{timeout:15000})
+        axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/testdomainextrat/${domain}`,{timeout:5000})
         .then(response=>{
             var bulkdomainextratdata = this.state.bulkdomainextratdata;
             var msdata= response.data;
