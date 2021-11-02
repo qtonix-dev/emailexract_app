@@ -4,8 +4,9 @@ import Body from '../../../components/Body'
 import { Grid,List,Loader } from 'semantic-ui-react'
 import AccountSidenav from '../../../components/account/AccountSidenav'
 // import Chart from "react-google-charts";
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import Moment from 'react-moment';
+
 
 export const AccountUsage = (props) => {
 
@@ -81,23 +82,35 @@ export const AccountUsage = (props) => {
                                         <List divided verticalAlign='middle'>
                                             <List.Item>
                                                 <List.Content>
-                                                    <p className="chartbox_listtext">Domain Search <span className="float-right">{props.navbarprogress.single_domain_search}/{props.navbarprogress.packageinfo.totalsingledomain} &nbsp;&nbsp; <Link exact to='/account/usage/domainsearch'>View</Link></span>   </p>
+                                                    <p className="chartbox_listtext">Domain Search <span className="float-right">{props.navbarprogress.single_domain_search}/{props.navbarprogress.packageinfo.totalsingledomain} &nbsp;&nbsp; 
+                                                    {/* &nbsp;&nbsp; <Link exact to='/account/usage/domainsearch'>View</Link>    */}
+                                                    </span>
+                                                    </p>
                                                 </List.Content>
                                             </List.Item>
                                             
                                             <List.Item>
                                                 <List.Content>
-                                                    <p className="chartbox_listtext">Email Finder <span className="float-right">{props.navbarprogress.email_finder}/{props.navbarprogress.packageinfo.totalemailsearch} &nbsp;&nbsp; <Link exact to='/account/usage/emailfinder'>View</Link></span></p>
+                                                    <p className="chartbox_listtext">Email Finder <span className="float-right">{props.navbarprogress.email_finder}/{props.navbarprogress.packageinfo.totalemailsearch} &nbsp;&nbsp; 
+                                                    {/* <Link exact to='/account/usage/emailfinder'>View</Link> */}
+                                                    </span>
+                                                    </p>
                                                 </List.Content>
                                             </List.Item>
                                             <List.Item>
                                                 <List.Content>
-                                                    <p className="chartbox_listtext">Email Verification <span className="float-right">{props.navbarprogress.email_verification}/{props.navbarprogress.packageinfo.totalemailverification} &nbsp;&nbsp; <Link exact to='/account/usage/emailverification'>View</Link></span></p>
+                                                    <p className="chartbox_listtext">Email Verification <span className="float-right">{props.navbarprogress.email_verification}/{props.navbarprogress.packageinfo.totalemailverification} &nbsp;&nbsp; 
+                                                    {/* <Link exact to='/account/usage/emailverification'>View</Link> */}
+                                                    </span>
+                                                    </p>
                                                 </List.Content>
                                             </List.Item>
                                             <List.Item>
                                                 <List.Content>
-                                                    <p className="chartbox_listtext">Bulk Domain Extract <span className="float-right">{props.navbarprogress.bulk_domain_search}/{props.navbarprogress.packageinfo.totalbuldomainkextract} &nbsp;&nbsp; <Link exact to='/account/usage/bulkdomainextract'>View</Link></span></p>
+                                                    <p className="chartbox_listtext">Bulk Domain Extract <span className="float-right">{props.navbarprogress.bulk_domain_search}/{props.navbarprogress.packageinfo.totalbuldomainkextract} &nbsp;&nbsp; 
+                                                    {/* <Link exact to='/account/usage/bulkdomainextract'>View</Link> */}
+                                                    </span>
+                                                    </p>
                                                 </List.Content>
                                             </List.Item>
                                         </List>

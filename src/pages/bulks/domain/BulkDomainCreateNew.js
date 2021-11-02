@@ -119,13 +119,14 @@ export class BulkDomainCreate extends Component {
                     // }else{
                     //     alert('Failed')
                     // }
+                    this.fetchRecord(domainCreate[this.state.counter].domain)
                     if(response.data.response){
                             this.setState({
                             domainCreate:domainCreate,
                             totaldomain:domainCreate.length,
                             domainextractprocess:'Processing'
                         })
-                        this.fetchRecord(domainCreate[this.state.counter].domain)
+                        
                     }
                 })
             }

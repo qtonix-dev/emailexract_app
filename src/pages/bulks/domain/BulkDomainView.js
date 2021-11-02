@@ -102,8 +102,6 @@ export class BulkDomainView extends Component {
                                                             <td>{dta.domainname}</td>
                                                             <td>{dta.domainemails==='NotFound'?'NotFound':'Found'}</td>
                                                             <td>
-
-
                                                                 {dta.domainemails==='NotFound'
                                                                 ?<>-</>
                                                                 :
@@ -119,15 +117,11 @@ export class BulkDomainView extends Component {
                                                                     :
                                                                     <>-</>
                                                                 }
-                                                            
                                                             </td>
-
                                                         </tr>
                                                     )
                                         })}
                                     </table>
-                                
-
                                 </h3>
 
 
