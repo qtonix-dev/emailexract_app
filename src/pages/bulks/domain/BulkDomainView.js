@@ -6,7 +6,7 @@ import { Grid,  Table} from 'semantic-ui-react'
 // import io from "socket.io-client";
 // import { MdVerifiedUser,MdErrorOutline } from "react-icons/md";
 // import API from '../../../api/API'
-import API from '../../../api/API'
+// import API from '../../../api/API'
 import Loader from "react-loader-spinner";
 import Moment from 'react-moment';
 // import percentage from 'calculate-percentages'
@@ -16,21 +16,24 @@ import cookie from 'react-cookies'
 // import _ from 'lodash';
 // import { toast } from 'react-toastify';
 import TableRowViewForView from './TableRowViewForView'
+import API_BULK_EXTRACT_ROUTING from '../../../api/API_BULK_EXTRACT_ROUTING'
+
+
 export class BulkDomainView extends Component {
 
 
     constructor(props){
         super(props)
         this.state={
-            pageLoading:true
+            pageLoading:true,
+            fetching:true,
         }
     }
 
 
     componentDidMount(){
-        API.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
+        API_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
         .then(response=>{
-
             this.setState({
                 domainextractinfo:response.data.domainextractinfo,
                 bulkdomainextract:response.data.bulkdomainextract,
@@ -41,12 +44,43 @@ export class BulkDomainView extends Component {
                 pageLoading:false,
             })
         })
+
+
+
+        // set Interval
+        this.interval = setInterval(this.getCenter, 3000);
+    }
+
+
+    getCenter = () => {
+
+        if(window.location.pathname==='/bulks/domainextract/view/'+this.props.match.params.id){
+            if(this.state.pageLoading===false){
+                if(this.state.bulkdomainextract.length!==this.state.domainextractinfo.totaldomains){
+
+                    API_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
+                    .then(response=>{
+                        this.setState({
+                            domainextractinfo:response.data.domainextractinfo,
+                            bulkdomainextract:response.data.bulkdomainextract,
+                            bulkdomainextractemails:response.data.bulkdomainextractemails,
+                            bulkdomainextractcount:response.data.bulkdomainextractcount,
+                            userinfo:response.data.userinfo,
+                            userpackageinfo:response.data.userpackageinfo,
+                            pageLoading:false,
+                        })
+                    })
+
+                }
+            }
+        }
     }
 
 
 
+
     render() {
-        console.log(this.state)
+        // console.log(this.state)
         return (
             <Body>
                 <section>
@@ -141,7 +175,9 @@ export class BulkDomainView extends Component {
                                         <div className="bulkdetailsss">
                                             <p><b>Total Domains:</b> {this.state.domainextractinfo.totaldomains}</p>
                                             <p><b>Total Email Found:</b> {this.state.bulkdomainextractemails.length}</p>
+                                            <p><b>Status:</b> {this.state.bulkdomainextract.length===this.state.domainextractinfo.totaldomains?'Success':'Pocessing'}</p>
                                             
+                                            {this.state.bulkdomainextract.length}/{this.state.domainextractinfo.totaldomains}
                                         </div>
 
 

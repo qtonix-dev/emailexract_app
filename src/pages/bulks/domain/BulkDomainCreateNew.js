@@ -167,9 +167,11 @@ export class BulkDomainCreate extends Component {
     fetchRecord(domain){
         this.setState({currentextractdomainname:domain})
         // axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/testdomainextrat/${domain}`,{timeout:7000})
-        axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/${domain}`,{timeout:7000})
+        axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/singledomainextract/${domain}`,{timeout:7000})
+    
 
         .then(response=>{
+            console.log(response.data)
             var bulkdomainextratdata = this.state.bulkdomainextratdata;
             var msdata= response.data;
             bulkdomainextratdata.push(msdata);
@@ -272,33 +274,7 @@ websitetwo.com' />
                     ?
                     <></>
                     :
-                    // <Table unstackable>
-                    //     <Table.Header>
-                    //     <Table.Row>
-                    //     <Table.HeaderCell>Domain</Table.HeaderCell>
-                    //         <Table.HeaderCell>Emails</Table.HeaderCell>
-                    //         <Table.HeaderCell>Facebook</Table.HeaderCell>
-                    //         <Table.HeaderCell>Instagram</Table.HeaderCell>
-                    //         <Table.HeaderCell>Twitter</Table.HeaderCell>
-                    //         <Table.HeaderCell>LinkedIn</Table.HeaderCell>
-                    //         <Table.HeaderCell>GooglePlus</Table.HeaderCell>
-                    //         <Table.HeaderCell>Youtube</Table.HeaderCell>
-                    //         <Table.HeaderCell>WhatsApp</Table.HeaderCell>
-                    //         <Table.HeaderCell>Tel</Table.HeaderCell>
-                    //         <Table.HeaderCell></Table.HeaderCell>
-
-                    //     </Table.Row>
-                    //     </Table.Header>
-
-                    //     <Table.Body>
-                    //         {this.state.bulkdomainextratdata.map((data,key)=>{
-                    //             return(
-                    //                 <TableRowView data={data} key={key} />
-                    //             )
-                    //         })}
-                            
-                    //     </Table.Body>
-                    // </Table>
+                    <>
 
                     <Table  basic='very'>
                                         <Table.Header>
@@ -320,6 +296,8 @@ websitetwo.com' />
                                             
                                         </Table.Body>
                                     </Table>
+
+                                    </>
                     }
                     
                     </>

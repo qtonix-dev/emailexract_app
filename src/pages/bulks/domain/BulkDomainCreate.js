@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import cookie from 'react-cookies'
 import API_BULK_EXTRACT from '../../../api/API_BULK_EXTRACT'
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 
 export class BulkDomainCreate extends Component {
@@ -89,14 +90,44 @@ export class BulkDomainCreate extends Component {
                 });
                 this.setState({loadSubmitButton:false})
             }else{
-                API_BULK_EXTRACT.post('/bulkdomainextract/bulkextractbyuser',domainCreate)
+            
+            
+            // API_BULK_EXTRACT.post('/bulkdomainextract/bulkextractbyuser',domainCreate)
+            // axios.post('http://localhost:5004/api/bulkdomainextract/websitesingledomainextract',domainCreate)
+
+
+            
+
+
+            API_BULK_EXTRACT.post('/bulkdomainextract/new/storebulkinfo',domainCreate)
             .then(response=>{
                 if(response.data.response){
-                    this.props.history.push(`/bulks/domainextract/view/${this.state.uuid}`)
+                    // alert('Success');
+
+
+                    // axios.post('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/websitesingledomainextract',domainCreate)
+                    axios.post('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/websitesingledomainextract',domainCreate)
+                    .then(response=>{
+                        this.props.history.push(`/bulks/domainextract/view/${this.state.uuid}`)
+                        // console.log(response.data)
+
+                        // if(response.data.response){
+                        //     this.props.history.push(`/bulks/domainextract/view/${this.state.uuid}`)
+                        // }else{
+                        //     alert('Failed')
+                        // }
+                    })
+
+
                 }else{
-                    alert('Failed')
+                    alert('Failed try again');
                 }
             })
+
+
+
+            
+
             }
         }
 

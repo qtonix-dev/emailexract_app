@@ -75,9 +75,9 @@ export default function App() {
 
             <ProtectedRouteUser exact path='/bulks' component={Bulks} />
             <ProtectedRouteUser exact path='/bulks/domainextract' component={BulkDomain} />
-            <ProtectedRouteUser exact path='/bulks/domainextract/new(oldversion)' component={BulkDomainCreate} />
+            <ProtectedRouteUser exact path='/bulks/domainextract/new(newversion)' component={BulkDomainCreateNew} />
 
-            <ProtectedRouteUser exact path='/bulks/domainextract/new' component={BulkDomainCreateNew} />
+            <ProtectedRouteUser exact path='/bulks/domainextract/new' component={BulkDomainCreate} />
 
 
             
