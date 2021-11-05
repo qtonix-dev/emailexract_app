@@ -105,8 +105,8 @@ export class BulkDomainCreate extends Component {
                     // alert('Success');
 
 
-                    // axios.post('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/websitesingledomainextract',domainCreate)
                     axios.post('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/websitesingledomainextract',domainCreate)
+                    // axios.post('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/websitesingledomainextract',domainCreate)
                     .then(response=>{
                         this.props.history.push(`/bulks/domainextract/view/${this.state.uuid}`)
                         // console.log(response.data)

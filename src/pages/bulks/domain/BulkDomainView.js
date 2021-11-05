@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Body from '../../../components/Body'
-import { Grid,  Table} from 'semantic-ui-react'
+import { Grid,  Table, Progress} from 'semantic-ui-react'
 // import {Link} from 'react-router-dom'
 // import io from "socket.io-client";
 // import { MdVerifiedUser,MdErrorOutline } from "react-icons/md";
@@ -9,7 +9,7 @@ import { Grid,  Table} from 'semantic-ui-react'
 // import API from '../../../api/API'
 import Loader from "react-loader-spinner";
 import Moment from 'react-moment';
-// import percentage from 'calculate-percentages'
+import percentage from 'calculate-percentages'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {navbarProgressInfo} from '../../../actions';
 import cookie from 'react-cookies'
@@ -176,8 +176,24 @@ export class BulkDomainView extends Component {
                                             <p><b>Total Domains:</b> {this.state.domainextractinfo.totaldomains}</p>
                                             <p><b>Total Email Found:</b> {this.state.bulkdomainextractemails.length}</p>
                                             <p><b>Status:</b> {this.state.bulkdomainextract.length===this.state.domainextractinfo.totaldomains?'Success':'Pocessing'}</p>
+
+
                                             
-                                            {this.state.bulkdomainextract.length}/{this.state.domainextractinfo.totaldomains}
+                                                {this.state.bulkdomainextract.length===this.state.domainextractinfo.totaldomains
+                                                ?
+                                                <>
+                                                
+                                                </>
+                                                :<>
+
+                                                <Progress percent={Math.round(percentage.calculate(this.state.bulkdomainextract.length, this.state.domainextractinfo.totaldomains))} progress />
+                                                
+                                                <center style={{fontSize:'15px',fontWeight:'600',marginTop:'-29px'}}> {this.state.bulkdomainextract.length}/{this.state.domainextractinfo.totaldomains}  </center>
+                                
+                                                </>
+                                                }
+                                            
+                                            
                                         </div>
 
 
