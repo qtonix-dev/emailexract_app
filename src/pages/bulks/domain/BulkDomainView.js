@@ -135,9 +135,9 @@ export class BulkDomainView extends Component {
                                                     return(
                                                         <tr key={dta._id}>
                                                             <td>{dta.domainname}</td>
-                                                            <td>{dta.domainemails==='NotFound'?'NotFound':'Found'}</td>
+                                                            <td>{dta.domainemails===undefined?'NotFound':'Found'}</td>
                                                             <td>
-                                                                {dta.domainemails==='NotFound'
+                                                                {dta.domainemails===undefined
                                                                 ?<>-</>
                                                                 :
                                                                 dta.domainemails.length>0
