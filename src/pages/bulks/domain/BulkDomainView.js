@@ -124,7 +124,7 @@ export class BulkDomainView extends Component {
                                 />
                                 {/* } */}
 
-                                {/* <table id="table-to-xls" style={{display:'none'}}>
+                                <table id="table-to-xls" style={{display:'none'}}>
                                         <tr>
                                             <th>Domain</th>
                                             <th>Status</th>
@@ -156,7 +156,7 @@ export class BulkDomainView extends Component {
                                                         </tr>
                                                     )
                                         })}
-                                    </table> */}
+                                    </table>
                                 </h3>
 
 
