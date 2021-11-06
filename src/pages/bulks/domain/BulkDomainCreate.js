@@ -7,6 +7,7 @@ import cookie from 'react-cookies'
 import API_BULK_EXTRACT from '../../../api/API_BULK_EXTRACT'
 import { toast } from 'react-toastify';
 import axios from 'axios';
+// import Crawler from 'simplecrawler';
 
 
 export class BulkDomainCreate extends Component {
@@ -24,6 +25,7 @@ export class BulkDomainCreate extends Component {
         }
         this.handleChange=this.handleChange.bind(this)
     }
+
 
 
 
@@ -105,7 +107,7 @@ export class BulkDomainCreate extends Component {
                     // alert('Success');
 
 
-                    axios.post('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/websitesingledomainextract',domainCreate)
+                    axios.post('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/websitemultidomainextract',domainCreate)
                     // axios.post('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/websitesingledomainextract',domainCreate)
                     .then(response=>{
                         this.props.history.push(`/bulks/domainextract/view/${this.state.uuid}`)
