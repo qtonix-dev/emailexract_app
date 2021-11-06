@@ -69,6 +69,7 @@ export class BulkDomainView extends Component {
                             userpackageinfo:response.data.userpackageinfo,
                             pageLoading:false,
                         })
+                        // console.log(response.data)
                     })
 
                 }
@@ -80,7 +81,7 @@ export class BulkDomainView extends Component {
 
 
     render() {
-        // console.log(this.state)
+        console.log(this.state)
         return (
             <Body>
                 <section>
@@ -123,7 +124,7 @@ export class BulkDomainView extends Component {
                                 />
                                 {/* } */}
 
-                                <table id="table-to-xls" style={{display:'none'}}>
+                                {/* <table id="table-to-xls" style={{display:'none'}}>
                                         <tr>
                                             <th>Domain</th>
                                             <th>Status</th>
@@ -155,7 +156,7 @@ export class BulkDomainView extends Component {
                                                         </tr>
                                                     )
                                         })}
-                                    </table>
+                                    </table> */}
                                 </h3>
 
 

@@ -9,7 +9,7 @@ export default function TableRowViewForView({data}) {
         <Table.Row>
                 <Table.Cell>{data.domainname}</Table.Cell>
                 <Table.Cell> 
-                    {data.domainemails==='NotFound'
+                    {data.domainemails===undefined
                     ?<>-</>
                     :
                         data.domainemails.length>2
@@ -65,7 +65,7 @@ export default function TableRowViewForView({data}) {
                             <p className="domainmodal">
                                 <b>Emails:</b>  <br />
                                 <span>
-                                    {data.domainemails==='NotFound'
+                                    {data.domainemails===undefined
                                     ?<>-</>
                                     :
                                         data.domainemails.length>0
