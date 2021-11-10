@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Body from '../../../components/Body'
-import { Grid,  Table, Progress} from 'semantic-ui-react'
+import { Grid,  Table} from 'semantic-ui-react'
 // import {Link} from 'react-router-dom'
 // import io from "socket.io-client";
 // import { MdVerifiedUser,MdErrorOutline } from "react-icons/md";
@@ -9,7 +9,7 @@ import { Grid,  Table, Progress} from 'semantic-ui-react'
 // import API from '../../../api/API'
 import Loader from "react-loader-spinner";
 import Moment from 'react-moment';
-import percentage from 'calculate-percentages'
+// import percentage from 'calculate-percentages'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import {navbarProgressInfo} from '../../../actions';
 import cookie from 'react-cookies'
@@ -48,34 +48,34 @@ export class BulkDomainView extends Component {
 
 
         // set Interval
-        this.interval = setInterval(this.getCenter, 3000);
+        // this.interval = setInterval(this.getCenter, 3000);
     }
 
 
-    getCenter = () => {
+    // getCenter = () => {
 
-        if(window.location.pathname==='/bulks/domainextract/view/'+this.props.match.params.id){
-            if(this.state.pageLoading===false){
-                if(this.state.bulkdomainextract.length!==this.state.domainextractinfo.totaldomains){
+    //     if(window.location.pathname==='/bulks/domainextract/view/'+this.props.match.params.id){
+    //         if(this.state.pageLoading===false){
+    //             if(this.state.bulkdomainextract.length!==this.state.domainextractinfo.totaldomains){
 
-                    API_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
-                    .then(response=>{
-                        this.setState({
-                            domainextractinfo:response.data.domainextractinfo,
-                            bulkdomainextract:response.data.bulkdomainextract,
-                            bulkdomainextractemails:response.data.bulkdomainextractemails,
-                            bulkdomainextractcount:response.data.bulkdomainextractcount,
-                            userinfo:response.data.userinfo,
-                            userpackageinfo:response.data.userpackageinfo,
-                            pageLoading:false,
-                        })
-                        // console.log(response.data)
-                    })
+    //                 API_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
+    //                 .then(response=>{
+    //                     this.setState({
+    //                         domainextractinfo:response.data.domainextractinfo,
+    //                         bulkdomainextract:response.data.bulkdomainextract,
+    //                         bulkdomainextractemails:response.data.bulkdomainextractemails,
+    //                         bulkdomainextractcount:response.data.bulkdomainextractcount,
+    //                         userinfo:response.data.userinfo,
+    //                         userpackageinfo:response.data.userpackageinfo,
+    //                         pageLoading:false,
+    //                     })
+    //                     // console.log(response.data)
+    //                 })
 
-                }
-            }
-        }
-    }
+    //             }
+    //         }
+    //     }
+    // }
 
 
 
@@ -176,23 +176,11 @@ export class BulkDomainView extends Component {
                                         <div className="bulkdetailsss">
                                             <p><b>Total Domains:</b> {this.state.domainextractinfo.totaldomains}</p>
                                             <p><b>Total Email Found:</b> {this.state.bulkdomainextractemails.length}</p>
-                                            <p><b>Status:</b> {this.state.bulkdomainextract.length===this.state.domainextractinfo.totaldomains?'Success':'Pocessing'}</p>
+                                            {/* <p><b>Status:</b> {this.state.bulkdomainextract.length===this.state.domainextractinfo.totaldomains?'Success':'Pocessing'}</p> */}
 
 
                                             
-                                                {this.state.bulkdomainextract.length===this.state.domainextractinfo.totaldomains
-                                                ?
-                                                <>
-                                                
-                                                </>
-                                                :<>
-
-                                                <Progress percent={Math.round(percentage.calculate(this.state.bulkdomainextract.length, this.state.domainextractinfo.totaldomains))} progress />
-                                                
-                                                <center style={{fontSize:'15px',fontWeight:'600',marginTop:'-29px'}}> {this.state.bulkdomainextract.length}/{this.state.domainextractinfo.totaldomains}  </center>
-                                
-                                                </>
-                                                }
+                                             
                                             
                                             
                                         </div>

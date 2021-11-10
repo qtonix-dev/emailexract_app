@@ -1,40 +1,43 @@
 import React from 'react'
-import { Table, Button, Modal } from 'semantic-ui-react'
-import { FiEye } from "react-icons/fi";
+// import { Table, Button, Modal } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
+
+// import { FiEye } from "react-icons/fi";
 
 
 export default function TableRowView({data,key}) {
-    const [open, setOpen] = React.useState(false)
-    console.log(data)
+    // const [open, setOpen] = React.useState(false)
+    // console.log(data);
+    console.log(data.response)
 
     return (
         <>
         <Table.Row>
-                <Table.Cell> {key} {data.domain}</Table.Cell>
+                <Table.Cell> {key} {data.response.domain}</Table.Cell>
 
                 <Table.Cell> 
-                    {data.response
+                    {data.response.status==='Found'
                     ?
-                    data.email.length>2
+                    data.response.emails.length>2
                         ?
                         <>
-                            {data.email[0]}, {data.email[1]} and {data.email.length-2} more...
+                            {data.response.emails[0]}, {data.response.emails[1]} and {data.response.emails.length-2} more...
                         </>
                         :
-                            data.email.map((ds)=>{
-                            return(
-                                <>
-                                {ds}, &nbsp;
-                                </>
-                            )
-                        })
+                            data.response.emails.map((ds)=>{
+                                return(
+                                    <>
+                                    {ds}, &nbsp;
+                                    </>
+                                )
+                            })
                     :
                     <>-</>
                     }
                 </Table.Cell>
 
                 <Table.Cell> 
-                    {data.response
+                    {/* {data.response
                     ?
                     data.tel.length>2
                         ?
@@ -51,10 +54,10 @@ export default function TableRowView({data,key}) {
                         })
                     :
                     <>-</>
-                    }
+                    } */}
                 </Table.Cell>
                 <Table.Cell>
-                <Modal
+                {/* <Modal
                     onClose={() => setOpen(false)}
                     onOpen={() => setOpen(true)}
                     open={open}
@@ -216,7 +219,7 @@ export default function TableRowView({data,key}) {
 
                         </Modal.Description>
                     </Modal.Content>
-                </Modal>
+                </Modal> */}
 
                 </Table.Cell>
 

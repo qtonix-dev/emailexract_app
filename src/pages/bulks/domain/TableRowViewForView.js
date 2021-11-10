@@ -5,6 +5,9 @@ import { FiEye } from "react-icons/fi";
 export default function TableRowViewForView({data}) {
     const [open, setOpen] = React.useState(false)
 
+
+    console.log(data)
+
     return (
         <Table.Row>
                 <Table.Cell>{data.domainname}</Table.Cell>
@@ -61,7 +64,7 @@ export default function TableRowViewForView({data}) {
                     <Modal.Content>
                         <Modal.Description>
                             <p className="domainmodal"><b>Domain:</b> <br /> <span>{data.domainname}</span></p>
-                            <p className="domainmodal"><b>Title:</b> <br /> <span>{data.domaintitle}</span></p>
+                            {/* <p className="domainmodal"><b>Title:</b> <br /> <span>{data.domaintitle}</span></p> */}
                             <p className="domainmodal">
                                 <b>Emails:</b>  <br />
                                 <span>
@@ -239,6 +242,48 @@ export default function TableRowViewForView({data}) {
                                         data.domainwhatsapp.length>0
                                         ?
                                             data.domainwhatsapp.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
+                            </p>
+
+                            <p className="domainmodal">
+                                <b>Printrest:</b> <br />
+                                <span>
+                                    {data.domainwprintrest===undefined
+                                    ?<>-</>
+                                    :
+                                        data.domainwprintrest.length>0
+                                        ?
+                                            data.domainwprintrest.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
+                            </p>
+
+                            <p className="domainmodal">
+                                <b>Skype:</b> <br />
+                                <span>
+                                    {data.domainskype===undefined
+                                    ?<>-</>
+                                    :
+                                        data.domainskype.length>0
+                                        ?
+                                            data.domainskype.map((dt)=>{
                                                 return(
                                                     <>
                                                     {dt} <br />

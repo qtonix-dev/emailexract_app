@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios'
 import percentage from 'calculate-percentages'
 import TableRowView from './TableRowView'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 
 export class BulkDomainCreate extends Component {
 
@@ -156,7 +157,7 @@ export class BulkDomainCreate extends Component {
             userid:this.state.user._id
         }
 
-        API_BULK_EXTRACT.post('/bulkdomainextract/new/storebulksubdatas',tmpData)
+        API_BULK_EXTRACT.post('/bulkdomainextract/new/storebulksubdatasnew',tmpData)
         .then(response=>{
             console.log(response.data)
         })
@@ -167,7 +168,7 @@ export class BulkDomainCreate extends Component {
     fetchRecord(domain){
         this.setState({currentextractdomainname:domain})
         // axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/testdomainextrat/${domain}`,{timeout:7000})
-        axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/singledomainextract/${domain}`,{timeout:7000})
+        axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/extract/${domain}`,{timeout:7000})
     
 
         .then(response=>{
@@ -215,22 +216,57 @@ export class BulkDomainCreate extends Component {
                     <Grid>
                         <Grid.Row columns={1}>
                             <Grid.Column>
-                                <h3>Bulk Domain Search</h3>
+                                <h3>Bulk Domain Search
+
+                                <ReactHTMLTableToExcel
+                                    id="test-table-xls-button"
+                                    className="ui button float-right bgmblue text-white"
+                                    table="table-to-xls"
+                                    filename={'Domains'}
+                                    sheet="tablexls"
+                                    buttonText="Download as XLS"
+                                />
+                                {/* } */}
+
+                                <table id="table-to-xls" style={{display:'none'}}>
+                                        <tr>
+                                            <th>Domain</th>
+                                            <th>Emails</th>
+                                        </tr>
+
+                                        
+                                        {this.state.bulkdomainextratdata.map((data)=>{
+                                                    return(
+                                                        <tr key={data.response.domain}>
+                                                            <td>{data.response.domain}</td>
+                                                            <td>
+                                                            {data.response.status==='Found'
+                                                                ?
+                                                                    data.response.emails.map((ds)=>{
+                                                                        return(
+                                                                            <>
+                                                                            {ds}, &nbsp;
+                                                                            </>
+                                                                        )
+                                                                    })
+                                                                :
+                                                                <>-</>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                        })}
+                                    </table>
+
+
+                                </h3>
                                 <h6>Find email addresses from a list of websites or companies.</h6>
                                 <br />
-                                {/* <p>Max upload limit: {this.props.navbarprogress.packageinfo.bulkuploaddomainatatime}</p>
-                                <p>Limit: {this.props.navbarprogress.packageinfo.totalbuldomainkextract}</p>
-                                <p>Credit Left: {this.props.navbarprogress.packageinfo.totalbuldomainkextract-this.props.navbarprogress.bulk_domain_search}</p>
-                                <p>Status: {this.state.domainextractprocess}</p>
-
-                                <p>Total Input Domains: {this.state.totaldomain}</p>
-                                <p>Domain Extracted: {this.state.counter}</p> */}
-
                                 <br />
                                 <div className="bulkdetailsss">
-                                            <p><b>Total Input Domains:</b> {this.state.totaldomain}</p>
-                                            <p><b>Domain Extracted:</b> {this.state.counter}</p>
-                                            <p><b>Status:</b> {this.state.domainextractprocess}</p>
+                                    <p><b>Total Input Domains:</b> {this.state.totaldomain}</p>
+                                    <p><b>Domain Extracted:</b> {this.state.counter}</p>
+                                    <p><b>Status:</b> {this.state.domainextractprocess}</p>
                                 </div>  
 
 

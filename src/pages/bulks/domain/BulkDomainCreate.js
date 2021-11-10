@@ -7,7 +7,6 @@ import cookie from 'react-cookies'
 import API_BULK_EXTRACT from '../../../api/API_BULK_EXTRACT'
 import { toast } from 'react-toastify';
 import axios from 'axios';
-// import Crawler from 'simplecrawler';
 
 
 export class BulkDomainCreate extends Component {
@@ -27,6 +26,69 @@ export class BulkDomainCreate extends Component {
     }
 
 
+
+    componentDidMount(){
+        axios.get('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/pupextract/sweetheartgallery.com')
+        .then(response=>{
+            // console.log(response.data.response.html[10])
+
+            // const $ = cheerio.load(`${response.data.response.html.toString()}`);
+            // var stringdata = $.html();
+    
+            // console.log(stringdata)
+
+
+            // console.log(`${response.data.response.html.toString()}`)
+
+
+
+
+            // var varEmails = []
+
+            // // working code
+            // var emaildata = extractEmail(`${stringdata}`);
+            // // console.log(emaildata)
+            // emaildata.forEach(element => {
+            //     console.log(element)
+            // });
+
+            // console.log(stringdata)
+            // var resEmail = emaildata;
+
+
+            // resEmail.forEach((item) => {
+            //     var href = item
+            //     var thref = href.toLowerCase();
+            //     if(ValidateEmail(thref)){
+            //       var tdataarray=[thref];
+            //       tdataarray.forEach(function(value){
+            //         if (varEmails.indexOf(value)==-1) varEmails.push(value);
+            //       });
+            //     }
+            //   });
+        
+        
+        
+            //   //GET ALL EMAILS
+            //   $('a[href^="mailto:"]').each((i, link) => {
+            //     const href = link.attribs.href;
+            //     var thref = href.substring(7).toLowerCase();
+            //     if(ValidateEmail(thref)){
+            //       var tdataarray=[thref];
+            //       tdataarray.forEach(function(value){
+            //         if (varEmails.indexOf(value)==-1) varEmails.push(value);
+            //       });
+            //     }
+            //   });
+
+
+
+            //   console.log(varEmails)
+              
+        })
+
+        
+    }
 
 
     
@@ -112,7 +174,7 @@ export class BulkDomainCreate extends Component {
                     
                     // axios.post('http://localhost:5002/api/bulkdomainextract/new/storebulksubdatas',domainCreate)
 
-                    axios.post('https://emailextractserver2bulkextract.herokuapp.com/api/bulkdomainextract/new/storebulksubdatas',domainCreate)
+                    axios.post('http://localhost:5002/api/bulkdomainextract/new/storebulksubdatas',domainCreate)
                     .then(response=>{
                         this.props.history.push(`/bulks/domainextract/view/${this.state.uuid}`)
                         // console.log(response.data)
