@@ -1,14 +1,48 @@
 import React from 'react'
-// import { Table, Button, Modal } from 'semantic-ui-react'
-import { Table } from 'semantic-ui-react'
-
-// import { FiEye } from "react-icons/fi";
+import { Table, Button, Modal } from 'semantic-ui-react'
+import { FiEye } from "react-icons/fi";
 
 
 export default function TableRowView({data,key}) {
-    // const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(false)
     // console.log(data);
-    console.log(data.response)
+    var finalemails=[];
+
+    // console.log(data)
+    var emailste=data.response.emails;
+
+
+    console.log(emailste);
+   
+
+
+    //check email is correct or not
+    function ValidateEmail(mail)
+    {
+        if (mail.match(/\.(jpe?g|png|pdf|jpg|js|css|io)$/)){
+            return false;
+          }else{
+            return true;
+          }
+    }
+
+
+
+    if(emailste===undefined){
+        // console.log('no emails')
+    }else{
+        emailste.forEach(element => {
+
+            if(ValidateEmail(element)){
+                if(element!==null){
+                    finalemails.push(element)
+                }
+            }else{
+
+            }
+
+        });
+    }
 
     return (
         <>
@@ -16,214 +50,307 @@ export default function TableRowView({data,key}) {
                 <Table.Cell> {key} {data.response.domain}</Table.Cell>
 
                 <Table.Cell> 
-                    {data.response.status==='Found'
-                    ?
-                    data.response.emails.length>2
-                        ?
-                        <>
-                            {data.response.emails[0]}, {data.response.emails[1]} and {data.response.emails.length-2} more...
-                        </>
-                        :
-                            data.response.emails.map((ds)=>{
-                                return(
+                {finalemails.length===0
+                                    ?<>-</>
+                                    :
                                     <>
-                                    {ds}, &nbsp;
+                                        {
+                                            finalemails.length>2
+                                            ?
+                                            <>
+                                                {finalemails[0]}, {finalemails[1]} and {finalemails.length-2} more...
+                                            </>
+                                            :
+                                            finalemails.map((ds)=>{
+                                                return(
+                                                    <>
+                                                    {ds}, &nbsp;
+                                                    </>
+                                                )
+                                            })
+                                        }
                                     </>
-                                )
-                            })
-                    :
-                    <>-</>
-                    }
-                </Table.Cell>
+                                    }
 
+                </Table.Cell>
                 <Table.Cell> 
-                    {/* {data.response
-                    ?
-                    data.tel.length>2
+                    {data.response.tel===undefined
+                    ?<>-</>
+                    :
+                    data.response.tel.length>0
                         ?
                         <>
-                            {data.tel[0]}, {data.tel[1]} and {data.tel.length-2} more...
+                            {data.response.tel[0]}, {data.response.tel[1]} and {data.response.tel.length-2} more...
                         </>
                         :
-                            data.tel.map((ds)=>{
+                            data.response.tel.map((ds)=>{
                             return(
                                 <>
                                 {ds}, &nbsp;
                                 </>
                             )
                         })
-                    :
-                    <>-</>
-                    } */}
+                    }
                 </Table.Cell>
                 <Table.Cell>
-                {/* <Modal
+                
+                    
+                    <Modal
                     onClose={() => setOpen(false)}
                     onOpen={() => setOpen(true)}
                     open={open}
                     size='tiny'
                     trigger={<FiEye />}
                     >
-                    <Modal.Content image>
+                  
+                    <Modal.Content>
                         <Modal.Description>
-                            <p className="domainmodal"><b>Domain:</b> <br /> <span>{data.domain}</span></p>
+                            <p className="domainmodal"><b>Domain:</b> <br /> <span>{data.response.domain}</span></p>
+                            <p className="domainmodal">
+                                <b>Emails:</b>  <br />
+                                <span>
+                                {finalemails.length===0
+                                    ?<>-</>
+                                    :
+                                    
+                                            finalemails.map((ds)=>{
+                                                return(
+                                                    <>
+                                                    {ds}, <br/>
+                                                    </>
+                                                )
+                                            })
+                                        }
+                                 
+                                    
 
-                            <p className="domainmodal"><b>Emails:</b> <br />
-                            {data.response?
-                            <>
-                                {data.email.map((mm)=>{
-                                    return(
-                                        <>
-                                        {mm}<br/>
-                                        </>
-                                    )
-                                })} 
-                            </>
-                            :
-                            <>N/A</>
-                            }
+                                </span>
                             </p>
 
-                            <p className="domainmodal"><b>Facebook:</b> <br />
-                            {data.response?
-                            <>
-                                {data.facebook.map((mm)=>{
-                                    return(
-                                        <>
-                                        {mm}<br/>
-                                        </>
-                                    )
-                                })}
-                            </>
-                            :
-                            <>N/A</>
-                            } 
+                            <p className="domainmodal">
+                                <b>Tel:</b>  <br />
+                                <span>
+                                    {data.response.tel===undefined
+                                    ?<>-</>
+                                    :
+                                        data.response.tel.length>0
+                                        ?
+                                            data.response.tel.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
                             </p>
 
-                            <p className="domainmodal"><b>Instagram:</b> <br />
-                            {data.response?
-                            <>
-                                {data.instagram.map((mm)=>{
-                                    return(
-                                        <>
-                                        {mm}<br/>
-                                        </>
-                                    )
-                                })}
-                            </>
-                            :
-                            <>N/A</>
-                            } 
+                            <p className="domainmodal">
+                                <b>Facebook:</b> <br />
+                                <span>
+                                    {data.response.facebook===undefined
+                                    ?<>-</>
+                                    :
+                                        data.response.facebook.length>0
+                                        ?
+                                            data.response.facebook.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
                             </p>
 
-                            <p className="domainmodal"><b>Twitter:</b> <br />
-                            {data.response?
-                            <>
-                                {data.twitter.map((mm)=>{
-                                    return(
-                                        <>
-                                        {mm}<br/>
-                                        </>
-                                    )
-                                })}
-                            </>
-                            :
-                            <>N/A</>
-                            } 
+                            <p className="domainmodal">
+                                <b>Instagram:</b> <br />
+                                <span>
+                                    {data.response.instagram===undefined
+                                    ?<>-</>
+                                    :
+                                        data.response.instagram.length>0
+                                        ?
+                                            data.response.instagram.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
                             </p>
 
-                            <p className="domainmodal"><b>LinkedIn:</b> <br />
-                            {data.response?
-                            <>
-                                {data.linkedin.map((mm)=>{
-                                    return(
-                                        <>
-                                        {mm}<br/>
-                                        </>
-                                    )
-                                })}
-                            </>
-                            :
-                            <>N/A</>
-                            } 
+                            <p className="domainmodal">
+                                <b>LinkedIn:</b> <br />
+                                <span>
+                                    {data.response.linkedin===undefined
+                                    ?<>-</>
+                                    :
+                                        data.response.linkedin.length>0
+                                        ?
+                                            data.response.linkedin.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
                             </p>
 
-                            <p className="domainmodal"><b>GooglePlus:</b> <br />
-                            {data.response?
-                            <>
-                                {data.googleplus.map((mm)=>{
-                                    return(
-                                        <>
-                                        {mm}<br/>
-                                        </>
-                                    )
-                                })}
-                            </>
-                            :
-                            <>N/A</>
-                            } 
+                            <p className="domainmodal">
+                                <b>Twitter:</b> <br />
+                                <span>
+                                    {data.twitter===undefined
+                                    ?<>-</>
+                                    :
+                                        data.response.twitter.length>0
+                                        ?
+                                            data.response.twitter.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
                             </p>
 
-                            <p className="domainmodal"><b>YouTube:</b> <br />
-                            {data.response?
-                            <>
-                                {data.youtube.map((mm)=>{
-                                    return(
-                                        <>
-                                        {mm}<br/>
-                                        </>
-                                    )
-                                })}
-                            </>
-                            :
-                            <>N/A</>
-                            } 
+                            <p className="domainmodal">
+                                <b>GooglePlus:</b> <br />
+                                <span>
+                                    {data.googleplus===undefined
+                                    ?<>-</>
+                                    :
+                                        data.googleplus.length>0
+                                        ?
+                                            data.response.googleplus.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
                             </p>
 
-                            <p className="domainmodal"><b>WhatsApp:</b> <br />
-                            {data.response?
-                            <>
-                                {data.whatsapp.map((mm)=>{
-                                    return(
-                                        <>
-                                        {mm}<br/>
-                                        </>
-                                    )
-                                })}
-                            </>
-                            :
-                            <>N/A</>
-                            } 
+                            <p className="domainmodal">
+                                <b>YouTube:</b> <br />
+                                <span>
+                                    {data.response.youtube===undefined
+                                    ?<>-</>
+                                    :
+                                        data.response.youtube.length>0
+                                        ?
+                                            data.response.youtube.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
                             </p>
 
-                            <p className="domainmodal"><b>Tel:</b> <br />
-                            {data.response?
-                            <>
-                                {data.tel.map((mm)=>{
-                                    return(
-                                        <>
-                                        {mm}<br/>
-                                        </>
-                                    )
-                                })}
-                            </>
-                            :
-                            <>N/A</>
-                            } 
+                            <p className="domainmodal">
+                                <b>skype:</b> <br />
+                                <span>
+                                    {data.response.skype===undefined
+                                    ?<>-</>
+                                    :
+                                        data.response.skype.length>0
+                                        ?
+                                            data.response.skype.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
                             </p>
+                            <p className="domainmodal">
+                                <b>WhatsApp:</b> <br />
+                                <span>
+                                    {data.response.whatsapp===undefined
+                                    ?<>-</>
+                                    :
+                                        data.response.whatsapp.length>0
+                                        ?
+                                            data.response.whatsapp.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
+                            </p>
+                            <p className="domainmodal">
+                                <b>printrest:</b> <br />
+                                <span>
+                                    {data.response.printrest===undefined
+                                    ?<>-</>
+                                    :
+                                        data.response.printrest.length>0
+                                        ?
+                                            data.response.printrest.map((dt)=>{
+                                                return(
+                                                    <>
+                                                    {dt} <br />
+                                                    </>
+                                                )
+                                            })
+                                        :
+                                        <>-</>
+                                    }
+                                </span>
+                            </p>
+
+
+
+
+                            
                             <br />
                             <Button color='black' size='mini' className="float-right" onClick={() => setOpen(false)}>
                             Close
                             </Button>
                             <br />
-
                         </Modal.Description>
                     </Modal.Content>
-                </Modal> */}
-
+                    {/* <Modal.Actions>
+                        
+                    </Modal.Actions> */}
+                </Modal>
                 </Table.Cell>
-
-                
         </Table.Row>
 
         </>

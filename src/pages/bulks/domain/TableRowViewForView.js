@@ -4,32 +4,102 @@ import { FiEye } from "react-icons/fi";
 
 export default function TableRowViewForView({data}) {
     const [open, setOpen] = React.useState(false)
+    
+
+    var finalemails=[];
+
+    // console.log(data)
+    var emailste=data.domainemails;
+   
 
 
-    console.log(data)
+    //check email is correct or not
+    function ValidateEmail(mail)
+    {
+
+        if (mail.match(/\.(jpe?g|png|pdf|jpg|js|css|io)$/)){
+            return false;
+          }else{
+            return true;
+          }
+        // if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+        // {
+        //     if(mail.slice(-3)==='jpg'){
+        //     return false;
+        //     }else if (mail.slice(-3)==='png') {
+        //     return false;
+        //     }else if (mail.slice(-3)==='gif') {
+        //     return false;
+        //     }else if (mail.slice(-3)==='css') {
+        //     return false;
+        //     }else if (mail.slice(-4)==='html') {
+        //     return false;
+        //     }else if (mail.slice(-11)==='example.com') {
+        //     return false;
+        //     }else if (mail.slice(-9)==='email.com') {
+        //     return false;
+        //     }else if (mail.slice(-9)==='sentry.io') {
+        //     return false;
+        //     }else if (mail.slice(-2)==='js') {
+        //     return false;
+        //     }else if (mail.slice(-4)==='jpeg') {
+        //     return false;
+        //     }else{
+        //     return true;
+        //     }
+        // }else {
+        //     return false;
+        // }
+    }
+
+
+
+    if(emailste===undefined){
+        // console.log('no emails')
+    }else{
+        emailste.forEach(element => {
+
+            if(ValidateEmail(element)){
+                if(element!==null){
+                    finalemails.push(element)
+                }
+            }else{
+
+            }
+
+        });
+    }
+
+   
+
 
     return (
         <Table.Row>
                 <Table.Cell>{data.domainname}</Table.Cell>
                 <Table.Cell> 
-                    {data.domainemails===undefined
+                    {finalemails.length===0
                     ?<>-</>
                     :
-                        data.domainemails.length>2
-                        ?
-                        <>
-                            {data.domainemails[0]}, {data.domainemails[1]} and {data.domainemails.length-2} more...
-                        </>
-                        :
-                            data.domainemails.map((ds)=>{
-                            return(
-                                <>
-                                {ds}, &nbsp;
-                                </>
-                            )
-                        })
-                    
+                    <>
+                        {
+                            finalemails.length>2
+                            ?
+                            <>
+                                {finalemails[0]}, {finalemails[1]} and {finalemails.length-2} more...
+                            </>
+                            :
+                            finalemails.map((ds)=>{
+                                return(
+                                    <>
+                                    {ds}, &nbsp;
+                                    </>
+                                )
+                            })
+                        }
+                    </>
                     }
+
+
                 </Table.Cell>
                 <Table.Cell> 
                     {data.domainphones===undefined
@@ -68,20 +138,16 @@ export default function TableRowViewForView({data}) {
                             <p className="domainmodal">
                                 <b>Emails:</b>  <br />
                                 <span>
-                                    {data.domainemails===undefined
+                                    {finalemails.length===0
                                     ?<>-</>
                                     :
-                                        data.domainemails.length>0
-                                        ?
-                                            data.domainemails.map((dt)=>{
-                                                return(
-                                                    <>
-                                                    {dt} <br />
-                                                    </>
-                                                )
-                                            })
-                                        :
-                                        <>-</>
+                                    finalemails.map((ds)=>{
+                                        return(
+                                            <>
+                                            {ds},<br/>
+                                            </>
+                                        )
+                                    })
                                     }
                                 </span>
                             </p>
