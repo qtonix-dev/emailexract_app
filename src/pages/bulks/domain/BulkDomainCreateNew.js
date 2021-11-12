@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Body from '../../../components/Body'
-import { Grid, Button, Form, Loader, Table, Progress,Popup } from 'semantic-ui-react'
-import { IoArrowBackCircleOutline } from "react-icons/io5";
-import {Link} from 'react-router-dom'
-
+import { Grid, Button, Form, Loader, Table, Progress } from 'semantic-ui-react'
 import { v4 as uuidv4 } from 'uuid';
 import cookie from 'react-cookies'
 import API_BULK_EXTRACT from '../../../api/API_BULK_EXTRACT'
@@ -210,11 +207,6 @@ export class BulkDomainCreate extends Component {
         // console.log(this.state.counter)
         return (
             <Body>
-                <Popup
-                    trigger={<Link exact to='/bulks/domainextract' className="cusbackbtn"><IoArrowBackCircleOutline /></Link>}
-                    content='Go Back'
-                    size='mini'
-                />
                 <section>
                     <div className="cuscontainer">
                     {this.props.navbarprogress===null || this.props.navbarprogress===undefined
@@ -234,7 +226,7 @@ export class BulkDomainCreate extends Component {
                                     sheet="tablexls"
                                     buttonText="Download as XLS"
                                 />
-                                {/ } /}
+                                {/* } */}
 
                                 <table id="table-to-xls" style={{display:'none'}}>
                                         <tr>
