@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Body from '../../../components/Body'
 import { Grid,  Table, Popup} from 'semantic-ui-react'
-// import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+
 // import io from "socket.io-client";
 // import { MdVerifiedUser,MdErrorOutline } from "react-icons/md";
 // import API from '../../../api/API'
