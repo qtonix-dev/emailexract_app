@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Body from '../../../components/Body'
-import { Grid,  Table} from 'semantic-ui-react'
+import { Grid,  Table, Popup} from 'semantic-ui-react'
 // import {Link} from 'react-router-dom'
 // import io from "socket.io-client";
 // import { MdVerifiedUser,MdErrorOutline } from "react-icons/md";
@@ -84,6 +84,11 @@ export class BulkDomainView extends Component {
         console.log(this.state)
         return (
             <Body>
+                <Popup
+                    trigger={<Link exact to='/bulks/domainextract' className="cusbackbtn"><IoArrowBackCircleOutline /></Link>}
+                    content='Go Back'
+                    size='mini'
+                />
                 <section>
                     <div className="cuscontainer">
                     {this.state.pageLoading

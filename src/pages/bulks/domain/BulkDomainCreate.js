@@ -26,6 +26,7 @@ export class BulkDomainCreate extends Component {
     }
 
 
+    
 
     componentDidMount(){
         axios.get('https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/pupextract/sweetheartgallery.com')

@@ -21,6 +21,7 @@ export class BulkDomain extends Component {
         }
     }
 
+    
 
     componentDidMount(){
         var user = cookie.load('qtonixemailextractweb_userdata');
