@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {Grid,Form,Button,Icon,Label} from 'semantic-ui-react'
+import {Grid,Form,Button,Icon} from 'semantic-ui-react'
 import { FiUnlock } from "react-icons/fi";
 import { IoChevronDown,IoChevronUp } from "react-icons/io5";
 import API from '../../../api/API'
