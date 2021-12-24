@@ -218,7 +218,7 @@ export class Home extends Component {
                                 ?
                                 <>
                                 <div>
-                                    <h3>Oh no! We couldn't find any emails</h3>
+                                    <h3 style={{color:"red"}}>Oh no! We couldn't find any emails</h3>
                                     <p>our trackers are searching the internet for leads of the highest quality, unfortunately we don't have any for this company, YET. but rest assured, we are working on it.</p>
                                 
                                 </div>

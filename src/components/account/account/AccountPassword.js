@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {Grid,Form,Button} from 'semantic-ui-react'
+import {Grid,Form,Button,Icon,Label} from 'semantic-ui-react'
 import { FiUnlock } from "react-icons/fi";
 import { IoChevronDown,IoChevronUp } from "react-icons/io5";
 import API from '../../../api/API'
@@ -14,13 +14,43 @@ export class AccountPassword extends Component {
         super(props)
         this.state={
             formLoading:false,
-            hideTab:true
+            hideTab:true,
+            type:'password',
+            type1:'password',
+            type2:'password'
+            
+            
         }
         this.showHideTab=this.showHideTab.bind(this)
         this.handleChnage=this.handleChnage.bind(this)
+        this.showHide = this.showHide.bind(this);
+        this.showHide1 = this.showHide1.bind(this);
+        this.showHide2 = this.showHide2.bind(this);
 
     }
-    
+    showHide(e){
+        //e.preventDefault();
+        //e.stopPropagation();
+        this.setState({
+          type: this.state.type === 'password' ? 'input' : 'password'
+        })  
+      }
+
+
+      showHide1(e){
+        //e.preventDefault();
+        //e.stopPropagation();
+        this.setState({
+          type1: this.state.type1 === 'password' ? 'input' : 'password'
+        })  
+      }
+      showHide2(e){
+          //e.preventDefault();
+          //e.stopPropagation();
+          this.setState({
+            type2: this.state.type2 === 'password' ? 'input' : 'password'
+          })  
+        }
 
     showHideTab(e){
         if(this.state.hideTab){
@@ -126,7 +156,7 @@ export class AccountPassword extends Component {
                     </Grid.Column>
                     <Grid.Column mobile={14} >
                     <h5 className="cursor-pointer" onClick={this.showHideTab}>Password {this.state.hideTab?<span onClick={this.showHideTab} className="cursor-pointer"><IoChevronDown /></span>:<span onClick={this.showHideTab} className="cursor-pointer"><IoChevronUp /></span>}  </h5>
-                    <p className="cursor-pointer" onClick={this.showHideTab}>Update your email address, name and time zone.</p>
+                    <p className="cursor-pointer" onClick={this.showHideTab}>Update your Password</p>
                     </Grid.Column>
                     {this.state.hideTab
                     ?
@@ -135,12 +165,14 @@ export class AccountPassword extends Component {
                     <Grid.Column  mobile={16}>
                         
                         <Form success loading={this.state.formLoading} onSubmit={this.handleSubmit}>
-                            <Form.Input type="password" label='Old Password' name="oldpassword" value={this.state.oldpassword} onChange={this.handleChnage} placeholder='' />
-                            <Form.Input type="password" label='New Password' placeholder='' name="newpassword" value={this.state.newpassword} onChange={this.handleChnage} />
-                            <Form.Input type="password" label='Reenter New Password' placeholder='' name="reenternewpassword" value={this.state.reenternewpassword} onChange={this.handleChnage} />
-
+                            <Form.Input  type={this.state.type} label='Old Password' name="oldpassword" icon={<Icon name='eye' onClick={this.showHide} link />}    value={this.state.oldpassword} onChange={this.handleChnage} placeholder='' />  
+                           
+                            <Form.Input type={this.state.type1} label='New Password' placeholder='' name="newpassword" value={this.state.newpassword} onChange={this.handleChnage} icon={<Icon name='eye' onClick={this.showHide1} link />} />
+                            <Form.Input type={this.state.type2} label='Reenter New Password' placeholder='' name="reenternewpassword" value={this.state.reenternewpassword} onChange={this.handleChnage} icon={<Icon name='eye' onClick={this.showHide2} link />} />
+                                           
 
                             {/* <Message
+                             
                             success
                             header='Form Completed'
                             content="You're all signed up for the newsletter"

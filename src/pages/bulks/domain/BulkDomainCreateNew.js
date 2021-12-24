@@ -46,31 +46,60 @@ export class BulkDomainCreate extends Component {
 
 
     handleSubmit=speeddata=>{
+
         this.setState({loadSubmitButton:true})
         const word = this.state.domains;
         const domains = word.split("\n");
         const state= this.state;
+           
+    
+            var domainCreate = [];
 
-        var domainCreate = [];
-        domains.forEach(domainFunction);
-        function domainFunction(domainurl, index) {
+            
 
-            if(domainurl===''){
+               
+            domains.forEach(domainFunction);
+            function domainFunction(domainurl, index) {
 
-            }else{
-                var data={
-                    domain:domainurl,
-                    uuid:state.uuid,
-                    userid:state.user._id,
-                    username:state.user.name,
-                    useremail:state.user.email,
-                    listname:state.listname,
-                    speed:speeddata
+               
+            if (/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/.test(domainurl)) {
+
+
+
+
+
+    
+                if(domainurl===''){
+    
+                }else{
+                    var data={
+                        domain:domainurl,
+                        uuid:state.uuid,
+                        userid:state.user._id,
+                        username:state.user.name,
+                        useremail:state.user.email,
+                        listname:state.listname,
+                        speed:speeddata
+                    }
+                    domainCreate.push(data);
                 }
-                domainCreate.push(data);
+                
             }
             
+            else {
+                alert("Enter Valid Domain Name");
+                
+       
+               
+            }
+
+
         }
+
+            
+
+            
+
 
 
         //CHECK HOW MANY CREDIT LEFT
@@ -132,6 +161,17 @@ export class BulkDomainCreate extends Component {
                 })
             }
         }
+    
+        
+
+
+
+
+
+
+
+    
+
     }
 
 
