@@ -32,12 +32,14 @@ export class Home extends Component {
     }
 
     handleChange(e){
+        // if(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/.test(e)) {
         this.setState({
             [e.target.name]:e.target.value,
             datas:false,
             status:'waiting'
         })
-    }
+    
+     }
 
 
     componentDidMount(){
@@ -48,6 +50,8 @@ export class Home extends Component {
     fetchRecentSearches(){
         API.get(`domainsearch/recentsearches/${this.state.userid}`)
         .then(response=>{
+
+
             this.setState({
                 recentsearches:response.data.data
             })
@@ -66,7 +70,12 @@ export class Home extends Component {
 
 
     handleSubmit=e=>{
-        e.preventDefault();
+        if(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/.test(this.state.domain)) {
+
+        
+       
+           
+            e.preventDefault();
         this.setState({loadingBtn:true})
         API.get(`/domainsearch/finddomain/${this.state.domain}/${this.state.userid}`,{timeout: 15000})
         // API.get(`/domainsearch/finddomain/${this.state.domain}/${this.state.userid}`)
@@ -101,6 +110,31 @@ export class Home extends Component {
             })
             this.setState({loadingBtn:false,status:'not_found',datas:false}) 
         });
+
+
+    }
+    else {
+            
+        toast.error('invalid domain', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+        
+    this.setState({loadSubmitButton:false})
+
+    }
+        
+
+
+
+
+
+        
     }
 
     handleDelete=(e,f)=>{

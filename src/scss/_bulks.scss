@@ -1,77 +1,59 @@
-.bulksec{
+.bulksec {
     margin-top: 20px !important;
-
-    &_icon{
+    &_icon {
         font-size: 30px;
         position: absolute;
         top: 28%;
         color: #0495fd !important;
     }
-
-    h5{
+    h5 {
         font-size: 19px;
-    font-weight: 500;
-
-        span{
+        font-weight: 500;
+        span {
             margin-top: -20px;
         }
     }
-    p{
+    p {
         font-size: 15px;
     }
-
-
-    &_box{
-        h5{
-            span{
-            
+    &_box {
+        h5 {
+            span {
                 float: right;
                 margin-top: 4px;
             }
         }
-        p{
+        p {
             margin-top: -10px;
         }
     }
 }
 
+.bulksecview {}
 
-
-.bulksecview{
-    
-}
-
-.bulk9998{
+.bulk9998 {
     position: absolute;
     margin-top: 2px;
     margin-left: 3px;
     font-size: 17px;
 }
 
-
-.bulkdetailsss{
-    p{
+.bulkdetailsss {
+    p {
         line-height: 11px;
-    font-size: 16px;
-        b{
-
-        }
+        font-size: 16px;
+        b {}
     }
 }
 
-
-.domainmodal{
-    p{
+.domainmodal {
+    p {
         font-size: 18px;
-
-        b{
-
-        }
-    
-        span{
-    
-        }
+        b {}
+        span {}
     }
+}
 
-    
+.modal_head {
+    color: blue;
 }

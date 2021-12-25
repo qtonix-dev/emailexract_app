@@ -46,9 +46,8 @@ export class BulkDomainCreate extends Component {
 
 
     handleSubmit=speeddata=>{
-
         this.setState({loadSubmitButton:true})
-        const word = this.state.domains;
+        const word = this.state.domains.trim();
         const domains = word.split("\n");
         const state= this.state;
            
@@ -59,7 +58,7 @@ export class BulkDomainCreate extends Component {
 
                
             domains.forEach(domainFunction);
-            function domainFunction(domainurl, index) {
+            function domainFunction(domainurl) {
 
                
             if (/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/.test(domainurl)) {
@@ -67,7 +66,7 @@ export class BulkDomainCreate extends Component {
 
 
 
-
+                 
     
                 if(domainurl===''){
     
@@ -84,25 +83,38 @@ export class BulkDomainCreate extends Component {
                     domainCreate.push(data);
                 }
                 
+    
+
+                
             }
             
             else {
-                alert("Enter Valid Domain Name");
+                
+                toast.error('invalid domain', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
                 
        
-               
             }
-
 
         }
 
+        if(domainCreate.length>=1){
             
+        this.setState({loadSubmitButton:true})
+        }
+           else{
+               
+        this.setState({loadSubmitButton:false})
+           }
 
-            
-
-
-
-        //CHECK HOW MANY CREDIT LEFT
+             //CHECK HOW MANY CREDIT LEFT
         if(this.props.navbarprogress.packageinfo.totalbuldomainkextract-this.props.navbarprogress.bulk_domain_search<domainCreate.length){
             toast.warning(`You can't extract more than ${this.props.navbarprogress.packageinfo.totalbuldomainkextract-this.props.navbarprogress.bulk_domain_search}`, {
                 position: "top-right",
@@ -161,7 +173,11 @@ export class BulkDomainCreate extends Component {
                 })
             }
         }
-    
+            
+
+            
+
+
         
 
 

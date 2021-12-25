@@ -105,9 +105,9 @@ export default function TableRowView({data,key}) {
                   
                     <Modal.Content>
                         <Modal.Description>
-                            <p className="domainmodal"><b>Domain:</b> <br /> <span>{data.response.domain}</span></p>
+                            <p className="domainmodal"><b className='modal_head' >Domain:</b> <br /> <span>{data.response.domain}</span></p>
                             <p className="domainmodal">
-                                <b>Emails:</b>  <br />
+                                <b className='modal_head'>Emails:</b>  <br />
                                 <span>
                                 {finalemails.length===0
                                     ?<>-</>
@@ -128,7 +128,7 @@ export default function TableRowView({data,key}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Tel:</b>  <br />
+                                <b className='modal_head'>Tel:</b>  <br />
                                 <span>
                                     {data.response.tel===undefined
                                     ?<>-</>
@@ -149,7 +149,7 @@ export default function TableRowView({data,key}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Facebook:</b> <br />
+                                <b className='modal_head'>Facebook:</b> <br />
                                 <span>
                                     {data.response.facebook===undefined
                                     ?<>-</>
@@ -170,7 +170,7 @@ export default function TableRowView({data,key}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Instagram:</b> <br />
+                                <b className='modal_head'>Instagram:</b> <br />
                                 <span>
                                     {data.response.instagram===undefined
                                     ?<>-</>
@@ -191,7 +191,7 @@ export default function TableRowView({data,key}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>LinkedIn:</b> <br />
+                                <b className='modal_head'>LinkedIn:</b> <br />
                                 <span>
                                     {data.response.linkedin===undefined
                                     ?<>-</>
@@ -212,7 +212,7 @@ export default function TableRowView({data,key}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Twitter:</b> <br />
+                                <b className='modal_head'>Twitter:</b> <br />
                                 <span>
                                     {data.twitter===undefined
                                     ?<>-</>
@@ -233,7 +233,7 @@ export default function TableRowView({data,key}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>GooglePlus:</b> <br />
+                                <b className='modal_head'>GooglePlus:</b> <br />
                                 <span>
                                     {data.googleplus===undefined
                                     ?<>-</>
@@ -254,7 +254,7 @@ export default function TableRowView({data,key}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>YouTube:</b> <br />
+                                <b className='modal_head'>YouTube:</b> <br />
                                 <span>
                                     {data.response.youtube===undefined
                                     ?<>-</>
@@ -275,7 +275,7 @@ export default function TableRowView({data,key}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>skype:</b> <br />
+                                <b className='modal_head'>skype:</b> <br />
                                 <span>
                                     {data.response.skype===undefined
                                     ?<>-</>
@@ -295,7 +295,7 @@ export default function TableRowView({data,key}) {
                                 </span>
                             </p>
                             <p className="domainmodal">
-                                <b>WhatsApp:</b> <br />
+                                <b className='modal_head'>WhatsApp:</b> <br />
                                 <span>
                                     {data.response.whatsapp===undefined
                                     ?<>-</>
@@ -315,7 +315,7 @@ export default function TableRowView({data,key}) {
                                 </span>
                             </p>
                             <p className="domainmodal">
-                                <b>printrest:</b> <br />
+                                <b className='modal_head'>printrest:</b> <br />
                                 <span>
                                     {data.response.printrest===undefined
                                     ?<>-</>

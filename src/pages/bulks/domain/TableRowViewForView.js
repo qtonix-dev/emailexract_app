@@ -133,10 +133,10 @@ export default function TableRowViewForView({data}) {
                     {/* <Modal.Header>Domain Details</Modal.Header> */}
                     <Modal.Content>
                         <Modal.Description>
-                            <p className="domainmodal"><b>Domain:</b> <br /> <span>{data.domainname}</span></p>
+                            <p className="domainmodal"><b className='modal_head'>Domain:</b> <br /> <span>{data.domainname}</span></p>
                             {/* <p className="domainmodal"><b>Title:</b> <br /> <span>{data.domaintitle}</span></p> */}
                             <p className="domainmodal">
-                                <b>Emails:</b>  <br />
+                                <b className='modal_head'>Emails:</b>  <br />
                                 <span>
                                     {finalemails.length===0
                                     ?<>-</>
@@ -153,7 +153,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Phone:</b>  <br />
+                                <b className='modal_head'>Phone:</b>  <br />
                                 <span>
                                     {data.domainphones===undefined
                                     ?<>-</>
@@ -174,7 +174,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Facebook:</b> <br />
+                                <b className='modal_head'>Facebook:</b> <br />
                                 <span>
                                     {data.domainfacebook===undefined
                                     ?<>-</>
@@ -195,7 +195,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Instagram:</b> <br />
+                                <b className='modal_head'>Instagram:</b> <br />
                                 <span>
                                     {data.domaininstagram===undefined
                                     ?<>-</>
@@ -216,7 +216,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>LinkedIn:</b> <br />
+                                <b className='modal_head'>LinkedIn:</b> <br />
                                 <span>
                                     {data.domaintlinkedin===undefined
                                     ?<>-</>
@@ -237,7 +237,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Twitter:</b> <br />
+                                <b className='modal_head'>Twitter:</b> <br />
                                 <span>
                                     {data.domaintwitter===undefined
                                     ?<>-</>
@@ -258,7 +258,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>GooglePlus:</b> <br />
+                                <b className='modal_head'>GooglePlus:</b> <br />
                                 <span>
                                     {data.domaingoogleplus===undefined
                                     ?<>-</>
@@ -279,7 +279,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>YouTube:</b> <br />
+                                <b className='modal_head'>YouTube:</b> <br />
                                 <span>
                                     {data.domainyoutube===undefined
                                     ?<>-</>
@@ -300,7 +300,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>WhatsApp:</b> <br />
+                                <b className='modal_head'>WhatsApp:</b> <br />
                                 <span>
                                     {data.domainwhatsapp===undefined
                                     ?<>-</>
@@ -321,7 +321,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Printrest:</b> <br />
+                                <b className='modal_head'>Printrest:</b> <br />
                                 <span>
                                     {data.domainwprintrest===undefined
                                     ?<>-</>
@@ -342,7 +342,7 @@ export default function TableRowViewForView({data}) {
                             </p>
 
                             <p className="domainmodal">
-                                <b>Skype:</b> <br />
+                                <b className='modal_head'>Skype:</b> <br />
                                 <span>
                                     {data.domainskype===undefined
                                     ?<>-</>
