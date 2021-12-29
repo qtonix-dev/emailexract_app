@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import ValidEmail from '../components/emailverifier/ValidEmail'
 import InvalidEmail from '../components/emailverifier/InvalidEmail'
 import API from '../api/API'
+import axios from 'axios'
 import cookie from 'react-cookies'
 import {navbarProgressInfo} from '../actions';
 import CheckPackageRedirect from '../components/CheckPackageRedirect'
@@ -57,12 +58,12 @@ export class EmailVerifier extends Component {
         if(EmailValidator.validate(this.state.email)){
             this.setState({formLoading:true})
             
-            API.post('/emailverifcation/verifyemail',this.state)
+            axios.get(`https://emailextractserver2bulkextract.herokuapp.com/emailverify/${this.state.email}`)
             .then(response=>{
                 this.fetchRecentSearches();
                 this.props.navbarProgressInfo();
 
-                console.log(response.data)
+                console.log(response.data.data)
 
                 if(response.data.data.exist){
                     
@@ -70,14 +71,14 @@ export class EmailVerifier extends Component {
                         formLoading:false,
                         isValid:true,
                         isInvalid:false,
-                        data:response.data,
+                        data:response.data.data,
                     })
                 }else{
                     this.setState({
                         formLoading:false,
                         isValid:false,
                         isInvalid:true,
-                        data:response.data,
+                        data:response.data.data,
                     })
                 }
             })
@@ -153,11 +154,11 @@ export class EmailVerifier extends Component {
                     ?
                     <>
                     {this.state.isValid
-                    ?<ValidEmail urls={this.state.data.urls} data={this.state.data.data} />
+                    ?<ValidEmail urls={this.state.data.urls} data={this.state.data} />
                     :<></>}
 
                     {this.state.isInvalid
-                    ?<InvalidEmail urls={this.state.data.urls} data={this.state.data.data} />
+                    ?<InvalidEmail urls={this.state.data.urls} data={this.state.data} />
                     :<></>}
                     </>
                     :<></>}

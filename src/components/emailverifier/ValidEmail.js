@@ -39,7 +39,7 @@ export class ValidEmail extends Component {
                     <Grid columns='equal'>
                         <Grid.Column>
                             <div className="emailverify_success_status">
-                                <p>Format {this.state.data.form?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
+                                <p>Format {this.state.data.form ?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
                                 <p>SMTP {this.state.data.mx?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
                             </div>
                         </Grid.Column>
@@ -52,18 +52,19 @@ export class ValidEmail extends Component {
                     </Grid>
                     <Grid>
                         <Grid.Column>
-                            <h5>We found {this.state.urls.length} sources on the web.</h5>
+                            {/* <h5>We found {this.state.urls.length} sources on the web.</h5> */}
                             <div className='emailverify_success_foundlinks'>
-                                {this.state.urls.map((url)=>{
+                                {/* {this.state.urls.map((url)=>{
                                     return(
                                         <span key={url.link}>
                                         <a rel="noreferrer" target="_blank" href={url.link} >{this.truncate(url.link)} ...</a> <br />
                                         </span>
                                     )
-                                })}
+                                })} */}
+                              
                             </div>
                         </Grid.Column>
-                    </Grid>  
+                     </Grid>   
             </>
         )
     }

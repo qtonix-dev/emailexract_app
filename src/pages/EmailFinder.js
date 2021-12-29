@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import {navbarProgressInfo} from '../actions';
 import CheckPackageRedirect from '../components/CheckPackageRedirect'
 import ShowQuotaReached from '../components/ShowQuotaReached'
+import axios from 'axios';
 
 
 export class EmailFinder extends Component {
@@ -77,24 +78,10 @@ export class EmailFinder extends Component {
             userid:this.state.userid
         }
 
-        API.post('/emailfinder/findemail',tempdata,{timeout: 15000})
+        axios.get(`https://emailextractserver2bulkextract.herokuapp.com/emailverify`,tempdata)
         .then(response=>{
             this.props.navbarProgressInfo();
-            if(response.data.data.exist){
-                this.setState({
-                        showFound:true,
-                        showNotFound:false,
-                        formLoading:false,
-                        data:response.data
-                })
-            }else{
-                this.setState({
-                        showFound:false,
-                        showNotFound:true,
-                        formLoading:false,
-                        data:response.data
-                })
-            }
+            console.log(response)
         })
         .catch(error => {
             this.setState({

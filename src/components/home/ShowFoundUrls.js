@@ -33,7 +33,7 @@ export class ShowFoundUrls extends Component {
 
     componentDidMount(){
        
-        API.get(`/domainsearch/show_url_under_email/${this.props.data.email}`)
+        API.get(`/domainsearch/show_url_under_email/${this.props.data}`)
         .then(response=>{
             this.setState({totalURL:response.data.results})
             // alert(123)
@@ -49,7 +49,7 @@ export class ShowFoundUrls extends Component {
     render() {
         return (
             <div className="foundLink">
-                <h5>{this.state.data.email}
+                <h5>{this.state.data}
                 
                 {this.state.data.verified
                 ?<span className="foundLink_verifiedemail"><MdVerifiedUser /></span>

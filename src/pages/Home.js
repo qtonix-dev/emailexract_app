@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import {Link} from 'react-router-dom'
 import { FiSearch } from "react-icons/fi";
+import axios  from 'axios';
 import Body from '../components/Body'
 import { Grid,Form, Button,Input,Label,Icon } from 'semantic-ui-react'
 import ShowFoundUrls from '../components/home/ShowFoundUrls'
 import API from '../api/API'
 import cookie from 'react-cookies'
+import ReactImageFallback from "react-image-fallback";
 import { toast } from 'react-toastify';
 import {navbarProgressInfo} from '../actions';
 import CheckPackageRedirect from '../components/CheckPackageRedirect'
 import ShowQuotaReached from '../components/ShowQuotaReached'
+
 // import PDF from '../components/PDF'
 // import Stripe from '../components/Stripe'
 
@@ -77,18 +80,18 @@ export class Home extends Component {
            
             e.preventDefault();
         this.setState({loadingBtn:true})
-        API.get(`/domainsearch/finddomain/${this.state.domain}/${this.state.userid}`,{timeout: 15000})
+        axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/extract/${this.state.domain}`)
         // API.get(`/domainsearch/finddomain/${this.state.domain}/${this.state.userid}`)
         .then(response=>{
             this.props.navbarProgressInfo()
             if(response.data.response){
                 
-                if(response.data.emails.length===0){
+                if(response.data.response.emails.length===0){
                     this.setState({loadingBtn:false,status:'not_found',datas:false})
                     this.fetchRecentSearches();
 
                 }else{
-                    this.setState({loadingBtn:false,status:'found',datas:response.data  })
+                    this.setState({loadingBtn:false,status:'found',datas:response.data.response  })
                     this.fetchRecentSearches();
 
                 }
@@ -99,6 +102,7 @@ export class Home extends Component {
                 this.fetchRecentSearches();
 
             }
+            console.log(response.data);
         })
         .catch(error => {
             API.get(`/domainsearch/storerecentsearch/${this.state.domain}/${this.state.userid}`)
@@ -206,6 +210,7 @@ export class Home extends Component {
                                 :
                                 <>
                                 {this.state.datas.emails.length} results
+
                                 </>
                                     }</p>
                             </Grid.Column>
@@ -215,28 +220,54 @@ export class Home extends Component {
                                 
                                 
                                 {this.state.status==='found'
+                                
                                 ?
                                     <>
                                     {this.state.datas.emails.length>5
                                     ?
                                     <>
+                                   
+                                  
+                                   <ReactImageFallback
+                                                    src={`https://logo.clearbit.com/${this.state.domain}`}
+                                                    fallbackImage="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-website-logo-png-transparent-background-background-15.png"
+                                                    initialImage={`https://logo.clearbit.com/${this.state.domain}`}
+                                                    alt="cool image should be here"
+                                                    className="my-image" />
+                                     {/* {this.state.datas.emails.map((data)=>{
+                                        return(
+                                            // <ShowFoundUrls key={data.email} data={data} />
+                                            <p>
+                                                {data} </p>
+                                        )
+                                    })}  */}
+                                    
 
+
+                                      
                                         <ShowFoundUrls key={1} data={this.state.datas.emails[0]} />
                                         <ShowFoundUrls key={2} data={this.state.datas.emails[1]} />
                                         <ShowFoundUrls key={3} data={this.state.datas.emails[2]} />
                                         <ShowFoundUrls key={4} data={this.state.datas.emails[3]} />
-                                        <ShowFoundUrls key={5} data={this.state.datas.emails[4]} />
+                                        <ShowFoundUrls key={5} data={this.state.datas.emails[4]} /> 
                                         <p>and {this.state.datas.emails.length-5} more results</p>
                                     </>
                                     :
                                     <>
                                     <div style={{overflowY:'hidden'}}>
-                                    {this.state.datas.emails.map((data)=>{
-                                        return(
-                                            <ShowFoundUrls key={data.email} data={data} />
-                                        )
-                                    })}
-                                    </div>
+                                    <ReactImageFallback
+                                                    src={`https://logo.clearbit.com/${this.state.domain}`}
+                                                    fallbackImage="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-website-logo-png-transparent-background-background-15.png"
+                                                    initialImage={`https://logo.clearbit.com/${this.state.domain}`}
+                                                    alt="cool image should be here"
+                                                    className="my-image" />
+                                     {this.state.datas.emails.map((data)=>{
+                                         return(
+                                             // <ShowFoundUrls key={data.email} data={data} />
+                                             <p>{data} </p>
+                                         )
+                                     })}
+                                     </div>
     
                                     </>
                                     }
