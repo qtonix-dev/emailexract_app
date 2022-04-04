@@ -58,27 +58,27 @@ export class EmailVerifier extends Component {
         if(EmailValidator.validate(this.state.email)){
             this.setState({formLoading:true})
             
-            axios.get(`https://emailextractserver2bulkextract.herokuapp.com/emailverify/${this.state.email}`)
+            axios.get(`http://localhost:5002/emailverify/${this.state.email}`)
             .then(response=>{
                 this.fetchRecentSearches();
                 this.props.navbarProgressInfo();
 
-                console.log(response.data.data)
+                console.log(response.data)
 
-                if(response.data.data.exist){
+                if(response.data.deliverable){
                     
                     this.setState({
                         formLoading:false,
                         isValid:true,
                         isInvalid:false,
-                        data:response.data.data,
+                        data:response.data,
                     })
                 }else{
                     this.setState({
                         formLoading:false,
                         isValid:false,
                         isInvalid:true,
-                        data:response.data.data,
+                        data:response.data,
                     })
                 }
             })
