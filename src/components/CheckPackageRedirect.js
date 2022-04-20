@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom'
 
 export class CheckPackageRedirect extends Component {
     render() {
-        console.log(this.props.navbarprogressinfo)
         return (
             <>
                 {this.props.navbarprogressinfo===null

@@ -26,6 +26,8 @@ export class PlanActivatedSuccess extends Component {
 
             var data = cookie.load('qtonixemailextractweb_paymentdetails');
 
+
+
             if(data.uuid === this.props.match.params.uuid){
 
                 var tempData = {
@@ -67,7 +69,7 @@ export class PlanActivatedSuccess extends Component {
 
         }
 
-        console.log(cookie.load('qtonixemailextractweb_paymentdetails'))
+       
     }
 
     render() {

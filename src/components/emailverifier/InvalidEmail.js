@@ -57,14 +57,14 @@ export class InvalidEmail extends Component {
                     <Grid columns='equal'>
                         <Grid.Column>
                             <div className="emailverify_success_status">
-                                <p>Format {this.state.data.form?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
-                                <p>SMTP {this.state.data.mx?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
+                                <p>Format {this.state.data.isValidDomain ?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
+                                <p>SMTP {this.state.data.serverstatus?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
                             </div>
                         </Grid.Column>
                         <Grid.Column>
                             <div className="emailverify_success_status">
-                                <p>Server status {this.state.data.mx?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
-                                <p>Deliverable {this.state.data.exist?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
+                                <p>Server status {this.state.data.serverstatus?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
+                                <p>Deliverable {this.state.data.deliverable?<span>VALID</span>:<span className="text-danger">INVALID</span>}</p>
                             </div>
                         </Grid.Column>
                     </Grid>

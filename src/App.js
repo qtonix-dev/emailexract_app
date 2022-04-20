@@ -70,53 +70,23 @@ export default function App() {
             <ProtectedRouteUser exact path='/' component={Home} />
             <ProtectedRouteUser exact path='/verify' component={EmailVerifier} />
             <Route exact path='/verifyemail' component={EmailVerification} />
-
-            
-
             <ProtectedRouteUser exact path='/bulks' component={Bulks} />
             <ProtectedRouteUser exact path='/bulks/domainextract' component={BulkDomain} />
             <ProtectedRouteUser exact path='/bulks/domainextract/newone' component={BulkDomainCreate} />
-
             <ProtectedRouteUser exact path='/bulks/domainextract/new' component={BulkDomainCreateNew} />
-
-
-            
-
             <ProtectedRouteUser exact path='/bulks/domainextract/view/:id' component={BulkDomainView} />
-
-
-            
-            
-
             <ProtectedRouteUser exact path='/finder' component={EmailFinder} />
-
             <ProtectedRouteUser exact path='/account' component={AccountHome} />
             <ProtectedRouteUser exact path='/account/subscription' component={AccountSubscription} />
             <ProtectedRouteUser exact path='/account/subscription/view' component={AccountSubscriptionOne} />
             <ProtectedRouteUser exact path='/account/subscription/pay/61519ea638decb4661519ea638/:packageid/:userid/61519ea638decb46c8473a8061519ea638decb46c8473a80/638decb46c8473a80615' component={AccountSubscriptionTwo} />
-
-
-            
-            
-
             <ProtectedRouteUser exact path='/account/billing' component={AccountBilling} />
             <Route exact path='/account/usage' component={AccountUsage} />
-
             <Route exact path='/account/usage/domainsearch' component={UsageDomainSearch} />
             <Route exact path='/account/usage/emailfinder' component={UsageEmailFinder} />
             <Route exact path='/account/usage/emailverification' component={UsageEmailVerification} />
             <Route exact path='/account/usage/bulkdomainextract' component={UsageBulkDomainExtract} />
-
-            
-
-            
-
-
-            
-
             <Route exact path='/securelogincheck/:userid/:loginid' component={LoginCheck} />
-
-
             <Route exact path='/ea638decb4661519ea638decb46c8473a8061519ea638decb46c84/61519ea638decb46c8473/638decb46c8473a8061519ea638decb/:uuid/38decb46c8473/638decb46c8473a8061519ea6' component={PlanActivatedSuccess} />
             <Route exact path='/paymentfailed' component={PlanActivationFailed} />
 

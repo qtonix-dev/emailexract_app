@@ -81,7 +81,7 @@ export class AccountBilling extends Component {
                                                         <Table.Cell>$ {data.amountpaid}</Table.Cell>
                                                         <Table.Cell><Moment format="YYYY-MM-DD HH:mm:ss dddd">{data.createdAt}</Moment></Table.Cell>
                                                         <Table.Cell> 
-<a href={`${process.env.REACT_APP_BACKENDURL}/${data.downloadlink}`}>Download PDF</a>
+<a href={`${process.env.REACT_APP_BACKENDURL}${data.downloadlink}`}>Download PDF</a>
 
                                                         </Table.Cell>
 

@@ -74,7 +74,7 @@ export class BulkDomain extends Component {
                                     <Table basic='very'>
                                         <Table.Header>
                                         <Table.Row>
-                                            <Table.HeaderCell>Bulk</Table.HeaderCell>
+                                            <Table.HeaderCell>List</Table.HeaderCell>
                                             <Table.HeaderCell>Total</Table.HeaderCell>
                                             <Table.HeaderCell>Created</Table.HeaderCell>
                                             <Table.HeaderCell style={{width:'40px'}}></Table.HeaderCell>

@@ -1,79 +1,165 @@
 import React from 'react'
-import { Table, Button, Modal } from 'semantic-ui-react'
-import { FiEye } from "react-icons/fi";
+import { Table } from 'semantic-ui-react'
+// import { FiEye } from "react-icons/fi";
 
 
-export default function TableRowView({data,key}) {
-    const [open, setOpen] = React.useState(false)
-    // console.log(data);
-    var finalemails=[];
-
-    // console.log(data)
-    var emailste=data.response.emails;
-
-
-    console.log(emailste);
-   
-
-
-    //check email is correct or not
-    function ValidateEmail(mail)
-    {
-        if (mail.match(/\.(jpe?g|png|pdf|jpg|js|css|io)$/)){
-            return false;
-          }else{
-            return true;
-          }
-    }
-
-
-
-    if(emailste===undefined){
-        // console.log('no emails')
-    }else{
-        emailste.forEach(element => {
-
-            if(ValidateEmail(element)){
-                if(element!==null){
-                    finalemails.push(element)
-                }
-            }else{
-
-            }
-
-        });
-    }
+export default function TableRowView({data,key,extractPhone,extractSocial}) {
+    // const [open, setOpen] = React.useState(false)
+    
 
     return (
         <>
         <Table.Row>
-                <Table.Cell> {key} {data.response.domain}</Table.Cell>
+                <Table.Cell> {key} {data.domain}</Table.Cell>
 
-                <Table.Cell> 
-                {finalemails.length===0
+                {/* <Table.Cell> 
+                {data.emails.length===0
                                     ?<>-</>
                                     :
                                     <>
                                         {
-                                            finalemails.length>2
+                                            data.emails.length>2
                                             ?
                                             <>
-                                                {finalemails[0]}, {finalemails[1]} and {finalemails.length-2} more...
+                                                {data.emails[0]}, {data.emails[1]} and {data.emails.length-2} more...
                                             </>
                                             :
-                                            finalemails.map((ds)=>{
-                                                return(
-                                                    <>
-                                                    {ds}, &nbsp;
-                                                    </>
-                                                )
-                                            })
+                                            data.emails.join(", ")
                                         }
                                     </>
                                     }
 
+                </Table.Cell> */}
+                <Table.Cell >
+                    <div style={{float:'right'}}>
+                    {data.emails.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluency/20/000000/email.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+
+                                              {extractPhone
+                                              ?
+                                              <>
+                                              {data.tel.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluency/20/000000/call.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                              </>
+                                                :<></>}
+
+
+                                                {extractSocial
+                                                ?
+                                                <>
+                                                {data.facebook.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluency/20/000000/facebook.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                              {data.googleplus.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluent/20/google-plus-squared.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                              {data.instagram.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluent/20/instagram-new.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                              {data.linkedin.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluency/20/000000/linkedin.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                              {data.printrest.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluency/20/000000/pinterest.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                              {data.skype.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluency/20/000000/skype.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                              {data.twitter.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluency/20/000000/twitter.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                              {data.whatsapp.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluency/20/000000/whatsapp.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                              {data.youtube.length > 0 ? (
+                                                <>
+                                                  <span>
+                                                    <img src="https://img.icons8.com/fluency/20/000000/youtube.png" alt='iconimage' />
+                                                  </span>{" "}
+                                                  &nbsp;&nbsp;
+                                                </>
+                                              ) : (
+                                                <></>
+                                              )}
+                                                </>
+                                                :<></>}
+                                              
+                    </div>
+                
                 </Table.Cell>
-                <Table.Cell> 
+                {/* <Table.Cell> 
                     {data.response.tel===undefined
                     ?<>-</>
                     :
@@ -91,8 +177,8 @@ export default function TableRowView({data,key}) {
                             )
                         })
                     }
-                </Table.Cell>
-                <Table.Cell>
+                </Table.Cell> */}
+                {/* <Table.Cell>
                 
                     
                     <Modal
@@ -346,11 +432,9 @@ export default function TableRowView({data,key}) {
                             <br />
                         </Modal.Description>
                     </Modal.Content>
-                    {/* <Modal.Actions>
-                        
-                    </Modal.Actions> */}
+                    
                 </Modal>
-                </Table.Cell>
+                </Table.Cell> */}
         </Table.Row>
 
         </>

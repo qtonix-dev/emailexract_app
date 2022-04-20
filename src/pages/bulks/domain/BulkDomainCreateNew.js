@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Body from '../../../components/Body'
-import { Grid, Button, Form, Loader, Table, Progress } from 'semantic-ui-react'
+import { Grid, Button,Radio, Form, Loader, Table, Progress,Checkbox } from 'semantic-ui-react'
 import { v4 as uuidv4 } from 'uuid';
 import cookie from 'react-cookies'
-import API_BULK_EXTRACT from '../../../api/API_BULK_EXTRACT'
-import { toast } from 'react-toastify';
-import axios from 'axios'
+// import API_BULK_EXTRACT from '../../../api/API_BULK_EXTRACT'
+// import { toast } from 'react-toastify';
+// import axios from 'axios'
 import percentage from 'calculate-percentages'
 import TableRowView from './TableRowView'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel'
+// import ReactHTMLTableToExcel from 'react-html-table-to-excel'
+import API3 from '../../../api/API3';
+import API from '../../../api/API';
+import {navbarProgressInfo} from '../../../actions';
 
 export class BulkDomainCreate extends Component {
 
@@ -19,23 +22,76 @@ export class BulkDomainCreate extends Component {
         this.state={
             loadSubmitButton:false,
             uuid:uuidv4(),
+            maxupload:0,
+            extractleft:0,
+            totalcredits:0,
+            showformbox:false,
             listname:'',
             domains:'',
-            speed:4000,
+            // speed:4000,
             user:cookie.load('qtonixemailextractweb_userdata'),
-            totaldomain:1,
-            counter:0,
+            // totaldomain:1,
+            // counter:0,
             domainextractprocess:'Waiting',
+            // domainextractprocess:'saving',
+
+            totaldomains:0,
             domainCreate:null,
-            currentextractdomainname:false,
-            bulkdomainextratdata:[]
+            datas:[],
+            count:0,
+            // currentextractdomainname:false,
+            // bulkdomainextratdata:[],
+            extractPhone:true,
+            extractSocial:true,
+            extractType:'deep'
+
         }
         this.handleChange=this.handleChange.bind(this)
         this.fetchRecord=this.fetchRecord.bind(this)
-        this.setRecord=this.setRecord.bind(this)
+        // this.setRecord=this.setRecord.bind(this)
+        
     }
 
+    componentDidMount(){
+        this.props.navbarProgressInfo();
+        if(this.props.navbarprogress){
+            this.setState({
+                maxupload:this.props.navbarprogress.packageinfo.bulkuploaddomainatatime,
+                totalcredits:this.props.navbarprogress.packageinfo.totalbuldomainkextract,
+                extractleft:this.props.navbarprogress.packageinfo.totalbuldomainkextract-this.props.navbarprogress.bulk_domain_search,
+                showformbox:true
+            })
+        }else{
+            // console.log(this.props.navbarprogress)
+        }
+        
+    }
 
+    componentWillReceiveProps(props){
+        if(props.navbarprogress){
+            console.log(props.navbarprogress)
+            
+
+            if(props.navbarprogress.packageinfo.bulkuploaddomainatatime<props.navbarprogress.packageinfo.totalbuldomainkextract-props.navbarprogress.bulk_domain_search){
+                this.setState({
+                    maxupload:props.navbarprogress.packageinfo.bulkuploaddomainatatime,
+                    totalcredits:props.navbarprogress.packageinfo.totalbuldomainkextract,
+                    extractleft:props.navbarprogress.packageinfo.totalbuldomainkextract-props.navbarprogress.bulk_domain_search,
+                    showformbox:true
+                })
+            }else{
+                this.setState({
+                    maxupload:props.navbarprogress.packageinfo.totalbuldomainkextract-props.navbarprogress.bulk_domain_search,
+                    totalcredits:props.navbarprogress.packageinfo.totalbuldomainkextract,
+                    extractleft:props.navbarprogress.packageinfo.totalbuldomainkextract-props.navbarprogress.bulk_domain_search,
+                    showformbox:true
+                })
+            }
+
+        }else{
+            // console.log(this.props.navbarprogress)
+        }
+    }
 
     
     handleChange(e){
@@ -46,221 +102,169 @@ export class BulkDomainCreate extends Component {
 
 
     handleSubmit=speeddata=>{
-        this.setState({loadSubmitButton:true})
-        const word = this.state.domains.trim();
+
+
+        var state= this.state;
+
+        console.log(state.extractPhone);
+        console.log(state.extractSocial);
+
+
+        const word = this.state.domains;
         const domains = word.split("\n");
-        const state= this.state;
-           
-    
-            var domainCreate = [];
 
-            
+        var domainCreate = [];
+        domains.forEach(domainFunction);
+        function domainFunction(domainurl, index) {
 
-               
-            domains.forEach(domainFunction);
-            function domainFunction(domainurl) {
+            if(domainurl===''){
 
-               
-            if (/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/.test(domainurl)) {
-
-
-
-
-                 
-    
-                if(domainurl===''){
-    
-                }else{
-                    var data={
-                        domain:domainurl,
-                        uuid:state.uuid,
-                        userid:state.user._id,
-                        username:state.user.name,
-                        useremail:state.user.email,
-                        listname:state.listname,
-                        speed:speeddata
-                    }
-                    domainCreate.push(data);
-                }
-                
-    
-
-                
-            }
-            
-            else {
-                
-                toast.error('invalid domain', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-                
-       
-            }
-
-        }
-
-        if(domainCreate.length>=1){
-            
-        this.setState({loadSubmitButton:true})
-        }
-           else{
-               
-        this.setState({loadSubmitButton:false})
-           }
-
-             //CHECK HOW MANY CREDIT LEFT
-        if(this.props.navbarprogress.packageinfo.totalbuldomainkextract-this.props.navbarprogress.bulk_domain_search<domainCreate.length){
-            toast.warning(`You can't extract more than ${this.props.navbarprogress.packageinfo.totalbuldomainkextract-this.props.navbarprogress.bulk_domain_search}`, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            this.setState({loadSubmitButton:false})
-            
-        }else{
-            // CHECK BULK UPLOAD AT A TIME
-            if(this.props.navbarprogress.packageinfo.bulkuploaddomainatatime<domainCreate.length){
-                toast.warning(`You can't upload more than ${this.props.navbarprogress.packageinfo.bulkuploaddomainatatime}`, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-                this.setState({loadSubmitButton:false})
             }else{
-
-                //====OLD DONT DELETE
-                // API_BULK_EXTRACT.post('/bulkdomainextract/bulkextractbyuser',domainCreate)
-                // .then(response=>{
-                //     if(response.data.response){
-                //         this.props.history.push(`/bulks/domainextract/view/${this.state.uuid}`)
-                //     }else{
-                //         alert('Failed')
-                //     }
-                // })
-
-                // ====OLD DONT DELETE
-                API_BULK_EXTRACT.post('/bulkdomainextract/new/storebulkinfo',domainCreate)
-                .then(response=>{
-                    console.log(response.data)
-                    // if(response.data.response){
-                    //     this.props.history.push(`/bulks/domainextract/view/${this.state.uuid}`)
-                    // }else{
-                    //     alert('Failed')
-                    // }
-                    this.fetchRecord(domainCreate[this.state.counter].domain)
-                    if(response.data.response){
-                            this.setState({
-                            domainCreate:domainCreate,
-                            totaldomain:domainCreate.length,
-                            domainextractprocess:'Processing'
-                        })
-                        
-                    }
-                })
-            }
+                var data={
+                    domain:domainurl
+                }
+                domainCreate.push(data);
+            }            
         }
-            
 
-            
 
+        if(domainCreate.length>this.state.maxupload){
+            alert(`You can't uplaod more than ${this.state.maxupload} domains.`)
+        }else{
+            this.setState({
+                domainCreate:domainCreate,
+                totaldomains:domainCreate.length,
+                domainextractprocess:'processing...'
+            })
+    
+    
+            API3.get(`/extract/${domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
+            .then(response=>{
+              
+                var bulkdomainextratdata = this.state.datas;
+                var msdata= response.data.response;
+                // msdata.uuid=this.state.uuid,
+                // msdata.userid=this.state.userid,
+
+                msdata = { ...msdata, uuid: this.state.uuid ,userid: this.state.user._id};
+
+
+
+                bulkdomainextratdata.push(msdata);
+    
+                this.setState({
+                    count:this.state.count+1,
+                    datas:bulkdomainextratdata,
+                    domainextractprocess:'extracting...'
+                })
+                this.fetchRecord();
+            })
+        }
 
         
-
-
-
-
-
-
-
-    
-
     }
 
 
 
-    setRecord(data){
-        if(this.state.totaldomain===this.state.counter){
-            console.log('Completed')
+    fetchRecord(){
+        
+        if(this.state.totaldomains===this.state.count){
             this.setState({
-                domainextractprocess:'Completed'
+                domainextractprocess:'saving'
             })
+            this.storeRecordinDB();
         }else{
-            this.fetchRecord(this.state.domainCreate[this.state.counter].domain)
+            
+            API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
+            .then(response=>{
+                var bulkdomainextratdata = this.state.datas;
+                var msdata= response.data.response;
+                msdata = { ...msdata, uuid: this.state.uuid ,userid: this.state.user._id};
+                bulkdomainextratdata.push(msdata);
+                this.setState({
+                    count:this.state.count+1,
+                    datas:bulkdomainextratdata
+                })
+                this.fetchRecord();
+            })
         }
     }
 
 
-    
-    storeRecordinDB(data){
 
+    // setRecord(data){
+    //     if(this.state.totaldomain===this.state.counter){
+    //         console.log('Completed');
+    //         this.setState({
+    //             domainextractprocess:'saving'
+    //         })
+    //         this.storeRecordinDB();
+    //     }else{
+    //         this.fetchRecord(this.state.domainCreate[this.state.counter].domain)
+    //     }
+    // }
+
+
+    
+    storeRecordinDB=()=>{
         var tmpData={
-            data,
             uuid:this.state.uuid,
-            userid:this.state.user._id
+            userid:this.state.user._id,
+            listname:this.state.listname,
+            totaldomains:this.state.datas.length,
+            datas:this.state.datas
         }
 
-        API_BULK_EXTRACT.post('/bulkdomainextract/new/storebulksubdatasnew',tmpData)
+        API.post('/bulkdomainextract/storeextractdata',tmpData)
         .then(response=>{
             console.log(response.data)
+            this.props.history.push(`/bulks/domainextract/view/${response.data.data.uuid}`)
+            this.props.navbarProgressInfo();
         })
     }
 
 
 
-    fetchRecord(domain){
-        this.setState({currentextractdomainname:domain})
-        // axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/testdomainextrat/${domain}`,{timeout:7000})
-        axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/extract/${domain}`)
+    // fetchRecord(domain){
+    //     this.setState({currentextractdomainname:domain})
+    //     // axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/testdomainextrat/${domain}`,{timeout:7000})
+    //     axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/extract/${domain}`)
     
 
-        .then(response=>{
-            console.log(response.data)
-            var bulkdomainextratdata = this.state.bulkdomainextratdata;
-            var msdata= response.data;
-            bulkdomainextratdata.push(msdata);
-            this.setState({
-                counter:this.state.counter+1,
-                bulkdomainextratdata
-            })
-            //send data to db
-            this.storeRecordinDB(msdata);
-            this.setRecord()
-        })
-        .catch(err=>{
-            var bulkdomainextratdata = this.state.bulkdomainextratdata;
-            var msdata= {
-                response:false,
-                domain:this.state.currentextractdomainname
-            };
-            //send data to db
-            this.storeRecordinDB(msdata);
-            bulkdomainextratdata.push(msdata);
-            this.setState({
-                counter:this.state.counter+1,
-                bulkdomainextratdata
-            })
-            this.setRecord(err)
-            console.log('err')
-        })
-    }
+    //     .then(response=>{
+    //         console.log(response.data)
+    //         var bulkdomainextratdata = this.state.bulkdomainextratdata;
+    //         var msdata= response.data;
+    //         bulkdomainextratdata.push(msdata);
+    //         this.setState({
+    //             counter:this.state.counter+1,
+    //             bulkdomainextratdata
+    //         })
+    //         //send data to db
+    //         this.storeRecordinDB(msdata);
+    //         this.setRecord()
+    //     })
+    //     .catch(err=>{
+    //         var bulkdomainextratdata = this.state.bulkdomainextratdata;
+    //         var msdata= {
+    //             response:false,
+    //             domain:this.state.currentextractdomainname
+    //         };
+    //         //send data to db
+    //         this.storeRecordinDB(msdata);
+    //         bulkdomainextratdata.push(msdata);
+    //         this.setState({
+    //             counter:this.state.counter+1,
+    //             bulkdomainextratdata
+    //         })
+    //         this.setRecord(err)
+    //         console.log('err')
+    //     })
+    // }
 
 
     render() {
-        // console.log(this.state.counter)
+        
         return (
             <Body>
                 <section>
@@ -274,41 +278,65 @@ export class BulkDomainCreate extends Component {
                             <Grid.Column>
                                 <h3>Bulk Domain Search
 
-                                <ReactHTMLTableToExcel
+                                {/* <ReactHTMLTableToExcel
                                     id="test-table-xls-button"
                                     className="ui button float-right bgmblue text-white"
                                     table="table-to-xls"
                                     filename={'Domains'}
                                     sheet="tablexls"
                                     buttonText="Download as XLS"
-                                />
+                                /> */}
                                 {/* } */}
 
                                 <table id="table-to-xls" style={{display:'none'}}>
                                         <tr>
-                                            <th>Domain</th>
-                                            <th>Emails</th>
+                                        <th>Domain</th>
+                                        <th>Emails</th>
+                                        {this.state.extractPhone
+                                        ?<th>Phone</th>
+                                        :<></>}
+                                        
+                                        {this.state.extractSocial
+                                        ?<></>
+                                        :<>
+                                        <th>GooglePlus</th>
+                                        <th>Facebook</th>
+                                        <th>Twitter</th>
+                                        <th>Instagram</th>
+                                        <th>Pinterest</th>
+                                        <th>LinkedIn</th>
+                                        <th>WhatsApp</th>
+                                        <th>YouTube</th>
+                                        <th>Skype</th>
+                                        </>}
+                                        
                                         </tr>
 
                                         
-                                        {this.state.bulkdomainextratdata.map((data)=>{
+                                        {this.state.datas.map((data)=>{
                                                     return(
-                                                        <tr key={data.response.domain}>
-                                                            <td>{data.response.domain}</td>
-                                                            <td>
-                                                            {data.response.status==='Found'
-                                                                ?
-                                                                    data.response.emails.map((ds)=>{
-                                                                        return(
-                                                                            <>
-                                                                            {ds}, &nbsp;
-                                                                            </>
-                                                                        )
-                                                                    })
-                                                                :
-                                                                <>-</>
-                                                                }
-                                                            </td>
+                                                        <tr key={data.domain}>
+                                                        <td>{data.domain}</td>
+                                                        <td>{data.emails.join(", ")}</td>
+
+                                                        {this.state.extractPhone
+                                                        ?<td>{data.tel.join(", ")}</td>
+                                                        :<></>}
+                                                        {this.state.extractSocial
+                                                        ?
+                                                        <>
+                                                        <td>{data.googleplus.join(", ")}</td>
+                                                        <td>{data.facebook.join(", ")}</td>
+                                                        <td>{data.twitter.join(", ")}</td>
+                                                        <td>{data.instagram.join(", ")}</td>
+                                                        <td>{data.printrest.join(", ")}</td>
+                                                        <td>{data.linkedin.join(", ")}</td>
+                                                        <td>{data.whatsapp.join(", ")}</td>
+                                                        <td>{data.youtube.join(", ")}</td>
+                                                        <td>{data.skype.join(", ")}</td>
+                                                        </>
+                                                        :<></>
+                                                        }
                                                         </tr>
                                                     )
                                         })}
@@ -320,19 +348,58 @@ export class BulkDomainCreate extends Component {
                                 <br />
                                 <br />
                                 <div className="bulkdetailsss">
-                                    <p><b>Total Input Domains:</b> {this.state.totaldomain}</p>
-                                    <p><b>Domain Extracted:</b> {this.state.counter}</p>
+                                    
+                                    <p><b>Maxupload:</b> {this.state.maxupload}</p>
+                                    <p><b>Extract Left:</b> {this.state.extractleft}</p>
+                                    <p><b>Total Credits:</b> {this.state.totalcredits}</p>
+                                    <br/>
+                                    <p><b>Total Input Domains:</b> {this.state.totaldomains}</p>
+                                    <p><b>Domain Extracted:</b> {this.state.count}</p>
                                     <p><b>Status:</b> {this.state.domainextractprocess}</p>
+                                    <br/>
+                                    <p><b>Extract Phone</b> <span className='jhhj8889'> {this.state.extractPhone?<Checkbox slider checked={true} onClick={()=>this.setState({extractPhone:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractPhone:true})} />} </span></p>
+                                    <p><b>Extract Social</b> <span className='jhhj8889'>{this.state.extractSocial?<Checkbox slider checked={true} onClick={()=>this.setState({extractSocial:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractSocial:true})} />}</span></p>
+                                    <Form>
+
+                                    <p><b>Extract Type</b></p><br/>
+                                    <Form.Group inline style={{position:'absolute',marginTop:'-22px'}}>
+                                        
+                                        
+                                        <Form.Field
+                                            control={Radio}
+                                            label='Basic'
+                                            value='1'
+                                            checked={this.state.extractType==='basic'}
+                                            onChange={()=>this.setState({extractType:'basic'})}
+                                        />
+                                        <Form.Field
+                                            control={Radio}
+                                            label='Normal'
+                                            value='2'
+                                            checked={this.state.extractType==='normal'}
+                                            onChange={()=>this.setState({extractType:'normal'})}
+                                        />
+                                        <Form.Field
+                                            control={Radio}
+                                            label='Deep'
+                                            value='3'
+                                            checked={this.state.extractType==='deep'}
+                                            onChange={()=>this.setState({extractType:'deep'})}
+                                        />
+                                        </Form.Group>
+                                        </Form>
+                                    
                                 </div>  
 
 
 
-                                {this.state.domainextractprocess==='Processing'
+                                {this.state.domainextractprocess==='extracting...'
                                 ?
                                 <>
-                                <Progress percent={Math.round(percentage.calculate(this.state.counter, this.state.totaldomain))} progress />
+                                <br /><br />
+                                <Progress percent={Math.round(percentage.calculate(this.state.count, this.state.totaldomains))} indicating />
                                 
-                                <center style={{fontSize:'15px',fontWeight:'600',marginTop:'-29px'}}>{this.state.currentextractdomainname===false?'':<>{this.state.currentextractdomainname}...</> } </center>
+                                {/* <center style={{fontSize:'15px',fontWeight:'600',marginTop:'-29px'}}> {this.state.domainCreate!==null?this.state.domainCreate[0]:<></>}  </center> */}
                                 </>
                                 :<></>
                                 }
@@ -344,12 +411,36 @@ export class BulkDomainCreate extends Component {
                             <Grid.Column>
                                 <Grid columns='equal' className="bulksec">
                                     <Grid.Column>
+                                        {this.state.showformbox
+                                        ?
+                                        
                                         <Form onSubmit={()=>this.handleSubmit(this.props.navbarprogress.packageinfo.mainspeed)}>
                                         <Form.Input label='List name' placeholder='Enter a name' name="listname" onChange={this.handleChange} value={this.state.listname} required />
                                         <Form.TextArea label='Enter the domain names (one per line)' name="domains" onChange={this.handleChange} value={this.state.domains} required placeholder='websiteone.com
 websitetwo.com' />
                                         <Button type='submit' className="float-right bgmblue text-white" loading={this.state.loadSubmitButton}>Submit</Button>
                                         </Form>
+                                        :
+                                        <center>Loading...</center>
+                                        }
+                                    </Grid.Column>
+                                </Grid>
+                            </Grid.Column>
+                            :
+                            <></>}
+
+
+
+                            {this.state.domainextractprocess==='saving'
+                            ?
+                            <Grid.Column>
+                                <Grid columns='equal' className="bulksec">
+                                    <Grid.Column>
+                                        <center>
+                                            <h4>Saving records please wait...</h4>
+                                            <h6>Please don't close this tab</h6>
+
+                                        </center>
                                     </Grid.Column>
                                 </Grid>
                             </Grid.Column>
@@ -362,7 +453,7 @@ websitetwo.com' />
                     <br />
 
                 
-                    {this.state.bulkdomainextratdata.length===0
+                    {this.state.datas.length===0
                     ?
                     <></>
                     :
@@ -372,17 +463,16 @@ websitetwo.com' />
                                         <Table.Header>
                                         <Table.Row>
                                         <Table.HeaderCell>Domain</Table.HeaderCell>
-                                            <Table.HeaderCell>Emails</Table.HeaderCell>
-                                            <Table.HeaderCell>Tel</Table.HeaderCell>
+                                            
                                             <Table.HeaderCell></Table.HeaderCell>
 
                                         </Table.Row>
                                         </Table.Header>
 
                                         <Table.Body>
-                                            {this.state.bulkdomainextratdata.map((data,key)=>{
+                                            {this.state.datas.map((data,key)=>{
                                                 return(
-                                                    <TableRowView data={data} key={key} />
+                                                    <TableRowView data={data} key={key} extractPhone={this.state.extractPhone} extractSocial={this.state.extractSocial} />
                                                 )
                                             })}
                                             
@@ -406,8 +496,4 @@ const mapStateToProps = (state) => ({
     navbarprogress:state.navbarprogress
 })
 
-const mapDispatchToProps = {
-    
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BulkDomainCreate)
+export default connect(mapStateToProps, {navbarProgressInfo})(BulkDomainCreate)

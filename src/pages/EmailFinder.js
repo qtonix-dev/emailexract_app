@@ -9,7 +9,8 @@ import { toast } from 'react-toastify';
 import {navbarProgressInfo} from '../actions';
 import CheckPackageRedirect from '../components/CheckPackageRedirect'
 import ShowQuotaReached from '../components/ShowQuotaReached'
-import axios from 'axios';
+// import axios from 'axios';
+import API2 from '../api/API2';
 
 
 export class EmailFinder extends Component {
@@ -38,7 +39,7 @@ export class EmailFinder extends Component {
 
 
     fetchRecentSearches(){
-        API.get(`emailfinder/recentsearches/${this.state.userid}`)
+        API.get(`/emailfinder/recentsearches/${this.state.userid}`)
         .then(response=>{
             console.log(response.data)
             this.setState({
@@ -78,10 +79,29 @@ export class EmailFinder extends Component {
             userid:this.state.userid
         }
 
-        axios.get(`https://emailextractserver2bulkextract.herokuapp.com/emailverify`,tempdata)
+        API2.post(`/emailfind`,tempdata)
         .then(response=>{
             this.props.navbarProgressInfo();
-            console.log(response)
+            this.fetchRecentSearches();
+            console.log(response.data)
+
+            if(response.data.deliverable){
+                this.setState({
+                showFound:true,
+                showNotFound:false,
+                formLoading:false,
+                data:response.data
+            })
+            }else{
+                this.setState({
+                    showFound:false,
+                    showNotFound:true,
+                    formLoading:false,
+                    data:response.data
+                })
+            }
+            
+            
         })
         .catch(error => {
             this.setState({
@@ -167,10 +187,10 @@ export class EmailFinder extends Component {
                         <Grid>
                             <Grid.Column mobile={16} tablet={16} computer={16}>
                                 <div className="findbyname">
-                                    <h1>{this.state.data.emailaddress} &nbsp; <span><MdVerifiedUser /></span> </h1>
+                                    <h1>{this.state.data.email} &nbsp; <span><MdVerifiedUser /></span> </h1>
                                 </div>   
                             </Grid.Column>
-                            <br />
+                            {/* <br />
                             <Grid.Column mobile={4} tablet={2} computer={2}>
                         
                             <img src={this.state.data.metadata.icon} onError={(e)=>{e.target.onerror = null; e.target.src="https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"}} alt="found" style={{height:'48px',width:'48px'}} />
@@ -181,8 +201,8 @@ export class EmailFinder extends Component {
                                     <h6>{this.state.data.metadata.title}</h6>
                                 </div>
                             </Grid.Column>
-                            <br />
-                            <Grid.Column mobile={16} tablet={16} computer={13}>
+                            <br /> */}
+                            {/* <Grid.Column mobile={16} tablet={16} computer={13}>
                                 <div className="findbyname_links">
                                     <h6>We found {this.state.data.urls.length} email sources</h6>
                                     {this.state.data.urls.map((url)=>{
@@ -195,7 +215,7 @@ export class EmailFinder extends Component {
                                     
 
                                 </div>
-                            </Grid.Column>
+                            </Grid.Column> */}
 
                         </Grid>
                         :<></>}

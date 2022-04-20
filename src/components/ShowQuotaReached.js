@@ -79,9 +79,6 @@ export class ShowQuotaReached extends Component {
                                 {this.props.children}
                                 </>
                                 }
-
-                                
-
                                 </>
                             :<></>
                         }

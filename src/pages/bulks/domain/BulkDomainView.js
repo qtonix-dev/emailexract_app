@@ -17,8 +17,8 @@ import {navbarProgressInfo} from '../../../actions';
 import cookie from 'react-cookies'
 // import _ from 'lodash';
 // import { toast } from 'react-toastify';
-import TableRowViewForView from './TableRowViewForView'
-import API_BULK_EXTRACT_ROUTING from '../../../api/API_BULK_EXTRACT_ROUTING'
+import TableRowView from './TableRowView'
+import API from '../../../api/API'
 
 
 export class BulkDomainView extends Component {
@@ -29,57 +29,25 @@ export class BulkDomainView extends Component {
         this.state={
             pageLoading:true,
             fetching:true,
+            data:null
         }
     }
 
 
     componentDidMount(){
-        API_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
+        API.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
         .then(response=>{
-            this.setState({
-                domainextractinfo:response.data.domainextractinfo,
-                bulkdomainextract:response.data.bulkdomainextract,
-                bulkdomainextractemails:response.data.bulkdomainextractemails,
-                bulkdomainextractcount:response.data.bulkdomainextractcount,
-                userinfo:response.data.userinfo,
-                userpackageinfo:response.data.userpackageinfo,
-                pageLoading:false,
-            })
+            console.log(response.data)
+            if(response.data.response){
+                this.setState({
+                    pageLoading:false,
+                    data:response.data.data
+                })
+            }else{
+                this.props.history.push('/bulks/domainextract')
+            }
         })
-
-
-
-        // set Interval
-        // this.interval = setInterval(this.getCenter, 3000);
     }
-
-
-    // getCenter = () => {
-
-    //     if(window.location.pathname==='/bulks/domainextract/view/'+this.props.match.params.id){
-    //         if(this.state.pageLoading===false){
-    //             if(this.state.bulkdomainextract.length!==this.state.domainextractinfo.totaldomains){
-
-    //                 API_BULK_EXTRACT_ROUTING.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
-    //                 .then(response=>{
-    //                     this.setState({
-    //                         domainextractinfo:response.data.domainextractinfo,
-    //                         bulkdomainextract:response.data.bulkdomainextract,
-    //                         bulkdomainextractemails:response.data.bulkdomainextractemails,
-    //                         bulkdomainextractcount:response.data.bulkdomainextractcount,
-    //                         userinfo:response.data.userinfo,
-    //                         userpackageinfo:response.data.userpackageinfo,
-    //                         pageLoading:false,
-    //                     })
-    //                     // console.log(response.data)
-    //                 })
-
-    //             }
-    //         }
-    //     }
-    // }
-
-
 
 
     render() {
@@ -109,57 +77,65 @@ export class BulkDomainView extends Component {
                         <Grid.Row columns={1}>
                             <Grid.Column>
                                 <h3>
-                                    {this.state.domainextractinfo.listname} 
+                                    {this.state.data.listname} 
                                 
                                    
 
 
-
-                    
-                                {/* EXPORT TO EXCEL */}
-
-                                {/* {this.state.userpackageinfo.name==='Free'
-                                ?<></>
-                                : */}
                                 <ReactHTMLTableToExcel
                                     id="test-table-xls-button"
                                     className="ui button float-right bgmblue text-white"
                                     table="table-to-xls"
-                                    filename={this.state.domainextractinfo.listname}
+                                    filename={'Domains'}
                                     sheet="tablexls"
                                     buttonText="Download as XLS"
                                 />
-                                {/* } */}
 
-                                <table id="table-to-xls" style={{display:'none'}}>
+<table id="table-to-xls" style={{display:'none'}}>
                                         <tr>
-                                            <th>Domain</th>
-                                            <th>Status</th>
-                                            <th>Email</th>
+                                        <th>Domain</th>
+                                        <th>Emails</th>
+                                        <th>Phone</th>
+                                        
+                                        
+                                        <th>GooglePlus</th>
+                                        <th>Facebook</th>
+                                        <th>Twitter</th>
+                                        <th>Instagram</th>
+                                        <th>Pinterest</th>
+                                        <th>LinkedIn</th>
+                                        <th>WhatsApp</th>
+                                        <th>YouTube</th>
+                                        <th>Skype</th>
+                                       
+                                        
                                         </tr>
 
-                                        {this.state.bulkdomainextract.map((dta)=>{
+                                        
+                                        {this.state.data.datas.map((data)=>{
                                                     return(
-                                                        <tr key={dta._id}>
-                                                            <td>{dta.domainname}</td>
-                                                            <td>{dta.domainemails===undefined?'NotFound':'Found'}</td>
-                                                            <td>
-                                                                {dta.domainemails===undefined
-                                                                ?<>-</>
-                                                                :
-                                                                dta.domainemails.length>0
-                                                                    ?
-                                                                    dta.domainemails.map((dt)=>{
-                                                                            return(
-                                                                                <>
-                                                                                {dt},
-                                                                                </>
-                                                                            )
-                                                                        })
-                                                                    :
-                                                                    <>-</>
-                                                                }
-                                                            </td>
+                                                        <tr key={data.domain}>
+                                                        <td>{data.domain}</td>
+                                                        <td>{data.emails.join(", ")}</td>
+
+                                                        {this.state.extractPhone
+                                                        ?<td>{data.tel.join(", ")}</td>
+                                                        :<></>}
+                                                        {this.state.extractSocial
+                                                        ?
+                                                        <>
+                                                        <td>{data.googleplus.join(", ")}</td>
+                                                        <td>{data.facebook.join(", ")}</td>
+                                                        <td>{data.twitter.join(", ")}</td>
+                                                        <td>{data.instagram.join(", ")}</td>
+                                                        <td>{data.printrest.join(", ")}</td>
+                                                        <td>{data.linkedin.join(", ")}</td>
+                                                        <td>{data.whatsapp.join(", ")}</td>
+                                                        <td>{data.youtube.join(", ")}</td>
+                                                        <td>{data.skype.join(", ")}</td>
+                                                        </>
+                                                        :<></>
+                                                        }
                                                         </tr>
                                                     )
                                         })}
@@ -168,7 +144,7 @@ export class BulkDomainView extends Component {
 
 
 
-                                <h6>Bulk created on <Moment format="YYYY-MM-DD dddd  HH:mm:ss">{this.state.domainextractinfo.createdAt}</Moment></h6>
+                                <h6>Bulk extract created on <Moment format="YYYY-MM-DD dddd  HH:mm:ss">{this.state.data.createdAt}</Moment></h6>
                             </Grid.Column>
                             <Grid.Column>
                                 <br />
@@ -181,8 +157,10 @@ export class BulkDomainView extends Component {
 
 
                                         <div className="bulkdetailsss">
-                                            <p><b>Total Domains:</b> {this.state.domainextractinfo.totaldomains}</p>
-                                            <p><b>Total Email Found:</b> {this.state.bulkdomainextractemails.length}</p>
+                                            <p><b>Total Domains:</b> {this.state.data.totaldomains}</p>
+                                            <p><b>Status:</b> Completed</p>
+
+                                            {/* <p><b>Total Email Found:</b> {this.state.bulkdomainextractemails.length}</p> */}
                                             {/* <p><b>Status:</b> {this.state.bulkdomainextract.length===this.state.domainextractinfo.totaldomains?'Success':'Pocessing'}</p> */}
 
 
@@ -214,17 +192,15 @@ export class BulkDomainView extends Component {
                                         <Table.Header>
                                         <Table.Row>
                                         <Table.HeaderCell>Domain</Table.HeaderCell>
-                                            <Table.HeaderCell>Emails</Table.HeaderCell>
-                                            <Table.HeaderCell>Tel</Table.HeaderCell>
                                             <Table.HeaderCell></Table.HeaderCell>
 
                                         </Table.Row>
                                         </Table.Header>
 
                                         <Table.Body>
-                                            {this.state.bulkdomainextract.map((data,key)=>{
+                                            {this.state.data.datas.map((data,key)=>{
                                                 return(
-                                                    <TableRowViewForView data={data} key={key} />
+                                                    <TableRowView data={data} key={key} extractPhone={true} extractSocial={true} />
                                                 )
                                             })}
                                             

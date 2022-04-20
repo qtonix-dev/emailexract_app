@@ -7,11 +7,12 @@ import { toast } from 'react-toastify';
 import ValidEmail from '../components/emailverifier/ValidEmail'
 import InvalidEmail from '../components/emailverifier/InvalidEmail'
 import API from '../api/API'
-import axios from 'axios'
+// import axios from 'axios'
 import cookie from 'react-cookies'
 import {navbarProgressInfo} from '../actions';
 import CheckPackageRedirect from '../components/CheckPackageRedirect'
 import ShowQuotaReached from '../components/ShowQuotaReached'
+import API2 from '../api/API2';
 
 export class EmailVerifier extends Component {
 
@@ -58,21 +59,25 @@ export class EmailVerifier extends Component {
         if(EmailValidator.validate(this.state.email)){
             this.setState({formLoading:true})
             
-            axios.get(`http://localhost:5002/emailverify/${this.state.email}`)
-            .then(response=>{
-                this.fetchRecentSearches();
-                this.props.navbarProgressInfo();
+            var datatemp={
+                email:this.state.email,
+                userid:this.state.userid
+            }
 
-                console.log(response.data)
+            API2.post(`/emailverification`,datatemp)
+            .then(response=>{
+                
+
 
                 if(response.data.deliverable){
-                    
                     this.setState({
                         formLoading:false,
                         isValid:true,
                         isInvalid:false,
                         data:response.data,
                     })
+                    this.fetchRecentSearches();
+                this.props.navbarProgressInfo();
                 }else{
                     this.setState({
                         formLoading:false,
@@ -80,6 +85,8 @@ export class EmailVerifier extends Component {
                         isInvalid:true,
                         data:response.data,
                     })
+                    this.fetchRecentSearches();
+                this.props.navbarProgressInfo();
                 }
             })
             
