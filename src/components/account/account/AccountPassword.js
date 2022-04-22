@@ -29,8 +29,6 @@ export class AccountPassword extends Component {
 
     }
     showHide(e){
-        //e.preventDefault();
-        //e.stopPropagation();
         this.setState({
           type: this.state.type === 'password' ? 'input' : 'password'
         })  
@@ -38,15 +36,11 @@ export class AccountPassword extends Component {
 
 
       showHide1(e){
-        //e.preventDefault();
-        //e.stopPropagation();
         this.setState({
           type1: this.state.type1 === 'password' ? 'input' : 'password'
         })  
       }
       showHide2(e){
-          //e.preventDefault();
-          //e.stopPropagation();
           this.setState({
             type2: this.state.type2 === 'password' ? 'input' : 'password'
           })  
@@ -165,10 +159,23 @@ export class AccountPassword extends Component {
                     <Grid.Column  mobile={16}>
                         
                         <Form success loading={this.state.formLoading} onSubmit={this.handleSubmit}>
-                            <Form.Input  type={this.state.type} label='Old Password' name="oldpassword" icon={<Icon name='eye' onClick={this.showHide} link />}    value={this.state.oldpassword} onChange={this.handleChnage} placeholder='' />  
                            
-                            <Form.Input type={this.state.type1} label='New Password' placeholder='' name="newpassword" value={this.state.newpassword} onChange={this.handleChnage} icon={<Icon name='eye' onClick={this.showHide1} link />} />
-                            <Form.Input type={this.state.type2} label='Reenter New Password' placeholder='' name="reenternewpassword" value={this.state.reenternewpassword} onChange={this.handleChnage} icon={<Icon name='eye' onClick={this.showHide2} link />} />
+                            <Form.Input  type={this.state.type} label='Old Password' name="oldpassword" 
+                            // icon={<Icon name='eye' onClick={this.showHide} link />}  
+                            icon={<Icon name={this.state.type==='password'?'eye slash':'eye'} onClick={this.showHide} link />}  
+                            value={this.state.oldpassword} onChange={this.handleChnage} placeholder='' />  
+                           
+                           
+                            <Form.Input type={this.state.type1} label='New Password' placeholder='' name="newpassword" value={this.state.newpassword} onChange={this.handleChnage} 
+                            // icon={<Icon name='eye' onClick={this.showHide1} link />}
+                            icon={<Icon name={this.state.type1==='password'?'eye slash':'eye'} onClick={this.showHide1} link />}
+                            
+                            />
+                            
+                            <Form.Input type={this.state.type2} label='Reenter New Password' placeholder='' name="reenternewpassword" value={this.state.reenternewpassword} onChange={this.handleChnage} 
+                            icon={<Icon name={this.state.type2==='password'?'eye slash':'eye'} onClick={this.showHide2} link />}
+
+                             />
                                            
 
                             {/* <Message
