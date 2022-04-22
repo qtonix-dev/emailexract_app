@@ -115,27 +115,17 @@ export class BulkDomainView extends Component {
                                         {this.state.data.datas.map((data)=>{
                                                     return(
                                                         <tr key={data.domain}>
-                                                        <td>{data.domain}</td>
-                                                        <td>{data.emails.join(", ")}</td>
-
-                                                        {this.state.extractPhone
-                                                        ?<td>{data.tel.join(", ")}</td>
-                                                        :<></>}
-                                                        {this.state.extractSocial
-                                                        ?
-                                                        <>
-                                                        <td>{data.googleplus.join(", ")}</td>
-                                                        <td>{data.facebook.join(", ")}</td>
-                                                        <td>{data.twitter.join(", ")}</td>
-                                                        <td>{data.instagram.join(", ")}</td>
-                                                        <td>{data.printrest.join(", ")}</td>
-                                                        <td>{data.linkedin.join(", ")}</td>
-                                                        <td>{data.whatsapp.join(", ")}</td>
-                                                        <td>{data.youtube.join(", ")}</td>
-                                                        <td>{data.skype.join(", ")}</td>
-                                                        </>
-                                                        :<></>
-                                                        }
+                                                            <td>{data.domain}</td>
+                                                            <td>{data.emails.join(", ")}</td>
+                                                            <td>{data.googleplus.join(", ")}</td>
+                                                            <td>{data.facebook.join(", ")}</td>
+                                                            <td>{data.twitter.join(", ")}</td>
+                                                            <td>{data.instagram.join(", ")}</td>
+                                                            <td>{data.printrest.join(", ")}</td>
+                                                            <td>{data.linkedin.join(", ")}</td>
+                                                            <td>{data.whatsapp.join(", ")}</td>
+                                                            <td>{data.youtube.join(", ")}</td>
+                                                            <td>{data.skype.join(", ")}</td>
                                                         </tr>
                                                     )
                                         })}

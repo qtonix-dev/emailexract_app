@@ -229,7 +229,7 @@ export class Home extends Component {
                                 <h6>Facebook</h6>
                                 {this.state.datas.datas.facebook.map((data,key)=>{
                                   return(
-                                    <p key={key}>{data}</p>
+                                    <p key={key}> <a href={data} target='_blank' rel="noreferrer">{data}</a>  </p>
                                   )
                                 })}
                                 <br />
@@ -246,7 +246,7 @@ export class Home extends Component {
                                 <h6>Instagram</h6>
                                 {this.state.datas.datas.instagram.map((data,key)=>{
                                   return(
-                                    <p key={key}>{data}</p>
+                                    <p key={key}> <a href={data} target='_blank' rel="noreferrer">{data}</a>  </p>
                                   )
                                 })}
                                 <br />
@@ -262,7 +262,7 @@ export class Home extends Component {
                                   <h6>Twitter</h6>
                                   {this.state.datas.datas.twitter.map((data,key)=>{
                                     return(
-                                      <p key={key}>{data}</p>
+                                      <p key={key}> <a href={data} target='_blank' rel="noreferrer">{data}</a>  </p>
                                     )
                                   })}
                                   <br />
@@ -279,7 +279,7 @@ export class Home extends Component {
                                   <h6>Linkedin</h6>
                                   {this.state.datas.datas.linkedin.map((data,key)=>{
                                     return(
-                                      <p key={key}>{data}</p>
+                                      <p key={key}> <a href={data} target='_blank' rel="noreferrer">{data}</a>  </p>
                                     )
                                   })}
                                   <br />
@@ -296,7 +296,7 @@ export class Home extends Component {
                                 <h6>YouTube</h6>
                                 {this.state.datas.datas.youtube.map((data,key)=>{
                                   return(
-                                    <p key={key}>{data}</p>
+                                    <p key={key}> <a href={data} target='_blank' rel="noreferrer">{data}</a>  </p>
                                   )
                                 })}
                                 <br />
@@ -313,7 +313,7 @@ export class Home extends Component {
                                 <h6>WhatsApp</h6>
                                 {this.state.datas.datas.whatsapp.map((data,key)=>{
                                   return(
-                                    <p key={key}>{data}</p>
+                                    <p key={key}> <a href={data} target='_blank' rel="noreferrer">{data}</a>  </p>
                                   )
                                 })}
                                 <br />
@@ -330,7 +330,7 @@ export class Home extends Component {
                                 <h6>Pintrest</h6>
                                 {this.state.datas.datas.printrest.map((data,key)=>{
                                   return(
-                                    <p key={key}>{data}</p>
+                                    <p key={key}> <a href={data} target='_blank' rel="noreferrer">{data}</a>  </p>
                                   )
                                 })}
                                 <br />
@@ -346,7 +346,7 @@ export class Home extends Component {
                                 <h6>Skype</h6>
                                 {this.state.datas.datas.skype.map((data,key)=>{
                                   return(
-                                    <p key={key}>{data}</p>
+                                    <p key={key}> <a href={data} target='_blank' rel="noreferrer">{data}</a>  </p>
                                   )
                                 })}
                               </div>
@@ -362,7 +362,7 @@ export class Home extends Component {
                               <h6>GooglePlus</h6>
                               {this.state.datas.datas.googleplus.map((data,key)=>{
                                 return(
-                                  <p key={key}>{data}</p>
+                                  <p key={key}> <a href={data} target='_blank' rel="noreferrer">{data}</a>  </p>
                                 )
                               })}
                               <br />
