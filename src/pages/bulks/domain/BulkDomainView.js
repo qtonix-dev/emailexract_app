@@ -19,7 +19,7 @@ import cookie from 'react-cookies'
 // import { toast } from 'react-toastify';
 import TableRowView from './TableRowView'
 import API from '../../../api/API'
-
+import _ from 'lodash'
 
 export class BulkDomainView extends Component {
 
@@ -188,7 +188,8 @@ export class BulkDomainView extends Component {
                                         </Table.Header>
 
                                         <Table.Body>
-                                            {this.state.data.datas.map((data,key)=>{
+                                        
+                                            {_.uniqBy(this.state.data.datas, 'domain').map((data,key)=>{
                                                 return(
                                                     <TableRowView data={data} key={key} extractPhone={true} extractSocial={true} />
                                                 )

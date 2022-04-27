@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 import cookie from 'react-cookies'
 import {setUserDetails,navbarProgressInfo} from '../actions'
 import Loader from "react-loader-spinner";
-import { Offline, Online } from "react-detect-offline";
+// import { Offline, Online } from "react-detect-offline";
 
 
 
@@ -45,10 +45,10 @@ export class Body extends Component {
                 <Container>
                 
                 <br />
-                <Online>
+                {/* <Online> */}
                 {this.props.children}
 
-                </Online>
+                {/* </Online>
                 <Offline>
                     <center>
                     <img src="/images/im-offline-right-now.jpg" alt="nointernet" />
@@ -56,7 +56,7 @@ export class Body extends Component {
                     Please check your internet connection
                     </h2>
                     </center>
-                </Offline>
+                </Offline> */}
 
 
                 </Container>

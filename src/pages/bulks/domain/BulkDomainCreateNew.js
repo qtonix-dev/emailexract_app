@@ -13,6 +13,8 @@ import TableRowView from './TableRowView'
 import API3 from '../../../api/API3';
 import API from '../../../api/API';
 import {navbarProgressInfo} from '../../../actions';
+// import _ from 'lodash'
+
 
 export class BulkDomainCreate extends Component {
 
@@ -158,6 +160,10 @@ export class BulkDomainCreate extends Component {
                     domainextractprocess:'extracting...'
                 })
                 this.fetchRecord();
+                this.fetchRecord();
+                this.fetchRecord();
+                this.fetchRecord();
+
             })
         }
 
@@ -174,19 +180,30 @@ export class BulkDomainCreate extends Component {
             })
             this.storeRecordinDB();
         }else{
-            
+
             API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
             .then(response=>{
                 var bulkdomainextratdata = this.state.datas;
-                var msdata= response.data.response;
-                msdata = { ...msdata, uuid: this.state.uuid ,userid: this.state.user._id};
-                bulkdomainextratdata.push(msdata);
-                this.setState({
-                    count:this.state.count+1,
-                    datas:bulkdomainextratdata
-                })
-                this.fetchRecord();
+                // var msdata= response.data.response;
+
+                // let filtered_array = _.find(bulkdomainextratdata, ['domain', response.data.response.domain]);
+
+                // if(filtered_array===undefined){
+                    // msdata = ;
+                    bulkdomainextratdata.push({ ...response.data.response, uuid: this.state.uuid ,userid: this.state.user._id});
+                    this.setState({
+                        count:this.state.count+1,
+                        datas:bulkdomainextratdata
+                    })
+                    this.fetchRecord();
+                // }else{
+                //     this.fetchRecord();
+                // }
+
+            
             })
+
+            
         }
     }
 
@@ -264,6 +281,9 @@ export class BulkDomainCreate extends Component {
 
 
     render() {
+
+
+  console.log(this.state.datas)
         
         return (
             <Body>
@@ -313,9 +333,9 @@ export class BulkDomainCreate extends Component {
                                         </tr>
 
                                         
-                                        {this.state.datas.map((data)=>{
+                                        {this.state.datas.map((data,key)=>{
                                                     return(
-                                                        <tr key={data.domain}>
+                                                        <tr key={key}>
                                                         <td>{data.domain}</td>
                                                         <td>{data.emails.join(", ")}</td>
 
