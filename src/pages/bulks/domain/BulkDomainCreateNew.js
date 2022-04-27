@@ -13,7 +13,7 @@ import TableRowView from './TableRowView'
 import API3 from '../../../api/API3';
 import API from '../../../api/API';
 import {navbarProgressInfo} from '../../../actions';
-// import _ from 'lodash'
+import _ from 'lodash'
 
 
 export class BulkDomainCreate extends Component {
@@ -174,7 +174,7 @@ export class BulkDomainCreate extends Component {
 
     fetchRecord(){
         
-        if(this.state.totaldomains===this.state.count){
+        if(this.state.totaldomains===_.uniqBy(this.state.datas, 'domain').length){
             this.setState({
                 domainextractprocess:'saving'
             })
@@ -183,7 +183,7 @@ export class BulkDomainCreate extends Component {
 
             API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
             .then(response=>{
-                var bulkdomainextratdata = this.state.datas;
+                var bulkdomainextratdata = _.uniqBy(this.state.datas, 'domain');
                 // var msdata= response.data.response;
 
                 // let filtered_array = _.find(bulkdomainextratdata, ['domain', response.data.response.domain]);
@@ -209,6 +209,43 @@ export class BulkDomainCreate extends Component {
 
 
 
+    //****** ==== BACKUP ==== ******//
+    // fetchRecord(){
+        
+    //     if(this.state.totaldomains===this.state.count){
+    //         this.setState({
+    //             domainextractprocess:'saving'
+    //         })
+    //         this.storeRecordinDB();
+    //     }else{
+
+    //         API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
+    //         .then(response=>{
+    //             var bulkdomainextratdata = this.state.datas;
+    //             // var msdata= response.data.response;
+
+    //             // let filtered_array = _.find(bulkdomainextratdata, ['domain', response.data.response.domain]);
+
+    //             // if(filtered_array===undefined){
+    //                 // msdata = ;
+    //                 bulkdomainextratdata.push({ ...response.data.response, uuid: this.state.uuid ,userid: this.state.user._id});
+    //                 this.setState({
+    //                     count:this.state.count+1,
+    //                     datas:bulkdomainextratdata
+    //                 })
+    //                 this.fetchRecord();
+    //             // }else{
+    //             //     this.fetchRecord();
+    //             // }
+
+            
+    //         })
+
+            
+    //     }
+    // }
+
+
     // setRecord(data){
     //     if(this.state.totaldomain===this.state.counter){
     //         console.log('Completed');
@@ -228,8 +265,8 @@ export class BulkDomainCreate extends Component {
             uuid:this.state.uuid,
             userid:this.state.user._id,
             listname:this.state.listname,
-            totaldomains:this.state.datas.length,
-            datas:this.state.datas
+            totaldomains:_.uniqBy(this.state.datas, 'domain').length,
+            datas:_.uniqBy(this.state.datas, 'domain')
         }
 
         API.post('/bulkdomainextract/storeextractdata',tmpData)
@@ -283,7 +320,9 @@ export class BulkDomainCreate extends Component {
     render() {
 
 
-  console.log(this.state.datas)
+  console.log(this.state.totaldomains);
+  console.log(_.uniqBy(this.state.datas, 'domain'));
+
         
         return (
             <Body>
@@ -490,7 +529,7 @@ websitetwo.com' />
                                         </Table.Header>
 
                                         <Table.Body>
-                                            {this.state.datas.map((data,key)=>{
+                                            {_.uniqBy(this.state.datas, 'domain').map((data,key)=>{
                                                 return(
                                                     <TableRowView data={data} key={key} extractPhone={this.state.extractPhone} extractSocial={this.state.extractSocial} />
                                                 )
