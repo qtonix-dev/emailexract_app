@@ -110,6 +110,15 @@ export class BulkDomainCreate extends Component {
 
 
     handleSubmit=speeddata=>{
+        this.handleSubmitTwo();
+        setTimeout( function() { this.handleSubmitTwo(); }, 500);
+        setTimeout( function() { this.handleSubmitTwo(); }, 700);
+        setTimeout( function() { this.handleSubmitTwo(); }, 1000);
+        setTimeout( function() { this.handleSubmitTwo(); }, 1200);
+    }
+
+
+    handleSubmitTwo=speeddata=>{
 
 
         var state= this.state;
