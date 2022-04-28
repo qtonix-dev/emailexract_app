@@ -166,21 +166,22 @@ export class BulkDomainCreate extends Component {
                     domainextractprocess:'extracting...'
                 })
 
-                if(this.state.displayspeed===1){
-                    this.fetchRecord();
+                // if(this.state.displayspeed===1){
+                //     this.fetchRecord();
 
-                }
-                if(this.state.displayspeed===2){
-                    this.fetchRecord();
-                    this.fetchRecord();
+                // }
+                // if(this.state.displayspeed===2){
+                //     this.fetchRecord();
+                //     this.fetchRecord();
 
-                }
-                if(this.state.displayspeed===3){
-                    this.fetchRecord();
-                    this.fetchRecord();
-                    this.fetchRecord();
-                    this.fetchRecord();
-                }
+                // }
+                // if(this.state.displayspeed===3){
+                //     this.fetchRecord();
+                //     this.fetchRecord();
+                //     this.fetchRecord();
+                //     this.fetchRecord();
+                // }
+                this.fetchRecord();
                 
 
             }).catch(err=>{
