@@ -146,7 +146,7 @@ export class BulkDomainCreate extends Component {
             })
     
     
-            API3.get(`/extract/${domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
+            API3.get(`/extract/${domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, { timeout: 10000 })
             .then(response=>{
               
                 var bulkdomainextratdata = this.state.datas;
@@ -183,6 +183,50 @@ export class BulkDomainCreate extends Component {
                 }
                 
 
+            }).catch(err=>{
+
+                var bulkdomainextratdata =this.state.datas;
+
+                var msdata= {
+                    response: true,
+                    domain: domainCreate[this.state.count].domain,
+                    status: "Not Found",
+                    emails: [ ],
+                    tel: [ ],
+                    facebook: [ ],
+                    instagram: [ ],
+                    twitter: [ ],
+                    linkedin: [ ],
+                    googleplus: [ ],
+                    youtube: [ ],
+                    whatsapp: [ ],
+                    printrest: [ ],
+                    skype: [ ]
+                }
+                
+                    bulkdomainextratdata.push({ ...msdata, uuid: this.state.uuid ,userid: this.state.user._id});
+                    this.setState({
+                        count:this.state.count+1,
+                        datas:bulkdomainextratdata
+                    })
+                    
+
+                    if(this.state.displayspeed===1){
+                        this.fetchRecord();
+    
+                    }
+                    if(this.state.displayspeed===2){
+                        this.fetchRecord();
+                        this.fetchRecord();
+    
+                    }
+                    if(this.state.displayspeed===3){
+                        this.fetchRecord();
+                        this.fetchRecord();
+                        this.fetchRecord();
+                        this.fetchRecord();
+                    }
+    
             })
         }
 
@@ -200,7 +244,7 @@ export class BulkDomainCreate extends Component {
             this.storeRecordinDB();
         }else{
 
-            API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
+            API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, { timeout: 10000 })
             .then(response=>{
                 var bulkdomainextratdata = _.uniqBy(this.state.datas, 'domain');
                 // var msdata= response.data.response;
@@ -220,6 +264,34 @@ export class BulkDomainCreate extends Component {
                 // }
 
             
+            }).catch(err=>{
+
+                var bulkdomainextratdata = _.uniqBy(this.state.datas, 'domain');
+
+                var msdata= {
+                    response: true,
+                    domain: this.state.domainCreate[this.state.count].domain,
+                    status: "Not Found",
+                    emails: [ ],
+                    tel: [ ],
+                    facebook: [ ],
+                    instagram: [ ],
+                    twitter: [ ],
+                    linkedin: [ ],
+                    googleplus: [ ],
+                    youtube: [ ],
+                    whatsapp: [ ],
+                    printrest: [ ],
+                    skype: [ ]
+                }
+                
+                    bulkdomainextratdata.push({ ...msdata, uuid: this.state.uuid ,userid: this.state.user._id});
+                    this.setState({
+                        count:this.state.count+1,
+                        datas:bulkdomainextratdata
+                    })
+                    this.fetchRecord();
+    
             })
 
             
