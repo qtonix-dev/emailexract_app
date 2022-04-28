@@ -146,7 +146,7 @@ export class BulkDomainCreate extends Component {
             })
     
     
-            API3.get(`/extract/${domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, { timeout: 10000 })
+            API3.get(`/extract/${domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, { timeout: 20000 })
             .then(response=>{
               
                 var bulkdomainextratdata = this.state.datas;
@@ -209,23 +209,26 @@ export class BulkDomainCreate extends Component {
                         count:this.state.count+1,
                         datas:bulkdomainextratdata
                     })
+
+                        this.fetchRecord();
+                    
                     
 
-                    if(this.state.displayspeed===1){
-                        this.fetchRecord();
+                    // if(this.state.displayspeed===1){
+                    //     this.fetchRecord();
     
-                    }
-                    if(this.state.displayspeed===2){
-                        this.fetchRecord();
-                        this.fetchRecord();
+                    // }
+                    // if(this.state.displayspeed===2){
+                    //     this.fetchRecord();
+                    //     this.fetchRecord();
     
-                    }
-                    if(this.state.displayspeed===3){
-                        this.fetchRecord();
-                        this.fetchRecord();
-                        this.fetchRecord();
-                        this.fetchRecord();
-                    }
+                    // }
+                    // if(this.state.displayspeed===3){
+                    //     this.fetchRecord();
+                    //     this.fetchRecord();
+                    //     this.fetchRecord();
+                    //     this.fetchRecord();
+                    // }
     
             })
         }
@@ -244,7 +247,7 @@ export class BulkDomainCreate extends Component {
             this.storeRecordinDB();
         }else{
 
-            API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, { timeout: 10000 })
+            API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, { timeout: 20000 })
             .then(response=>{
                 var bulkdomainextratdata = _.uniqBy(this.state.datas, 'domain');
                 // var msdata= response.data.response;
@@ -299,58 +302,6 @@ export class BulkDomainCreate extends Component {
     }
 
 
-
-    //****** ==== BACKUP ==== ******//
-    // fetchRecord(){
-        
-    //     if(this.state.totaldomains===this.state.count){
-    //         this.setState({
-    //             domainextractprocess:'saving'
-    //         })
-    //         this.storeRecordinDB();
-    //     }else{
-
-    //         API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
-    //         .then(response=>{
-    //             var bulkdomainextratdata = this.state.datas;
-    //             // var msdata= response.data.response;
-
-    //             // let filtered_array = _.find(bulkdomainextratdata, ['domain', response.data.response.domain]);
-
-    //             // if(filtered_array===undefined){
-    //                 // msdata = ;
-    //                 bulkdomainextratdata.push({ ...response.data.response, uuid: this.state.uuid ,userid: this.state.user._id});
-    //                 this.setState({
-    //                     count:this.state.count+1,
-    //                     datas:bulkdomainextratdata
-    //                 })
-    //                 this.fetchRecord();
-    //             // }else{
-    //             //     this.fetchRecord();
-    //             // }
-
-            
-    //         })
-
-            
-    //     }
-    // }
-
-
-    // setRecord(data){
-    //     if(this.state.totaldomain===this.state.counter){
-    //         console.log('Completed');
-    //         this.setState({
-    //             domainextractprocess:'saving'
-    //         })
-    //         this.storeRecordinDB();
-    //     }else{
-    //         this.fetchRecord(this.state.domainCreate[this.state.counter].domain)
-    //     }
-    // }
-
-
-    
     storeRecordinDB=()=>{
         var tmpData={
             uuid:this.state.uuid,
@@ -367,46 +318,6 @@ export class BulkDomainCreate extends Component {
             this.props.navbarProgressInfo();
         })
     }
-
-
-
-    // fetchRecord(domain){
-    //     this.setState({currentextractdomainname:domain})
-    //     // axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/api/bulkdomainextract/testdomainextrat/${domain}`,{timeout:7000})
-    //     axios.get(`https://emailextractserver2bulkgetinfo.herokuapp.com/extract/${domain}`)
-    
-
-    //     .then(response=>{
-    //         console.log(response.data)
-    //         var bulkdomainextratdata = this.state.bulkdomainextratdata;
-    //         var msdata= response.data;
-    //         bulkdomainextratdata.push(msdata);
-    //         this.setState({
-    //             counter:this.state.counter+1,
-    //             bulkdomainextratdata
-    //         })
-    //         //send data to db
-    //         this.storeRecordinDB(msdata);
-    //         this.setRecord()
-    //     })
-    //     .catch(err=>{
-    //         var bulkdomainextratdata = this.state.bulkdomainextratdata;
-    //         var msdata= {
-    //             response:false,
-    //             domain:this.state.currentextractdomainname
-    //         };
-    //         //send data to db
-    //         this.storeRecordinDB(msdata);
-    //         bulkdomainextratdata.push(msdata);
-    //         this.setState({
-    //             counter:this.state.counter+1,
-    //             bulkdomainextratdata
-    //         })
-    //         this.setRecord(err)
-    //         console.log('err')
-    //     })
-    // }
-
 
     render() {
 
@@ -584,8 +495,8 @@ export class BulkDomainCreate extends Component {
                                 
 
                             </Grid.Column>
-                            {this.state.domainextractprocess==='Waiting'
-                            ?
+                            {/* {this.state.domainextractprocess==='Waiting'
+                            ? */}
                             <Grid.Column>
                                 <Grid columns='equal' className="bulksec">
                                     <Grid.Column>
@@ -604,8 +515,9 @@ websitetwo.com' />
                                     </Grid.Column>
                                 </Grid>
                             </Grid.Column>
-                            :
-                            <></>}
+                            {/* // :
+                            // <></>
+                            // } */}
 
 
 
