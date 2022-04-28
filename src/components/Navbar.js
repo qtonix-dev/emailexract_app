@@ -123,7 +123,11 @@ export class Navbar extends Component {
                                                 <br /><Line percent={percentage.calculate(this.props.navbarprogress.email_verification, this.props.navbarprogress.packageinfo.totalemailverification)} strokeWidth="3" strokeColor="#0495fd" />
                                                 <br />
 
-                                                <h6>Bulk Domain Extract <span className="float-right">{this.props.navbarprogress.bulk_domain_search} / {this.props.navbarprogress.packageinfo.totalbuldomainkextract}</span></h6>
+                                                {this.props.navbarprogress.packageinfo.totalbuldomainkextract===123456789
+                                                ?<h6>Bulk Domain Extract <span className="float-right"> Unlimited</span></h6>
+                                                :<h6>Bulk Domain Extract <span className="float-right">{this.props.navbarprogress.bulk_domain_search} / {this.props.navbarprogress.packageinfo.totalbuldomainkextract}</span></h6>
+                                                }
+                                                
                                                
                                                 <br /><Line percent={percentage.calculate(this.props.navbarprogress.bulk_domain_search, this.props.navbarprogress.packageinfo.totalbuldomainkextract)} strokeWidth="3" strokeColor="#0495fd" />
                                                 <br />

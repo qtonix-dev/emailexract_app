@@ -10,9 +10,9 @@ export default function TableRowView({data,key,extractPhone,extractSocial}) {
     return (
         <>
         <Table.Row>
-                <Table.Cell> {key} {data.domain}</Table.Cell>
+                <Table.Cell> <b>{data.domain}</b></Table.Cell>
 
-                {/* <Table.Cell> 
+                <Table.Cell style={{textTransform:'lowercase'}}> 
                 {data.emails.length===0
                                     ?<>-</>
                                     :
@@ -29,7 +29,7 @@ export default function TableRowView({data,key,extractPhone,extractSocial}) {
                                     </>
                                     }
 
-                </Table.Cell> */}
+                </Table.Cell>
                 <Table.Cell >
                     <div style={{float:'right'}}>
                     {data.emails.length > 0 ? (

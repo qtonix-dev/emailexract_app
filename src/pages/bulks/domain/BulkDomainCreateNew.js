@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Body from '../../../components/Body'
-import { Grid, Button,Radio, Form, Loader, Table, Progress,Checkbox } from 'semantic-ui-react'
+import { Grid, Button,Radio, Form, Loader, Table, Progress,Checkbox, Modal, Icon } from 'semantic-ui-react'
 import { v4 as uuidv4 } from 'uuid';
 import cookie from 'react-cookies'
 // import API_BULK_EXTRACT from '../../../api/API_BULK_EXTRACT'
@@ -22,6 +22,7 @@ export class BulkDomainCreate extends Component {
     constructor(props){
         super(props)
         this.state={
+            modalStatus:false,
             loadSubmitButton:false,
             uuid:uuidv4(),
             maxupload:0,
@@ -45,7 +46,8 @@ export class BulkDomainCreate extends Component {
             // bulkdomainextratdata:[],
             extractPhone:true,
             extractSocial:true,
-            extractType:'deep'
+            extractType:'deep',
+            displayspeed:0
 
         }
         this.handleChange=this.handleChange.bind(this)
@@ -60,9 +62,11 @@ export class BulkDomainCreate extends Component {
             this.setState({
                 maxupload:this.props.navbarprogress.packageinfo.bulkuploaddomainatatime,
                 totalcredits:this.props.navbarprogress.packageinfo.totalbuldomainkextract,
+                displayspeed:this.props.navbarprogress.packageinfo.displayspeed,
                 extractleft:this.props.navbarprogress.packageinfo.totalbuldomainkextract-this.props.navbarprogress.bulk_domain_search,
                 showformbox:true
             })
+            console.log(this.props.navbarprogress.packageinfo)
         }else{
             // console.log(this.props.navbarprogress)
         }
@@ -78,12 +82,14 @@ export class BulkDomainCreate extends Component {
                 this.setState({
                     maxupload:props.navbarprogress.packageinfo.bulkuploaddomainatatime,
                     totalcredits:props.navbarprogress.packageinfo.totalbuldomainkextract,
+                    displayspeed:props.navbarprogress.packageinfo.displayspeed,
                     extractleft:props.navbarprogress.packageinfo.totalbuldomainkextract-props.navbarprogress.bulk_domain_search,
                     showformbox:true
                 })
             }else{
                 this.setState({
                     maxupload:props.navbarprogress.packageinfo.totalbuldomainkextract-props.navbarprogress.bulk_domain_search,
+                    displayspeed:props.navbarprogress.packageinfo.displayspeed,
                     totalcredits:props.navbarprogress.packageinfo.totalbuldomainkextract,
                     extractleft:props.navbarprogress.packageinfo.totalbuldomainkextract-props.navbarprogress.bulk_domain_search,
                     showformbox:true
@@ -159,10 +165,23 @@ export class BulkDomainCreate extends Component {
                     datas:bulkdomainextratdata,
                     domainextractprocess:'extracting...'
                 })
-                this.fetchRecord();
-                this.fetchRecord();
-                this.fetchRecord();
-                this.fetchRecord();
+
+                if(this.state.displayspeed===1){
+                    this.fetchRecord();
+
+                }
+                if(this.state.displayspeed===2){
+                    this.fetchRecord();
+                    this.fetchRecord();
+
+                }
+                if(this.state.displayspeed===3){
+                    this.fetchRecord();
+                    this.fetchRecord();
+                    this.fetchRecord();
+                    this.fetchRecord();
+                }
+                
 
             })
         }
@@ -320,8 +339,7 @@ export class BulkDomainCreate extends Component {
     render() {
 
 
-  console.log(this.state.totaldomains);
-  console.log(_.uniqBy(this.state.datas, 'domain'));
+  console.log(this.state.displayspeed);
 
         
         return (
@@ -409,44 +427,67 @@ export class BulkDomainCreate extends Component {
                                 <div className="bulkdetailsss">
                                     
                                     <p><b>Maxupload:</b> {this.state.maxupload}</p>
-                                    <p><b>Extract Left:</b> {this.state.extractleft}</p>
-                                    <p><b>Total Credits:</b> {this.state.totalcredits}</p>
+                                    <p><b>Extract Left:</b> {this.state.totalcredits===123456789?'Unlimited':this.state.extractleft}</p>
+                                    {/* <p><b>Total Credits:</b> {this.state.totalcredits}</p> */}
                                     <br/>
                                     <p><b>Total Input Domains:</b> {this.state.totaldomains}</p>
-                                    <p><b>Domain Extracted:</b> {this.state.count}</p>
-                                    <p><b>Status:</b> {this.state.domainextractprocess}</p>
-                                    <br/>
-                                    <p><b>Extract Phone</b> <span className='jhhj8889'> {this.state.extractPhone?<Checkbox slider checked={true} onClick={()=>this.setState({extractPhone:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractPhone:true})} />} </span></p>
-                                    <p><b>Extract Social</b> <span className='jhhj8889'>{this.state.extractSocial?<Checkbox slider checked={true} onClick={()=>this.setState({extractSocial:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractSocial:true})} />}</span></p>
-                                    <Form>
+                                    <p><b>Domain Extracted:</b> {_.uniqBy(this.state.datas, 'domain').length}</p>
+                                    
+                                    <p><b>Speed:</b> {this.state.displayspeed}x</p>
 
-                                    <p><b>Extract Type</b></p><br/>
-                                    <Form.Group inline style={{position:'absolute',marginTop:'-22px'}}>
+                                    
+
+                                    {/* <p><b>Domain Extracted:</b> {_.uniqBy(this.state.datas, 'domain')}</p> */}
+
+                                    <p><b>Status:</b> {this.state.domainextractprocess}</p>
+
+                                    <Modal
+                                        onClose={() => this.setState({modalStatus:false})}
+                                        onOpen={() => this.setState({modalStatus:true})}
+                                        open={this.state.modalStatus}
+                                        trigger={<Button><Icon disabled name='settings' /> Advanced</Button>}
+                                        size={'mini'}
+                                        >
+                                        <Modal.Header>Advanced Settings</Modal.Header>
+                                        <Modal.Content >
+                                            
+                                            <Modal.Description>
+                                            
+                                            <p><b>Extract Phone</b> <span className='jhhj8889'> {this.state.extractPhone?<Checkbox slider checked={true} onClick={()=>this.setState({extractPhone:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractPhone:true})} />} </span></p>
+                                                                        <p><b>Extract Social</b> <span className='jhhj8889'>{this.state.extractSocial?<Checkbox slider checked={true} onClick={()=>this.setState({extractSocial:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractSocial:true})} />}</span></p>
+                                                                        <Form>
+
+                                                                        <p><b>Extract Type</b></p><br/>
+                                                                        <Form.Group inline style={{position:'absolute',marginTop:'-22px'}}>
+                                                                            
+                                                                            
+                                                                            <Form.Field
+                                                                                control={Radio}
+                                                                                label='Basic'
+                                                                                value='1'
+                                                                                checked={this.state.extractType==='basic'}
+                                                                                onChange={()=>this.setState({extractType:'basic'})}
+                                                                            />
+                                                                            <Form.Field
+                                                                                control={Radio}
+                                                                                label='Normal'
+                                                                                value='2'
+                                                                                checked={this.state.extractType==='normal'}
+                                                                                onChange={()=>this.setState({extractType:'normal'})}
+                                                                            />
+                                                                            <Form.Field
+                                                                                control={Radio}
+                                                                                label='Deep'
+                                                                                value='3'
+                                                                                checked={this.state.extractType==='deep'}
+                                                                                onChange={()=>this.setState({extractType:'deep'})}
+                                                                            />
+                                                                            </Form.Group>
+                                                                            </Form>
+                                            </Modal.Description>
+                                        </Modal.Content>
                                         
-                                        
-                                        <Form.Field
-                                            control={Radio}
-                                            label='Basic'
-                                            value='1'
-                                            checked={this.state.extractType==='basic'}
-                                            onChange={()=>this.setState({extractType:'basic'})}
-                                        />
-                                        <Form.Field
-                                            control={Radio}
-                                            label='Normal'
-                                            value='2'
-                                            checked={this.state.extractType==='normal'}
-                                            onChange={()=>this.setState({extractType:'normal'})}
-                                        />
-                                        <Form.Field
-                                            control={Radio}
-                                            label='Deep'
-                                            value='3'
-                                            checked={this.state.extractType==='deep'}
-                                            onChange={()=>this.setState({extractType:'deep'})}
-                                        />
-                                        </Form.Group>
-                                        </Form>
+                                        </Modal>
                                     
                                 </div>  
 
@@ -456,12 +497,18 @@ export class BulkDomainCreate extends Component {
                                 ?
                                 <>
                                 <br /><br />
-                                <Progress percent={Math.round(percentage.calculate(this.state.count, this.state.totaldomains))} indicating />
+                                <Progress percent={Math.round(percentage.calculate(_.uniqBy(this.state.datas, 'domain').length, this.state.totaldomains))} indicating />
                                 
                                 {/* <center style={{fontSize:'15px',fontWeight:'600',marginTop:'-29px'}}> {this.state.domainCreate!==null?this.state.domainCreate[0]:<></>}  </center> */}
                                 </>
                                 :<></>
                                 }
+
+
+
+
+
+
                                 
 
                             </Grid.Column>
@@ -505,6 +552,27 @@ websitetwo.com' />
                             </Grid.Column>
                             :
                             <></>}
+
+
+                            {this.state.domainextractprocess==='processing...'
+                            ?
+                            <Grid.Column>
+                                <Grid columns='equal' className="bulksec">
+                                    <Grid.Column>
+                                        <center>
+                                            <h4>Processing please wait...</h4>
+                                        </center>
+                                    </Grid.Column>
+                                </Grid>
+                            </Grid.Column>
+                            :
+                            <></>}
+
+
+
+
+
+
                             
                         </Grid.Row>
                     </Grid>
@@ -524,6 +592,8 @@ websitetwo.com' />
                                         <Table.HeaderCell>Domain</Table.HeaderCell>
                                             
                                             <Table.HeaderCell></Table.HeaderCell>
+                                            <Table.HeaderCell></Table.HeaderCell>
+
 
                                         </Table.Row>
                                         </Table.Header>
@@ -543,6 +613,17 @@ websitetwo.com' />
                     
                     </>
                     }
+
+
+
+
+
+
+
+
+
+
+
                     
                     </div>
                 </section>

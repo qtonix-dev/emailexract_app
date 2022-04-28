@@ -107,8 +107,24 @@ export const AccountUsage = (props) => {
                                             </List.Item>
                                             <List.Item>
                                                 <List.Content>
-                                                    <p className="chartbox_listtext">Bulk Domain Extract <span className="float-right">{props.navbarprogress.bulk_domain_search}/{props.navbarprogress.packageinfo.totalbuldomainkextract} &nbsp;&nbsp; 
+
+
+
+
+                                                    <p className="chartbox_listtext">Bulk Domain Extract 
+                                                    
+                                                    <span className="float-right"> 
+                                                    
+                                                    
+                                                    {props.navbarprogress.packageinfo.totalbuldomainkextract===123456789
+                                                    ?<>Unlimited</>
+                                                    :<>{props.navbarprogress.bulk_domain_search}/{props.navbarprogress.packageinfo.totalbuldomainkextract} &nbsp;&nbsp;</>
+                                                    }
+                                                    
+                                                    
+                                                    
                                                     {/* <Link exact to='/account/usage/bulkdomainextract'>View</Link> */}
+                                                    
                                                     </span>
                                                     </p>
                                                 </List.Content>

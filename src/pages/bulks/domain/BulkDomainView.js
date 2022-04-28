@@ -96,8 +96,6 @@ export class BulkDomainView extends Component {
                                         <th>Domain</th>
                                         <th>Emails</th>
                                         <th>Phone</th>
-                                        
-                                        
                                         <th>GooglePlus</th>
                                         <th>Facebook</th>
                                         <th>Twitter</th>
@@ -115,7 +113,8 @@ export class BulkDomainView extends Component {
                                         {this.state.data.datas.map((data)=>{
                                                     return(
                                                         <tr key={data.domain}>
-                                                            <td>{data.domain}</td>
+                                                            <td style={{textTransform:'lowercase'}}>{data.domain}</td>
+                                                            <td>{data.tel.join(", ")}</td>
                                                             <td>{data.emails.join(", ")}</td>
                                                             <td>{data.googleplus.join(", ")}</td>
                                                             <td>{data.facebook.join(", ")}</td>
@@ -182,6 +181,7 @@ export class BulkDomainView extends Component {
                                         <Table.Header>
                                         <Table.Row>
                                         <Table.HeaderCell>Domain</Table.HeaderCell>
+                                            <Table.HeaderCell></Table.HeaderCell>
                                             <Table.HeaderCell></Table.HeaderCell>
 
                                         </Table.Row>
