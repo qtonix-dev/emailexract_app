@@ -114,8 +114,8 @@ export class BulkDomainView extends Component {
                                                     return(
                                                         <tr key={data.domain}>
                                                             <td style={{textTransform:'lowercase'}}>{data.domain}</td>
+                                                            <td style={{textTransform:'lowercase'}}>{data.emails.join(", ")}</td>
                                                             <td>{data.tel.join(", ")}</td>
-                                                            <td>{data.emails.join(", ")}</td>
                                                             <td>{data.googleplus.join(", ")}</td>
                                                             <td>{data.facebook.join(", ")}</td>
                                                             <td>{data.twitter.join(", ")}</td>
@@ -133,7 +133,7 @@ export class BulkDomainView extends Component {
 
 
 
-                                <h6>Bulk extract created on <Moment format="YYYY-MM-DD dddd  HH:mm:ss">{this.state.data.createdAt}</Moment></h6>
+                                <h6>Bulk extract created on <Moment format="YYYY-MM-DD">{this.state.data.createdAt}</Moment></h6>
                             </Grid.Column>
                             <Grid.Column>
                                 <br />

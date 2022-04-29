@@ -277,7 +277,7 @@ export class BulkDomainView extends Component {
 
 
 
-                                <h6>Bulk created on <Moment format="YYYY-MM-DD dddd  HH:mm:ss">{this.state.domainextractinfo.createdAt}</Moment></h6>
+                                <h6>Bulk created on <Moment format="YYYY-MM-DD">{this.state.domainextractinfo.createdAt}</Moment></h6>
                             </Grid.Column>
                             <Grid.Column>
                                 <br />

@@ -177,7 +177,7 @@ export default function TableRowView({data,key,extractPhone,extractSocial}) {
                             )
                         })
                     }
-                </Table.Cell> */}
+                </Table.Cell> 
                 {/* <Table.Cell>
                 
                     

@@ -27,7 +27,6 @@ export class BulkDomain extends Component {
         var user = cookie.load('qtonixemailextractweb_userdata');
         API.get(`/bulkdomainextract/viewlist/${user._id}`)
         .then(response=>{
-            console.log(response.data)
             if(response.data.response){
                 this.setState({
                     pageLoad:false,
@@ -92,7 +91,7 @@ export class BulkDomain extends Component {
                                                             <Link exact to={`/bulks/domainextract/view/${data.uuid}`}><span className="text-black">{data.totaldomains} domains</span></Link>
                                                         </Table.Cell>
                                                         <Table.Cell>
-                                                            <Link exact to={`/bulks/domainextract/view/${data.uuid}`}><span className="text-black"><Moment format="YYYY-MM-DD dddd  HH:mm:ss">{data.createdAt}</Moment></span></Link>
+                                                            <Link exact to={`/bulks/domainextract/view/${data.uuid}`}><span className="text-black"><Moment format="YYYY-MM-DD">{data.createdAt}</Moment></span></Link>
                                                         </Table.Cell>
                                                         <Table.Cell>
                                                             <Link exact to={`/bulks/domainextract/view/${data.uuid}`}><span className="text-black"><FiChevronRight /></span></Link>

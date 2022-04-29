@@ -193,17 +193,26 @@ export class BulkDomainCreate extends Component {
 
 
     fetchRecord(){
+
+        // console.log(this.state.totaldomains);
+        // console.log(_.uniqBy(this.state.datas, 'domain').length);
+
         
-        if(this.state.totaldomains===_.uniqBy(this.state.datas, 'domain').length){
+        // if(this.state.totaldomains===this.state.count){
+        if( _.uniqBy(this.state.datas, 'domain')>=this.state.totaldomains){
             this.setState({
                 domainextractprocess:'saving'
             })
             this.storeRecordinDB();
         }else{
 
-            API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
+            console.log(this.state.domainCreate[this.state.count].domain)
+
+            API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, { timeout: 10000 })
             .then(response=>{
-                var bulkdomainextratdata = _.uniqBy(this.state.datas, 'domain');
+                // var bulkdomainextratdata = _.uniqBy(this.state.datas, 'domain');
+                var bulkdomainextratdata = this.state.datas;
+
                 // var msdata= response.data.response;
 
                 // let filtered_array = _.find(bulkdomainextratdata, ['domain', response.data.response.domain]);
@@ -222,15 +231,84 @@ export class BulkDomainCreate extends Component {
                 // console.log(this.state.domainCreate[this.state.count].domain)
 
             
-            })
+            }).catch(err=>{
 
-            
+                // var bulkdomainextratdata = _.uniqBy(this.state.datas, 'domain');
+                var bulkdomainextratdata = this.state.datas;
+
+                var msdata= {
+                    response: true,
+                    domain: this.state.domainCreate[this.state.count].domain,
+                    status: "Not Found",
+                    emails: [ ],
+                    tel: [ ],
+                    facebook: [ ],
+                    instagram: [ ],
+                    twitter: [ ],
+                    linkedin: [ ],
+                    googleplus: [ ],
+                    youtube: [ ],
+                    whatsapp: [ ],
+                    printrest: [ ],
+                    skype: [ ]
+                }
+                bulkdomainextratdata.push({ ...msdata, uuid: this.state.uuid ,userid: this.state.user._id});
+                    this.setState({
+                        count:this.state.count+1,
+                        datas:bulkdomainextratdata
+                    })
+                    this.fetchRecord();
+            })
         }
     }
 
 
 
-    //****** ==== BACKUP ==== ******//
+
+    //****** ==== BACKUP 1 ==== ******//
+    // fetchRecord(){
+
+    //     console.log(this.state.totaldomains);
+    //     console.log(_.uniqBy(this.state.datas, 'domain').length);
+
+        
+    //     if(this.state.totaldomains===_.uniqBy(this.state.datas, 'domain').length){
+    //         this.setState({
+    //             domainextractprocess:'saving'
+    //         })
+    //         this.storeRecordinDB();
+    //     }else{
+
+    //         API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
+    //         .then(response=>{
+    //             var bulkdomainextratdata = _.uniqBy(this.state.datas, 'domain');
+    //             // var msdata= response.data.response;
+
+    //             // let filtered_array = _.find(bulkdomainextratdata, ['domain', response.data.response.domain]);
+
+    //             // if(filtered_array===undefined){
+    //                 bulkdomainextratdata.push({ ...response.data.response, uuid: this.state.uuid ,userid: this.state.user._id});
+    //                 this.setState({
+    //                     count:this.state.count+1,
+    //                     datas:bulkdomainextratdata
+    //                 })
+    //                 this.fetchRecord();
+    //             // }else{
+    //             //     this.fetchRecord();
+    //             // }
+
+    //             // console.log(this.state.domainCreate[this.state.count].domain)
+
+            
+    //         })
+
+            
+    //     }
+    // }
+
+
+
+    //****** ==== BACKUP 2 ==== ******//
     // fetchRecord(){
         
     //     if(this.state.totaldomains===this.state.count){
