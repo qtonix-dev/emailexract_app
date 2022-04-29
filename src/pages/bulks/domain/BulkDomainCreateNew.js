@@ -701,7 +701,7 @@ websitetwo.com' />
                                         </Table.Header>
 
                                         <Table.Body>
-                                            {_.uniqBy(this.state.datas, 'domain').map((data,key)=>{
+                                            {_.uniqBy(this.state.datas, 'domain').reverse().map((data,key)=>{
                                                 return(
                                                     <TableRowView data={data} key={key} extractPhone={this.state.extractPhone} extractSocial={this.state.extractSocial} />
                                                 )
