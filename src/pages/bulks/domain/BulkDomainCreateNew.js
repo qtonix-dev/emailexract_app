@@ -280,6 +280,13 @@ export class BulkDomainCreate extends Component {
     // }
 
 
+    stopAndSave=()=>{
+        this.setState({
+            domainextractprocess:'saving'
+        })
+        this.storeRecordinDB();
+    }
+
     
     storeRecordinDB=()=>{
         var tmpData={
@@ -490,6 +497,13 @@ export class BulkDomainCreate extends Component {
                                         </Modal.Content>
                                         
                                         </Modal>
+
+                                        {this.state.domainextractprocess==='extracting...'
+                                        ?
+                                        <Button onClick={()=>this.stopAndSave()}><Icon disabled name='save' /> Stop and Save Data</Button>
+                                        :<></>
+                                        }
+                                        
                                     
                                 </div>  
 

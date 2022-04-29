@@ -13,7 +13,7 @@ export default function TableRowView({data,key,extractPhone,extractSocial}) {
                 <Table.Cell> <b>{data.domain}</b></Table.Cell>
 
                 <Table.Cell style={{textTransform:'lowercase'}}> 
-                {/* {data.emails.length===0
+                {data.emails.length===0
                                     ?<>-</>
                                     :
                                     <>
@@ -27,7 +27,7 @@ export default function TableRowView({data,key,extractPhone,extractSocial}) {
                                             data.emails.join(", ")
                                         }
                                     </>
-                                    } */}
+                                    }
 
                 </Table.Cell>
                 <Table.Cell >
