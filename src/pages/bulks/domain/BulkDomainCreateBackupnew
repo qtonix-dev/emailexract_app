@@ -110,7 +110,7 @@ export class BulkDomainCreate extends Component {
     handleSubmit=speeddata=>{
 
 
-        // var state= this.state;
+        var state= this.state;
 
         
 
@@ -197,13 +197,13 @@ export class BulkDomainCreate extends Component {
         // console.log(_.uniqBy(this.state.datas, 'domain').length);
 
         
-        if(this.state.totaldomains===this.state.count){
+        // if(this.state.totaldomains===this.state.count){
         // if( _.uniqBy(this.state.datas, 'domain')>=this.state.totaldomains){
-            this.setState({
-                domainextractprocess:'saving'
-            })
-            this.storeRecordinDB();
-        }else{
+        //     this.setState({
+        //         domainextractprocess:'saving'
+        //     })
+        //     this.storeRecordinDB();
+        // }else{
 
             console.log(this.state.domainCreate[this.state.count].domain)
             console.log(this.state.domainCreate)
@@ -245,7 +245,6 @@ export class BulkDomainCreate extends Component {
 
                 var msdata= {
                     response: true,
-                    // domain: this.state.domainCreate[this.state.count].domain,
                     domain: this.state.domainCreate[this.state.count].domain,
                     status: "Not Found",
                     emails: [],
@@ -267,7 +266,7 @@ export class BulkDomainCreate extends Component {
                 })
                 this.fetchRecord();
             })
-        }
+        // }
     }
 
 
@@ -513,11 +512,32 @@ export class BulkDomainCreate extends Component {
                                     </table>
 
 
+                                </h3>
+                                <h6>Find email addresses from a list of websites or companies.</h6>
+                                <br />
+                                <br />
+                                <div className="bulkdetailsss">
+                                    
+                                    <p><b>Maxupload:</b> {this.state.maxupload}</p>
+                                    <p><b>Extract Left:</b> {this.state.totalcredits===123456789?'Unlimited':this.state.extractleft}</p>
+                                    {/* <p><b>Total Credits:</b> {this.state.totalcredits}</p> */}
+                                    <br/>
+                                    <p><b>Total Input Domains:</b> {this.state.totaldomains}</p>
+                                    <p><b>Domain Extracted:</b> {_.uniqBy(this.state.datas, 'domain').length}</p>
+                                    
+                                    <p><b>Speed:</b> {this.state.displayspeed}x</p>
+
+                                    
+
+                                    {/* <p><b>Domain Extracted:</b> {_.uniqBy(this.state.datas, 'domain')}</p> */}
+
+                                    <p><b>Status:</b> {this.state.domainextractprocess}</p>
+
                                     <Modal
                                         onClose={() => this.setState({modalStatus:false})}
                                         onOpen={() => this.setState({modalStatus:true})}
                                         open={this.state.modalStatus}
-                                        trigger={<Button size='small' style={{float:'right'}} className='bgmblue text-white' primary><Icon disabled name='settings' /></Button>}
+                                        trigger={<Button><Icon disabled name='settings' /> Advanced</Button>}
                                         size={'mini'}
                                         >
                                         <Modal.Header>Advanced Settings</Modal.Header>
@@ -561,32 +581,9 @@ export class BulkDomainCreate extends Component {
                                         
                                         </Modal>
 
-
-                                </h3>
-                                <h6>Find email addresses from a list of websites or companies.</h6>
-                                {/* <br />
-                                <br /> */}
-                                <div className="bulkdetailsss">
-                                    
-                                    {/* <p><b>Maxupload:</b> {this.state.maxupload}</p>
-                                    <p><b>Extract Left:</b> {this.state.totalcredits===123456789?'Unlimited':this.state.extractleft}</p>
-                                    <p><b>Total Credits:</b> {this.state.totalcredits}</p>
-                                    <br/>
-                                    <p><b>Total Input Domains:</b> {this.state.totaldomains}</p>
-                                    <p><b>Domain Extracted:</b> {_.uniqBy(this.state.datas, 'domain').length}</p>
-                                    <p><b>Speed:</b> {this.state.displayspeed}x</p> */}
-
-                                
-                                    {/* <p><b>Status:</b> {this.state.domainextractprocess}</p> */}
-
-                                    
-
                                         {this.state.domainextractprocess==='extracting...'
                                         ?
-                                        <>
-                                        <br />
-                                        <Button onClick={()=>this.stopAndSave()} style={{position:'absolute',right:'12px'}}><Icon disabled name='save' /> Stop and Save Data</Button>
-                                        </>
+                                        <Button onClick={()=>this.stopAndSave()}><Icon disabled name='save' /> Stop and Save Data</Button>
                                         :<></>
                                         }
                                         
