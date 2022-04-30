@@ -11,7 +11,7 @@ export class ShowFoundUrls extends Component {
             hideLinks:true,
             data:props.data,
             isVerified:false,
-            totalURL:null,
+            totalURL:[],
         }
         this.showHideLinks=this.showHideLinks.bind(this);
     }
@@ -35,11 +35,10 @@ export class ShowFoundUrls extends Component {
     componentDidMount(){
        
         //Not working properly********
-        // API.get(`/domainsearch/show_url_under_email/${this.props.data}`)
-        // .then(response=>{
-        //     this.setState({totalURL:response.data.results})
-        //     // alert(123)
-        // })
+        API2.get(`/googlelinkfinder/${this.props.data}`)
+        .then(response=>{
+            this.setState({totalURL:response.data.datas})
+        })
 
         API2.get(`/emailverifychecknow/${this.props.data}`)
         .then(response=>{
@@ -49,6 +48,9 @@ export class ShowFoundUrls extends Component {
                 this.setState({isVerified:false})
             }
         })
+
+
+
 
        
 
@@ -74,8 +76,8 @@ export class ShowFoundUrls extends Component {
 
 
                 {this.state.hideLinks
-                    ?<span onClick={()=>this.showHideLinks(false)}>{this.state.totalURL===null?<></>:this.state.totalURL.length} Sources<span><MdKeyboardArrowDown /></span></span>
-                    :<span onClick={()=>this.showHideLinks(true)}>{this.state.totalURL===null?<></>:this.state.totalURL.length} Sources<span><MdKeyboardArrowUp /></span></span>
+                    ?<span onClick={()=>this.showHideLinks(false)}>{this.state.totalURL===null?this.state.totalURL.length:this.state.totalURL.length} Sources<span><MdKeyboardArrowDown /></span></span>
+                    :<span onClick={()=>this.showHideLinks(true)}>{this.state.totalURL===null?this.state.totalURL.length:this.state.totalURL.length} Sources<span><MdKeyboardArrowUp /></span></span>
                 }
 
 
@@ -87,13 +89,13 @@ export class ShowFoundUrls extends Component {
                     ?<></>
                     :
                     <>
-                    {this.state.totalURL===null
+                    {this.state.totalURL.length===0
                         ?<></>
                         :
                         <>
-                        {this.state.totalURL.map((url)=>{
+                        {this.state.totalURL.map((url,key)=>{
                                 return(
-                                        <p>  <a href={url.link} target="_blank" rel="noreferrer" >{this.truncate(url.link)}</a> </p>
+                                        <p key={key}>  <a href={url.link} target="_blank" rel="noreferrer" >{this.truncate(url.link)}</a> </p>
                                     )
                                 })}
                                 </>

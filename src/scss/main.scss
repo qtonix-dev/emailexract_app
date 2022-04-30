@@ -263,3 +263,13 @@ body{
 
 }
 
+
+
+
+// =====NEW
+.ui.mini.modal>.header:not(.ui) {
+    font-size: 1.3em;
+    background-color: #0495fd !important;
+    color: white;
+}
+

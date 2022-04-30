@@ -15,7 +15,6 @@ import API from '../../../api/API';
 import {navbarProgressInfo} from '../../../actions';
 import _ from 'lodash'
 
-
 export class BulkDomainCreate extends Component {
 
 
@@ -56,7 +55,7 @@ export class BulkDomainCreate extends Component {
         
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         this.props.navbarProgressInfo();
         if(this.props.navbarprogress){
             this.setState({
@@ -69,7 +68,20 @@ export class BulkDomainCreate extends Component {
         }else{
             // console.log(this.props.navbarprogress)
         }
-        
+
+
+
+
+
+        // const todoIdList = [1, 2, 3, 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,]
+        // for (const id of todoIdList) {
+        // const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        // const todo = await response.json()
+        // console.log(todo.title)
+        // }
+
+
+
     }
 
     componentWillReceiveProps(props){
@@ -107,7 +119,7 @@ export class BulkDomainCreate extends Component {
     }
 
 
-    handleSubmit=speeddata=>{
+    handleSubmit= async speeddata=>{
 
 
         // var state= this.state;
@@ -118,73 +130,159 @@ export class BulkDomainCreate extends Component {
         const word = this.state.domains;
         const domains = word.split("\n");
 
-        var domainCreate = [];
+        // var domainCreate = [];
+        // domains.forEach(domainFunction);
+        // function domainFunction(domainurl, index) {
+
+        //     if(domainurl===''){
+
+        //     }else{
+        //         var data={
+        //             domain:domainurl
+        //         }
+        //         domainCreate.push(data);
+        //     }            
+        // }
+
+
+        //NEW
+        var domainCreateX = [];
         domains.forEach(domainFunction);
         function domainFunction(domainurl, index) {
 
             if(domainurl===''){
 
             }else{
-                var data={
-                    domain:domainurl
-                }
-                domainCreate.push(data);
+                domainCreateX.push(domainurl);
             }            
         }
 
 
-        if(domainCreate.length>this.state.maxupload){
-            alert(`You can't uplaod more than ${this.state.maxupload} domains.`)
-        }else{
             this.setState({
-                domainCreate:domainCreate,
-                totaldomains:domainCreate.length,
-                domainextractprocess:'processing...'
+                domainCreate:domainCreateX,
+                totaldomains:domainCreateX.length,
+                domainextractprocess:'extracting...'
             })
-    
-    
-            API3.get(`/extract/${domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
-            .then(response=>{
-              
-                var bulkdomainextratdata = this.state.datas;
-                var msdata= response.data.response;
-                // msdata.uuid=this.state.uuid,
-                // msdata.userid=this.state.userid,
-
-                msdata = { ...msdata, uuid: this.state.uuid ,userid: this.state.user._id};
 
 
+        
+        //SPEED
+        var num = domainCreateX.length/this.state.displayspeed;
+       
 
-                bulkdomainextratdata.push(msdata);
-    
-                this.setState({
-                    count:this.state.count+1,
-                    datas:bulkdomainextratdata,
-                    domainextractprocess:'extracting...'
-                })
+        var perChunk = num // items per chunk    
+        var inputArray = domainCreateX;
 
-                
+        var result = inputArray.reduce((resultArray, item, index) => { 
+        const chunkIndex = Math.floor(index/perChunk)
 
-                if(this.state.displayspeed===1){
-                    this.fetchRecord();
-
-                }
-                if(this.state.displayspeed===2){
-                    this.fetchRecord();
-                    this.fetchRecord();
-
-                }
-                if(this.state.displayspeed===3){
-                    this.fetchRecord();
-                    this.fetchRecord();
-                    this.fetchRecord();
-                    this.fetchRecord();
-                    
-                }
-                
-
-            })
+        if(!resultArray[chunkIndex]) {
+            resultArray[chunkIndex] = [] // start a new chunk
         }
+        resultArray[chunkIndex].push(item)
+        return resultArray
+        }, [])
+
+        console.log(result); // result: [['a','b'], ['c','d'], ['e']]
+
+
+        result.forEach(async(element) => {
+            const DomainList = element
+            for (const domain of DomainList) {
+            const response = await fetch(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extract/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
+            const todo = await response.json()
+            console.log(todo.response)
+
+
+                    // var bulkdomainextratdata = this.state.datas;
+
+                    // bulkdomainextratdata.push({ ...todo.response, uuid: this.state.uuid ,userid: this.state.user._id});
+                    // this.setState({
+                    //     datas:bulkdomainextratdata
+                    // })
+
+                    this.setState(prevState => ({
+                        datas: [...prevState.datas, { ...todo.response, uuid: this.state.uuid ,userid: this.state.user._id}]
+                    }))
+
+
+                    if(this.state.datas.length===this.state.totaldomains){
+                        this.setState({
+                            domainextractprocess:'saving'
+                        })
+                        this.storeRecordinDB();
+                    }
+
+
+
+            }
+        });
+
+
+
+        console.log(this.state.datas)
+
+        
+
+
+
+
+
+        //NEW
+
+
+        // if(domainCreate.length>this.state.maxupload){
+        //     alert(`You can't uplaod more than ${this.state.maxupload} domains.`)
+        // }else{
+        //     this.setState({
+        //         domainCreate:domainCreate,
+        //         totaldomains:domainCreate.length,
+        //         domainextractprocess:'processing...'
+        //     })
+    
+    
+        //     API3.get(`/extract/${domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
+        //     .then(response=>{
+              
+        //         var bulkdomainextratdata = this.state.datas;
+        //         var msdata= response.data.response;
+        //         // msdata.uuid=this.state.uuid,
+        //         // msdata.userid=this.state.userid,
+
+        //         msdata = { ...msdata, uuid: this.state.uuid ,userid: this.state.user._id};
+
+
+
+        //         bulkdomainextratdata.push(msdata);
+    
+        //         this.setState({
+        //             count:this.state.count+1,
+        //             datas:bulkdomainextratdata,
+        //             domainextractprocess:'extracting...'
+        //         })
+
+                
+
+        //         if(this.state.displayspeed===1){
+        //             this.fetchRecord();
+
+        //         }
+        //         if(this.state.displayspeed===2){
+        //             this.fetchRecord();
+        //             this.fetchRecord();
+
+        //         }
+        //         if(this.state.displayspeed===3){
+        //             this.fetchRecord();
+        //             this.fetchRecord();
+        //             this.fetchRecord();
+        //             this.fetchRecord();
+                    
+        //         }
+                
+
+        //     })
+        // }
 
         
     }
@@ -197,7 +295,15 @@ export class BulkDomainCreate extends Component {
         // console.log(_.uniqBy(this.state.datas, 'domain').length);
 
         
-        if(this.state.totaldomains===this.state.count){
+        if(
+            this.state.totaldomains=== _.uniqBy(this.state.datas, 'domain').length || 
+            this.state.totaldomains=== _.uniqBy(this.state.datas, 'domain').length-1 ||
+            this.state.totaldomains=== _.uniqBy(this.state.datas, 'domain').length-2 ||
+            this.state.totaldomains=== _.uniqBy(this.state.datas, 'domain').length-3 ||
+            this.state.totaldomains=== _.uniqBy(this.state.datas, 'domain').length-4 ||
+            this.state.totaldomains=== _.uniqBy(this.state.datas, 'domain').length-5 
+            // this.state.totaldomains=== _.uniqBy(this.state.datas, 'domain').length-6 
+        ){
         // if( _.uniqBy(this.state.datas, 'domain')>=this.state.totaldomains){
             this.setState({
                 domainextractprocess:'saving'
@@ -205,14 +311,12 @@ export class BulkDomainCreate extends Component {
             this.storeRecordinDB();
         }else{
 
-            console.log(this.state.domainCreate[this.state.count].domain)
-            console.log(this.state.domainCreate)
-            console.log(this.state.count)
+            console.log('totaldomains '+this.state.totaldomains)
+            console.log('count '+this.state.count)
+            console.log('showdata '+_.uniqBy(this.state.datas, 'domain').length)
 
 
-            if(this.state.domainCreate[this.state.count].domain===undefined){
-                console.log(undefined);
-            }
+           
 
 
             API3.get(`/extract/${this.state.domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, { timeout: 10000 })
@@ -517,7 +621,7 @@ export class BulkDomainCreate extends Component {
                                         onClose={() => this.setState({modalStatus:false})}
                                         onOpen={() => this.setState({modalStatus:true})}
                                         open={this.state.modalStatus}
-                                        trigger={<Button size='small' style={{float:'right'}} className='bgmblue text-white' primary><Icon disabled name='settings' /></Button>}
+                                        trigger={<Button size='small' style={{float:'right'}} className='bgmblue text-white' primary> <Icon name='settings' className='text-white' /></Button>}
                                         size={'mini'}
                                         >
                                         <Modal.Header>Advanced Settings</Modal.Header>
@@ -525,11 +629,11 @@ export class BulkDomainCreate extends Component {
                                             
                                             <Modal.Description>
                                             
-                                            <p><b>Extract Phone</b> <span className='jhhj8889'> {this.state.extractPhone?<Checkbox slider checked={true} onClick={()=>this.setState({extractPhone:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractPhone:true})} />} </span></p>
-                                                                        <p><b>Extract Social</b> <span className='jhhj8889'>{this.state.extractSocial?<Checkbox slider checked={true} onClick={()=>this.setState({extractSocial:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractSocial:true})} />}</span></p>
+                                            <p>Extract Phone <span className='jhhj8889'> {this.state.extractPhone?<Checkbox slider checked={true} onClick={()=>this.setState({extractPhone:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractPhone:true})} />} </span></p>
+                                                                        <p>Extract Social <span className='jhhj8889'>{this.state.extractSocial?<Checkbox slider checked={true} onClick={()=>this.setState({extractSocial:false})} />:<Checkbox slider checked={false} onClick={()=>this.setState({extractSocial:true})} />}</span></p>
                                                                         <Form>
 
-                                                                        <p><b>Extract Type</b></p><br/>
+                                                                        <p>Extract Type</p><br/>
                                                                         <Form.Group inline style={{position:'absolute',marginTop:'-22px'}}>
                                                                             
                                                                             
@@ -564,20 +668,20 @@ export class BulkDomainCreate extends Component {
 
                                 </h3>
                                 <h6>Find email addresses from a list of websites or companies.</h6>
-                                {/* <br />
-                                <br /> */}
+                                <br />
+                                <br />
                                 <div className="bulkdetailsss">
                                     
-                                    {/* <p><b>Maxupload:</b> {this.state.maxupload}</p>
+                                    <p><b>Maxupload:</b> {this.state.maxupload}</p>
                                     <p><b>Extract Left:</b> {this.state.totalcredits===123456789?'Unlimited':this.state.extractleft}</p>
                                     <p><b>Total Credits:</b> {this.state.totalcredits}</p>
                                     <br/>
                                     <p><b>Total Input Domains:</b> {this.state.totaldomains}</p>
                                     <p><b>Domain Extracted:</b> {_.uniqBy(this.state.datas, 'domain').length}</p>
-                                    <p><b>Speed:</b> {this.state.displayspeed}x</p> */}
+                                    <p><b>Speed:</b> {this.state.displayspeed}x</p>
 
                                 
-                                    {/* <p><b>Status:</b> {this.state.domainextractprocess}</p> */}
+                                    <p><b>Status:</b> {this.state.domainextractprocess}</p>
 
                                     
 
@@ -590,7 +694,8 @@ export class BulkDomainCreate extends Component {
                                         :<></>
                                         }
                                         
-                                    
+                                   
+
                                 </div>  
 
 
