@@ -18,10 +18,10 @@ export default function TableRowView({data,key,extractPhone,extractSocial}) {
                                     :
                                     <>
                                         {
-                                            data.emails.length>2
+                                            data.emails.length>1
                                             ?
                                             <>
-                                                {data.emails[0]}, {data.emails[1]} and {data.emails.length-2} more...
+                                                {data.emails[0]} and {data.emails.length-1} more...
                                             </>
                                             :
                                             data.emails.join(", ")
