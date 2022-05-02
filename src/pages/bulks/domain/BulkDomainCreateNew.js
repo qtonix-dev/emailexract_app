@@ -614,7 +614,15 @@ export class BulkDomainCreate extends Component {
                                         trigger={<Button size='small' style={{float:'right'}} className='bgmblue text-white' primary> <Icon name='settings' className='text-white' /></Button>}
                                         size={'mini'}
                                         >
-                                        <Modal.Header>Advanced Settings</Modal.Header>
+                                        <Modal.Header>Advanced Settings <span onClick={() => this.setState({modalStatus:false})} 
+                                        style={{float: 'right',
+                                            backgroundColor: '#e91e63',
+                                            padding: '1px 9px',
+                                            fontWeight: '100',
+                                            fontSize: '10px',
+                                            borderRadius: '50%',
+                                            cursor: 'pointer',}}
+                                        >X</span> </Modal.Header>
                                         <Modal.Content >
                                             
                                             <Modal.Description>
