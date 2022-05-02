@@ -56,7 +56,7 @@ export class Bulks extends Component {
                                 <Grid columns='equal' className="bulksec">
                                     <Grid.Column>
                                         <center>
-                                            <IoSearchOutline className="bulksec_icon" />
+                                        <Link exact to='/bulks/domainextract/new'><IoSearchOutline className="bulksec_icon" /></Link>
                                         </center>
                                     </Grid.Column>
                                     <Grid.Column width={14}>
