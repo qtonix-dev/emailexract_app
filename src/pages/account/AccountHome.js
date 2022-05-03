@@ -40,8 +40,19 @@ export class AccountHome extends Component {
                                         <AccountInformation />
                                         <hr />
                                         <AccountPassword />
+                                        {this.props.user===undefined
+                                        ?
+                                        <>
+                                        </>
+                                        :
+                                        this.props.user.type==='SubUser'
+                                        ?<></>
+                                        :<>
                                         <hr />
                                         <AccountDelete />
+                                        </>
+                                        }
+                                        
                                     </div>
                                 </Grid.Column>
                             </Grid.Row>

@@ -145,12 +145,30 @@ export class Navbar extends Component {
                                         </div>
                                         
 
+
+                                        {this.props.admin.type==='SubUser'
+                                        ?
+                                        <>
+                                        <br />
+                                        <p><Link exact to='/account'><span>Account</span></Link></p> <br />
+                                        <p><Link exact to='/account/usage'><span>Usage</span></Link></p><br />
+                                        <p onClick={this.handleLogout}>
+                                           <center style={{backgroundColor: '#0495fd', padding: 15, color: '#ffffff', cursor: 'pointer'}}>Logout</center>
+
+                                        </p><br />
+                                        </>
+                                        :
+                                        <>
                                         <Button className="bgmblue w-100 text-white dpsubbtn"><Link exact to='/account/subscription' className="text-white">Upgrade</Link></Button>
                                         <br /> <br /> <br />
                                         <p><Link exact to='/account'><span>Account</span></Link></p> <br />
                                         <p><Link exact to='/account/subscription'><span>Subscription</span></Link></p><br />
                                         <p><Link exact to='/account/usage'><span>Usage</span></Link></p><br />
                                         <p onClick={this.handleLogout}><span>Logout</span></p><br />
+                                        </>
+                                        }
+
+                                        
                                     
                                         </div>
                                         
@@ -162,6 +180,9 @@ export class Navbar extends Component {
                         </Menu>
                     </Grid.Column>
                 </Grid.Row>
+
+
+                
                 <Grid.Row columns={1} only='mobile'>
                 <Grid.Column>
                         <Menu pointing secondary  size='huge'>
@@ -245,7 +266,8 @@ export class Navbar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    navbarprogress : state.navbarprogress
+    navbarprogress : state.navbarprogress,
+    admin: state.users
 })
 
 const mapDispatchToProps = {
