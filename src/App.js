@@ -53,6 +53,8 @@ import UsageBulkDomainExtract from './pages/account/usage/UsageBulkDomainExtract
 
 import UsersIndex from './pages/users/UsersIndex'
 import UsersCreate from './pages/users/UsersCreate'
+import UsersView from './pages/users/UsersView'
+
 
 
 
@@ -97,10 +99,10 @@ export default function App() {
 
             <Route exact path='/account/users' component={UsersIndex} />
             <Route exact path='/account/users/create' component={UsersCreate} />
+            <Route exact path='/account/users/view/:id' component={UsersView} />
 
 
-            
-
+        
 
           </Switch>
           <ToastContainer />

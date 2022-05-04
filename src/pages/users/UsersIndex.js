@@ -73,7 +73,11 @@ export const UserIndex = (props) => {
                                                             {user.email} 
                                                             
                                                             {/* &nbsp; <Label color={'green'} style={{fontSize:'10px',fontWeight:'300'}}>Active</Label> */}
-                                                            <span style={{float:"right", color:'blue', cursor:'pointer'}}>view</span>
+                                                            <Link exact to={`/account/users/view/${user._id}`}>
+                                                            <span style={{float: 'right', color: 'white', cursor: 'pointer', backgroundColor: '#0798fd', padding: '0px 7px', borderRadius: 3}}>view</span>
+                                                                
+                                                            </Link>
+
                                                         </p>
                                                         </List.Content>
                                                     </List.Item>

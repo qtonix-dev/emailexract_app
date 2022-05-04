@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 
 export class AccountSidenav extends Component {
   render() {
-      console.log(this.props.admin)
     return (
         <div className="accountsidenav">
         <h5>Account & Settings</h5>
