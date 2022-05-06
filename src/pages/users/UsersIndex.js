@@ -37,7 +37,14 @@ export const UserIndex = (props) => {
                         <Grid>
                             <Grid.Row columns={1}>
                                 <Grid.Column>
-                                    <h3>Users <Button color='orange' className='float-right'><Link exact to='/account/users/create' className="text-white">Create User</Link></Button></h3>
+                                    {users.length>=5
+                                    ?
+                                    <span className='float-right'>
+                                        {/* Max user limit 5 */}
+                                    </span>
+                                    :<h3>Users <Button color='orange' className='float-right'><Link exact to='/account/users/create' className="text-white">Create User</Link></Button></h3>
+                                    }
+                                    
                                     
                                 </Grid.Column>
                                 <Grid.Column>
@@ -70,7 +77,7 @@ export const UserIndex = (props) => {
                                                     <List.Item key={user._id}>
                                                         <List.Content>
                                                         <p style={{margin:'5px 10px'}}>
-                                                            {user.email} 
+                                                            {user.email} | {user.status}
                                                             
                                                             {/* &nbsp; <Label color={'green'} style={{fontSize:'10px',fontWeight:'300'}}>Active</Label> */}
                                                             <Link exact to={`/account/users/view/${user._id}`}>

@@ -108,28 +108,58 @@ export class Navbar extends Component {
                                             </>
                                             :
                                             <>
+                                                
+
+                                                {this.props.navbarprogress.packageinfo.totalbuldomainkextract===123456789
+                                                ?<h6>Domain Search <span className="float-right"> Unlimited</span><br /></h6>
+                                                :
+                                                <>
                                                 <h6>Domain Search <span className="float-right">{this.props.navbarprogress.single_domain_search} / {this.props.navbarprogress.packageinfo.totalsingledomain}</span></h6>
                                                
-                                                <br /><Line percent={percentage.calculate(this.props.navbarprogress.single_domain_search, this.props.navbarprogress.packageinfo.totalsingledomain)} strokeWidth="3" strokeColor="#0495fd" />
-                                                <br />
+                                               <br /><Line percent={percentage.calculate(this.props.navbarprogress.single_domain_search, this.props.navbarprogress.packageinfo.totalsingledomain)} strokeWidth="3" strokeColor="#0495fd" />
+                                               <br />
+                                                </>
+                                                }
 
+                                                
+
+                                                {this.props.navbarprogress.packageinfo.totalbuldomainkextract===123456789
+                                                ?<h6>EmailFinder <span className="float-right"> Unlimited</span><br /></h6>
+                                                :
+                                                <>
                                                 <h6>EmailFinder <span className="float-right">{this.props.navbarprogress.email_finder} / {this.props.navbarprogress.packageinfo.totalemailsearch}</span>  </h6>
                                                
-                                                <br /><Line percent={percentage.calculate(this.props.navbarprogress.email_finder, this.props.navbarprogress.packageinfo.totalemailsearch)} strokeWidth="3" strokeColor="#0495fd" />
-                                                <br />
+                                               <br /><Line percent={percentage.calculate(this.props.navbarprogress.email_finder, this.props.navbarprogress.packageinfo.totalemailsearch)} strokeWidth="3" strokeColor="#0495fd" />
+                                               <br />
+                                                </>
+                                                }
+                                                
 
+
+                                                {this.props.navbarprogress.packageinfo.totalbuldomainkextract===123456789
+                                                ?<h6>Verifier <span className="float-right"> Unlimited</span><br /></h6>
+                                                :
+                                                <>
                                                 <h6>Verifier <span className="float-right">{this.props.navbarprogress.email_verification} / {this.props.navbarprogress.packageinfo.totalemailverification}</span></h6>
                                                
-                                                <br /><Line percent={percentage.calculate(this.props.navbarprogress.email_verification, this.props.navbarprogress.packageinfo.totalemailverification)} strokeWidth="3" strokeColor="#0495fd" />
-                                                <br />
+                                               <br /><Line percent={percentage.calculate(this.props.navbarprogress.email_verification, this.props.navbarprogress.packageinfo.totalemailverification)} strokeWidth="3" strokeColor="#0495fd" />
+                                               <br />
+                                                </>
+                                                }
+
+
+
 
                                                 {this.props.navbarprogress.packageinfo.totalbuldomainkextract===123456789
                                                 ?<h6>Bulk Domain Extract <span className="float-right"> Unlimited</span></h6>
-                                                :<h6>Bulk Domain Extract <span className="float-right">{this.props.navbarprogress.bulk_domain_search} / {this.props.navbarprogress.packageinfo.totalbuldomainkextract}</span></h6>
+                                                :
+                                                <>
+                                                <h6>Bulk Domain Extract <span className="float-right">{this.props.navbarprogress.bulk_domain_search} / {this.props.navbarprogress.packageinfo.totalbuldomainkextract}</span></h6>
+                                                <br /><Line percent={percentage.calculate(this.props.navbarprogress.bulk_domain_search, this.props.navbarprogress.packageinfo.totalbuldomainkextract)} strokeWidth="3" strokeColor="#0495fd" />
+                                                </>
                                                 }
                                                 
                                                
-                                                <br /><Line percent={percentage.calculate(this.props.navbarprogress.bulk_domain_search, this.props.navbarprogress.packageinfo.totalbuldomainkextract)} strokeWidth="3" strokeColor="#0495fd" />
                                                 <br />
                                                 
                                                 <br />
@@ -162,6 +192,7 @@ export class Navbar extends Component {
                                         <Button className="bgmblue w-100 text-white dpsubbtn"><Link exact to='/account/subscription' className="text-white">Upgrade</Link></Button>
                                         <br /> <br /> <br />
                                         <p><Link exact to='/account'><span>Account</span></Link></p> <br />
+                                        <p><Link exact to='/account/users'><span>Users</span></Link></p> <br />
                                         <p><Link exact to='/account/subscription'><span>Subscription</span></Link></p><br />
                                         <p><Link exact to='/account/usage'><span>Usage</span></Link></p><br />
                                         <p onClick={this.handleLogout}><span>Logout</span></p><br />

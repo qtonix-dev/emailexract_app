@@ -80,51 +80,57 @@ export const AccountUsage = (props) => {
                                         <h4>Your monthly record</h4>
                                         <hr />
                                         <List divided verticalAlign='middle'>
+                                            
                                             <List.Item>
                                                 <List.Content>
-                                                    <p className="chartbox_listtext">Domain Search <span className="float-right">{props.navbarprogress.single_domain_search}/{props.navbarprogress.packageinfo.totalsingledomain} &nbsp;&nbsp; 
-                                                    {/* &nbsp;&nbsp; <Link exact to='/account/usage/domainsearch'>View</Link>    */}
+                                                    <p className="chartbox_listtext">Domain Search 
+                                                    <span className="float-right">
+                                                        {props.navbarprogress.packageinfo.totalsingledomain===123456789
+                                                        ?<>{props.navbarprogress.single_domain_search} / Unlimited</>
+                                                        :<>{props.navbarprogress.single_domain_search} /{props.navbarprogress.packageinfo.totalsingledomain} &nbsp;&nbsp;</>
+                                                        }
                                                     </span>
                                                     </p>
                                                 </List.Content>
                                             </List.Item>
                                             
+
                                             <List.Item>
                                                 <List.Content>
-                                                    <p className="chartbox_listtext">Email Finder <span className="float-right">{props.navbarprogress.email_finder}/{props.navbarprogress.packageinfo.totalemailsearch} &nbsp;&nbsp; 
-                                                    {/* <Link exact to='/account/usage/emailfinder'>View</Link> */}
+                                                    <p className="chartbox_listtext">Email Finder 
+                                                    <span className="float-right">
+                                                        {props.navbarprogress.packageinfo.totalemailsearch===123456789
+                                                        ?<>{props.navbarprogress.email_finder} / Unlimited</>
+                                                        :<>{props.navbarprogress.email_finder} /{props.navbarprogress.packageinfo.totalemailsearch} &nbsp;&nbsp;</>
+                                                        }
                                                     </span>
                                                     </p>
                                                 </List.Content>
                                             </List.Item>
+
+
+
                                             <List.Item>
                                                 <List.Content>
-                                                    <p className="chartbox_listtext">Email Verification <span className="float-right">{props.navbarprogress.email_verification}/{props.navbarprogress.packageinfo.totalemailverification} &nbsp;&nbsp; 
-                                                    {/* <Link exact to='/account/usage/emailverification'>View</Link> */}
+                                                    <p className="chartbox_listtext">Email Verification 
+                                                    <span className="float-right">
+                                                        {props.navbarprogress.packageinfo.totalemailverification===123456789
+                                                        ?<>{props.navbarprogress.email_verification} / Unlimited</>
+                                                        :<>{props.navbarprogress.email_verification} /{props.navbarprogress.packageinfo.totalemailverification} &nbsp;&nbsp;</>
+                                                        }
                                                     </span>
                                                     </p>
                                                 </List.Content>
                                             </List.Item>
+
                                             <List.Item>
                                                 <List.Content>
-
-
-
-
                                                     <p className="chartbox_listtext">Bulk Domain Extract 
-                                                    
-                                                    <span className="float-right"> 
-                                                    
-                                                    
-                                                    {props.navbarprogress.packageinfo.totalbuldomainkextract===123456789
-                                                    ?<>Unlimited</>
-                                                    :<>{props.navbarprogress.bulk_domain_search}/{props.navbarprogress.packageinfo.totalbuldomainkextract} &nbsp;&nbsp;</>
-                                                    }
-                                                    
-                                                    
-                                                    
-                                                    {/* <Link exact to='/account/usage/bulkdomainextract'>View</Link> */}
-                                                    
+                                                    <span className="float-right">
+                                                        {props.navbarprogress.packageinfo.totalbuldomainkextract===123456789
+                                                        ?<>{props.navbarprogress.bulk_domain_search} / Unlimited</>
+                                                        :<>{props.navbarprogress.bulk_domain_search}/{props.navbarprogress.packageinfo.totalbuldomainkextract} &nbsp;&nbsp;</>
+                                                        }
                                                     </span>
                                                     </p>
                                                 </List.Content>
