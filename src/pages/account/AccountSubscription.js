@@ -64,10 +64,10 @@ export class AccountSubscription extends Component {
                                         <Grid.Column mobile={16} tablet={8} computer={8}>
                                             <div className="subscription_box">
                                                 <h5>Quotas</h5>
-                                                <p><span className="text-success"><FiCheck /></span>{this.props.navbarprogress.packageinfo.totalsingledomain} Domain Search /mo</p>
-                                                <p><span className="text-success"><FiCheck /></span>{this.props.navbarprogress.packageinfo.totalemailsearch} Email Finder /mo</p>
-                                                <p><span className="text-success"><FiCheck /></span>{this.props.navbarprogress.packageinfo.totalemailverification} Email Verifier /mo</p>
-                                                <p><span className="text-success"><FiCheck /></span>{this.props.navbarprogress.packageinfo.totalbuldomainkextract} Bulk Domain Extract /mo</p>
+                                                <p><span className="text-success"><FiCheck /></span>{this.props.navbarprogress.packageinfo.totalsingledomain===123456789?'Unlimited':this.props.navbarprogress.packageinfo.totalsingledomain} Domain Search /mo</p>
+                                                <p><span className="text-success"><FiCheck /></span>{this.props.navbarprogress.packageinfo.totalemailsearch===123456789?'Unlimited':this.props.navbarprogress.packageinfo.totalemailsearch} Email Finder /mo</p>
+                                                <p><span className="text-success"><FiCheck /></span>{this.props.navbarprogress.packageinfo.totalemailverification===123456789?'Unlimited':this.props.navbarprogress.packageinfo.totalemailverification} Email Verifier /mo</p>
+                                                <p><span className="text-success"><FiCheck /></span>{this.props.navbarprogress.packageinfo.totalbuldomainkextract===123456789?'Unlimited':this.props.navbarprogress.packageinfo.totalbuldomainkextract} Bulk Domain Extract /mo</p>
                                             </div>
                                         </Grid.Column>
                                         <Grid.Column mobile={16} tablet={8} computer={8}>

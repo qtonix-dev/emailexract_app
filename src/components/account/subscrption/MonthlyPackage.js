@@ -21,10 +21,10 @@ export const MonthlyPackage = (props) => {
                                                 <Grid.Column mobile={6} tablet={6} computer={8}>
                                                     <div className="subsdetone">
                                                         <h4>{data.name} </h4>
-                                                        <p><b>{data.totalsingledomain}</b> single domain search /month</p>
-                                                        <p><b>{data.totalemailverification}</b> email verification /month</p>
-                                                        <p><b>{data.totalemailsearch}</b> email search /month</p>
-                                                        <p><b>{data.totalbuldomainkextract}</b> bulk domain extract /month</p>
+                                                        <p><b>{data.totalsingledomain===123456789?'Unlimited':data.totalsingledomain}</b> single domain search /month</p>
+                                                        <p><b>{data.totalemailverification===123456789?'Unlimited':data.totalemailverification}</b> email verification /month</p>
+                                                        <p><b>{data.totalemailsearch===123456789?'Unlimited':data.totalemailsearch}</b> email search /month</p>
+                                                        <p><b>{data.totalbuldomainkextract===123456789?'Unlimited':data.totalbuldomainkextract}</b> bulk domain extract /month</p>
 
                                                     </div>
                                                 </Grid.Column>

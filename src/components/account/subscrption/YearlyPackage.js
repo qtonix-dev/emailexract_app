@@ -19,10 +19,10 @@ export const YearlyPackage = (props) => {
                                                 <Grid.Column mobile={6} tablet={6} computer={8}>
                                                     <div className="subsdetone">
                                                         <h4>{data.name} </h4>
-                                                        <p><b>{data.totalsingledomain}</b> single domain search /month</p>
-                                                        <p><b>{data.totalemailverification}</b> email verification /month</p>
-                                                        <p><b>{data.totalemailsearch}</b> email search /month</p>
-                                                        <p><b>{data.totalbuldomainkextract}</b> bulk domain extract /month</p>
+                                                        <p><b>{data.totalsingledomain?'Unlimited':data.totalsingledomain}</b> single domain search /month</p>
+                                                        <p><b>{data.totalemailverification?'Unlimited':data.totalemailverification}</b> email verification /month</p>
+                                                        <p><b>{data.totalemailsearch?'Unlimited':data.totalemailsearch}</b> email search /month</p>
+                                                        <p><b>{data.totalbuldomainkextract?'Unlimited':data.totalbuldomainkextract}</b> bulk domain extract /month</p>
 
                                                     </div>
                                                 </Grid.Column>
