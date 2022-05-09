@@ -89,7 +89,7 @@ export class Bulks extends Component {
                                             <Table.Header>
                                             <Table.Row>
                                                 <Table.HeaderCell>List</Table.HeaderCell>
-                                                <Table.HeaderCell>Total</Table.HeaderCell>
+                                                <Table.HeaderCell>Total ({this.state.datas.length})</Table.HeaderCell>
                                                 <Table.HeaderCell>Created</Table.HeaderCell>
                                                 <Table.HeaderCell style={{width:'40px'}}></Table.HeaderCell>
                                             </Table.Row>
