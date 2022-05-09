@@ -43,8 +43,8 @@ export class BulkDomainCreate extends Component {
             count:0,
             // currentextractdomainname:false,
             // bulkdomainextratdata:[],
-            extractPhone:true,
-            extractSocial:true,
+            extractPhone:false,
+            extractSocial:false,
             extractType:'deep',
             displayspeed:0
 
