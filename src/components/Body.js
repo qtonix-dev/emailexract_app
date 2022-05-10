@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Container } from 'semantic-ui-react'
 import Navbar from '../components/Navbar'
+// import {Link} from 'react-router-dom'
 import cookie from 'react-cookies'
 import {setUserDetails,navbarProgressInfo} from '../actions'
 import Loader from "react-loader-spinner";
-import socketIoClient from 'socket.io-client'
-const socket = socketIoClient(process.env.REACT_APP_BACKENDURL)
+// import { Offline, Online } from "react-detect-offline";
+
 
 
 export class Body extends Component {
@@ -15,34 +16,7 @@ export class Body extends Component {
     componentDidMount(){
         this.props.setUserDetails(cookie.load('qtonixemailextractweb_userdata'))
         this.props.navbarProgressInfo();
-
-
-        
     }
-
-
-
-    componentDidUpdate(){
-        console.log(socket)
-        
-
-
-            // var socket = io(process.env.REACT_APP_SOCKET, {     
-            //     query: {
-            //         category: category,
-            //     }              
-            // });
-            // socket.connect();
-
-
-
-            socket.emit('loginbulkextract', cookie.load('qtonixemailextractweb_userdata')._id);
-
-            socket.on('testsocket',data=>{
-                console.log(data)
-            })
-    }
-
 
     render() {
         return (
