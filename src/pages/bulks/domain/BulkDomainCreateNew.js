@@ -15,6 +15,8 @@ import API from '../../../api/API';
 import {navbarProgressInfo} from '../../../actions';
 import _ from 'lodash'
 
+
+
 export class BulkDomainCreate extends Component {
 
 
@@ -55,7 +57,7 @@ export class BulkDomainCreate extends Component {
         
     }
 
-    async componentDidMount(){
+    componentDidMount(){
         this.props.navbarProgressInfo();
         if(this.props.navbarprogress){
             this.setState({
@@ -66,9 +68,10 @@ export class BulkDomainCreate extends Component {
                 showformbox:true
             })
         }else{
-            // console.log(this.props.navbarprogress)
         }
 
+            
+            
 
 
 
@@ -83,6 +86,9 @@ export class BulkDomainCreate extends Component {
 
 
     }
+
+
+
 
     componentWillReceiveProps(props){
         if(props.navbarprogress){
@@ -527,7 +533,7 @@ export class BulkDomainCreate extends Component {
 
     render() {
 
-
+        
   
         return (
             <Body>
