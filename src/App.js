@@ -95,15 +95,12 @@ export default function App() {
             <Route exact path='/securelogincheck/:userid/:loginid' component={LoginCheck} />
             <Route exact path='/ea638decb4661519ea638decb46c8473a8061519ea638decb46c84/61519ea638decb46c8473/638decb46c8473a8061519ea638decb/:uuid/38decb46c8473/638decb46c8473a8061519ea6' component={PlanActivatedSuccess} />
             <Route exact path='/paymentfailed' component={PlanActivationFailed} />
-
-
             <Route exact path='/account/users' component={UsersIndex} />
             <Route exact path='/account/users/create' component={UsersCreate} />
             <Route exact path='/account/users/view/:id' component={UsersView} />
 
 
-        
-
+    
           </Switch>
           <ToastContainer />
       </Router>
