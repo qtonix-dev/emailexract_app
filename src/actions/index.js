@@ -8,6 +8,10 @@ export const setUserDetails = data => async dispatch => {
     dispatch({type:'SET_USER_DETAILS', payload:data})
 }
 
+export const setSocketID = data => async dispatch => {
+    dispatch({type:'SET_SOCKET_ID', payload:data})
+}
+
 
 //NAVBAR PROGRESSINFO
 export const navbarProgressInfo = () => async dispatch => {

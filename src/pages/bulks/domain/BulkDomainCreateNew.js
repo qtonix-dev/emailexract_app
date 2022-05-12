@@ -14,9 +14,12 @@ import API3 from '../../../api/API3';
 import API from '../../../api/API';
 import {navbarProgressInfo} from '../../../actions';
 import _ from 'lodash'
+// import socketIoClient from 'socket.io-client'
+
+
+
 
 export class BulkDomainCreate extends Component {
-
 
     constructor(props){
         super(props)
@@ -55,7 +58,7 @@ export class BulkDomainCreate extends Component {
         
     }
 
-    async componentDidMount(){
+    componentDidMount(){
         this.props.navbarProgressInfo();
         if(this.props.navbarprogress){
             this.setState({
@@ -66,22 +69,10 @@ export class BulkDomainCreate extends Component {
                 showformbox:true
             })
         }else{
-            // console.log(this.props.navbarprogress)
+            //
         }
 
-
-
-
-
-        // const todoIdList = [1, 2, 3, 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,]
-        // for (const id of todoIdList) {
-        // const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
-        // const todo = await response.json()
-        // console.log(todo.title)
-        // }
-
-
-
+        console.log(cookie.load('qtonixemailextractweb_socketid'))
     }
 
     componentWillReceiveProps(props){

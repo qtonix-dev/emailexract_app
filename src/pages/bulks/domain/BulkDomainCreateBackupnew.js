@@ -43,8 +43,8 @@ export class BulkDomainCreate extends Component {
             count:0,
             // currentextractdomainname:false,
             // bulkdomainextratdata:[],
-            extractPhone:true,
-            extractSocial:true,
+            extractPhone:false,
+            extractSocial:false,
             extractType:'deep',
             displayspeed:0
 
@@ -189,17 +189,15 @@ export class BulkDomainCreate extends Component {
         result.forEach(async(element) => {
             const DomainList = element
             for (const domain of DomainList) {
-            const response = await fetch(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extract/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
-            const todo = await response.json()
-            console.log(todo.response)
+            
+            
+                try {
+                    const response = await this.fetchWithTimeout(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extract/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, {
+                      timeout: 10000
+                    });
+                    const todo = await response.json()
+                    console.log(todo.response)
 
-
-                    // var bulkdomainextratdata = this.state.datas;
-
-                    // bulkdomainextratdata.push({ ...todo.response, uuid: this.state.uuid ,userid: this.state.user._id});
-                    // this.setState({
-                    //     datas:bulkdomainextratdata
-                    // })
 
                     this.setState(prevState => ({
                         datas: [...prevState.datas, { ...todo.response, uuid: this.state.uuid ,userid: this.state.user._id}]
@@ -215,70 +213,69 @@ export class BulkDomainCreate extends Component {
 
 
 
+                  } catch (error) {
+                    // Timeouts if the request takes
+                    // longer than 6 seconds
+                    const msdata= {
+                        response: true,
+                        // domain: this.state.domainCreate[this.state.count].domain,
+                        domain: domain,
+                        status: "Not Found",
+                        emails: [],
+                        tel: [],
+                        facebook: [],
+                        instagram: [],
+                        twitter: [],
+                        linkedin: [],
+                        googleplus: [],
+                        youtube: [],
+                        whatsapp: [],
+                        printrest: [],
+                        skype: []
+                    }
+
+                    this.setState(prevState => ({
+                        datas: [...prevState.datas, { ...msdata, uuid: this.state.uuid ,userid: this.state.user._id}]
+                    }))
+
+
+                    if(this.state.datas.length===this.state.totaldomains){
+                        this.setState({
+                            domainextractprocess:'saving'
+                        })
+                        this.storeRecordinDB();
+                    }
+
+
+                  }
+
+
+
             }
         });
 
-
-
-
-        //NEW
-
-
-        // if(domainCreate.length>this.state.maxupload){
-        //     alert(`You can't uplaod more than ${this.state.maxupload} domains.`)
-        // }else{
-        //     this.setState({
-        //         domainCreate:domainCreate,
-        //         totaldomains:domainCreate.length,
-        //         domainextractprocess:'processing...'
-        //     })
-    
-    
-        //     API3.get(`/extract/${domainCreate[this.state.count].domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`)
-        //     .then(response=>{
-              
-        //         var bulkdomainextratdata = this.state.datas;
-        //         var msdata= response.data.response;
-        //         // msdata.uuid=this.state.uuid,
-        //         // msdata.userid=this.state.userid,
-
-        //         msdata = { ...msdata, uuid: this.state.uuid ,userid: this.state.user._id};
-
-
-
-        //         bulkdomainextratdata.push(msdata);
-    
-        //         this.setState({
-        //             count:this.state.count+1,
-        //             datas:bulkdomainextratdata,
-        //             domainextractprocess:'extracting...'
-        //         })
-
-                
-
-        //         if(this.state.displayspeed===1){
-        //             this.fetchRecord();
-
-        //         }
-        //         if(this.state.displayspeed===2){
-        //             this.fetchRecord();
-        //             this.fetchRecord();
-
-        //         }
-        //         if(this.state.displayspeed===3){
-        //             this.fetchRecord();
-        //             this.fetchRecord();
-        //             this.fetchRecord();
-        //             this.fetchRecord();
-                    
-        //         }
-                
-
-        //     })
-        // }
-
-        
     }
+
+
+
+     fetchWithTimeout = async (resource, options = {}) => {
+        const { timeout = 12000 } = options;
+        
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+        const response = await fetch(resource, {
+          ...options,
+          signal: controller.signal  
+        });
+        clearTimeout(id);
+        return response;
+      }
+
+
+
+
+
+
 
 
 
@@ -617,7 +614,15 @@ export class BulkDomainCreate extends Component {
                                         trigger={<Button size='small' style={{float:'right'}} className='bgmblue text-white' primary> <Icon name='settings' className='text-white' /></Button>}
                                         size={'mini'}
                                         >
-                                        <Modal.Header>Advanced Settings</Modal.Header>
+                                        <Modal.Header>Advanced Settings <span onClick={() => this.setState({modalStatus:false})} 
+                                        style={{float: 'right',
+                                            backgroundColor: '#e91e63',
+                                            padding: '1px 9px',
+                                            fontWeight: '100',
+                                            fontSize: '10px',
+                                            borderRadius: '50%',
+                                            cursor: 'pointer',}}
+                                        >X</span> </Modal.Header>
                                         <Modal.Content >
                                             
                                             <Modal.Description>

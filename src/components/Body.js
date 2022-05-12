@@ -4,10 +4,9 @@ import { Container } from 'semantic-ui-react'
 import Navbar from '../components/Navbar'
 // import {Link} from 'react-router-dom'
 import cookie from 'react-cookies'
-import {setUserDetails,navbarProgressInfo} from '../actions'
+import {setUserDetails,navbarProgressInfo,setSocketID} from '../actions'
 import Loader from "react-loader-spinner";
-// import { Offline, Online } from "react-detect-offline";
-
+import socketIoClient from 'socket.io-client'
 
 
 export class Body extends Component {
@@ -16,6 +15,26 @@ export class Body extends Component {
     componentDidMount(){
         this.props.setUserDetails(cookie.load('qtonixemailextractweb_userdata'))
         this.props.navbarProgressInfo();
+
+
+        const socket = socketIoClient(process.env.REACT_APP_BACKENDURL,{     
+            query: {
+                userid: cookie.load('qtonixemailextractweb_userdata')._id,
+            }              
+        })
+        socket.emit('loginbulkextract',cookie.load('qtonixemailextractweb_userdata')._id);
+
+  
+    
+        socket.on("connect", () => {
+            this.props.setSocketID(socket.id)
+        });
+
+      
+
+
+
+
     }
 
     render() {
@@ -84,4 +103,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps, {setUserDetails,navbarProgressInfo})(Body)
+export default connect(mapStateToProps, {setUserDetails,navbarProgressInfo,setSocketID})(Body)

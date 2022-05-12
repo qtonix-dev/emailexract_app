@@ -1,6 +1,8 @@
 import {combineReducers} from 'redux'
 
 import userReducer from './userReducer'
+import socketReducer from './socketReducer'
+
 import navbarProgressInfo from './navbarProgressInfo'
 
 // const songReducer = () => {
@@ -16,5 +18,6 @@ import navbarProgressInfo from './navbarProgressInfo'
 export default combineReducers({
     // songs:songReducer,
     users:userReducer,
+    socketid:socketReducer,
     navbarprogress:navbarProgressInfo
 })
