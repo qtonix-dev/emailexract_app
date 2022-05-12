@@ -72,9 +72,8 @@ export class BulkDomainCreate extends Component {
             //
         }
 
-        console.log('mount');
+        
 
-        console.log(this.props.socketid)
 
         if(this.props.socketid===null){
             this.props.setSocketID(this.state.uuid)
@@ -84,12 +83,32 @@ export class BulkDomainCreate extends Component {
 
             }else{
                 alert(`You can't open multiple tabs at a time.`)
-                this.props.history.push('/bulks')
+                // this.props.history.push('/bulks')
+                window.location.href = "https://emailextractonline.com";
             }
 
             
         }
 
+    }
+
+
+    componentDidUpdate(props){
+        console.log(123);
+        if(props.socketid===null){
+            props.setSocketID(this.state.uuid)
+        }else{
+
+            if(props.socketid===this.state.uuid){
+
+            }else{
+                alert(`You can't open multiple tabs at a time.`)
+                // this.props.history.push('/bulks')
+                window.location.href = "https://emailextractonline.com";
+            }
+
+            
+        }
     }
 
     componentWillUnmount(){
