@@ -5,13 +5,13 @@ const socketReducer = (state=null, action) => {
 
     // const ISSERVER = typeof window === "undefined";
 
-    //     if(!ISSERVER) {
-    //         // Access localStorage
-    //         if(cookie.load('qtonixemailextractweb_userdata')===undefined) {  
-    //         }else{
-    //         state = cookie.load('qtonixemailextractweb_userdata');
-    //         }
-    //     }
+        // if(!ISSERVER) {
+        //     // Access localStorage
+        //     if(cookie.load('qtonixemailextractweb_socketid')===undefined) {  
+        //     }else{
+        //     state = cookie.load('qtonixemailextractweb_socketid');
+        //     }
+        // }
 
 
 

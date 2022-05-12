@@ -12,7 +12,7 @@ import TableRowView from './TableRowView'
 // import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 import API3 from '../../../api/API3';
 import API from '../../../api/API';
-import {navbarProgressInfo} from '../../../actions';
+import {navbarProgressInfo,setSocketID} from '../../../actions';
 import _ from 'lodash'
 // import socketIoClient from 'socket.io-client'
 
@@ -72,7 +72,35 @@ export class BulkDomainCreate extends Component {
             //
         }
 
-        console.log(cookie.load('qtonixemailextractweb_socketid'))
+        console.log('mount');
+
+        console.log(this.props.socketid)
+
+        if(this.props.socketid===null){
+            this.props.setSocketID(this.state.uuid)
+        }else{
+
+            if(this.props.socketid===this.state.uuid){
+
+            }else{
+                alert(`You can't open multiple tabs at a time.`)
+                this.props.history.push('/bulks')
+            }
+
+            
+        }
+
+    }
+
+    componentWillUnmount(){
+        if(this.props.socketid===null){
+            
+        }else{
+            if(this.props.socketid===this.state.uuid){
+                this.props.setSocketID(null)
+            }
+        }
+
     }
 
     componentWillReceiveProps(props){
@@ -829,7 +857,8 @@ websitetwo.com' />
 }
 
 const mapStateToProps = (state) => ({
+    socketid:state.socketid,
     navbarprogress:state.navbarprogress
 })
 
-export default connect(mapStateToProps, {navbarProgressInfo})(BulkDomainCreate)
+export default connect(mapStateToProps, {navbarProgressInfo,setSocketID})(BulkDomainCreate)

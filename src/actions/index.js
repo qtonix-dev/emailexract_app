@@ -9,6 +9,8 @@ export const setUserDetails = data => async dispatch => {
 }
 
 export const setSocketID = data => async dispatch => {
+    cookie.remove('qtonixemailextractweb_socketid');
+    cookie.save('qtonixemailextractweb_socketid',data);
     dispatch({type:'SET_SOCKET_ID', payload:data})
 }
 

@@ -27,15 +27,13 @@ export class Body extends Component {
   
     
         socket.on("connect", () => {
-            this.props.setSocketID(socket.id)
+            // this.props.setSocketID(socket.id)
         });
 
-      
-
-
-
-
     }
+
+
+    
 
     render() {
         return (
