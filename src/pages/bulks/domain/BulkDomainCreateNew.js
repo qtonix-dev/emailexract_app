@@ -14,9 +14,6 @@ import API3 from '../../../api/API3';
 import API from '../../../api/API';
 import {navbarProgressInfo,setSocketID} from '../../../actions';
 import _ from 'lodash'
-// import socketIoClient from 'socket.io-client'
-
-
 
 
 export class BulkDomainCreate extends Component {
@@ -54,8 +51,6 @@ export class BulkDomainCreate extends Component {
         }
         this.handleChange=this.handleChange.bind(this)
         this.fetchRecord=this.fetchRecord.bind(this)
-        // this.setRecord=this.setRecord.bind(this)
-        
     }
 
     componentDidMount(){
@@ -89,6 +84,8 @@ export class BulkDomainCreate extends Component {
 
             
         }
+
+        console.log(this.props);
 
     }
 

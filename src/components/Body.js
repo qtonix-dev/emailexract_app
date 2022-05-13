@@ -7,9 +7,23 @@ import cookie from 'react-cookies'
 import {setUserDetails,navbarProgressInfo,setSocketID} from '../actions'
 import Loader from "react-loader-spinner";
 import socketIoClient from 'socket.io-client'
+import {Helmet} from "react-helmet";
 
+const socket = socketIoClient(process.env.REACT_APP_BACKENDURL,{     
+    query: {
+        userid: cookie.load('qtonixemailextractweb_userdata')._id,
+    }              
+})
 
 export class Body extends Component {
+
+    constructor(props){
+        super(props)
+        this.state={
+            loading:false,
+            multipleTab:false,
+        }
+    }
 
 
     componentDidMount(){
@@ -17,17 +31,35 @@ export class Body extends Component {
         this.props.navbarProgressInfo();
 
 
-        const socket = socketIoClient(process.env.REACT_APP_BACKENDURL,{     
-            query: {
-                userid: cookie.load('qtonixemailextractweb_userdata')._id,
-            }              
-        })
+        
         socket.emit('loginbulkextract',cookie.load('qtonixemailextractweb_userdata')._id);
 
-  
+        
     
         socket.on("connect", () => {
-            // this.props.setSocketID(socket.id)
+
+            console.log(socket.id);
+        });
+
+
+
+        // socket.emit('getuserinfo',cookie.load('qtonixemailextractweb_userdata')._id);
+        socket.off('getuserinfo').on('getuserinfo', (data) => {
+
+            if(data.socketid===socket.id){
+                this.setState({
+                    multipleTab:false
+                })
+
+            }else{
+                this.setState({
+                    multipleTab:true
+                })
+            }
+
+            console.log(data.socketid)
+            console.log(socket.id);
+
         });
 
     }
@@ -38,6 +70,16 @@ export class Body extends Component {
     render() {
         return (
             <>
+            {this.state.multipleTab
+            ?
+            <Helmet>
+                <title>Duplicate (Email Extract Online)</title>
+            </Helmet>
+            :
+            <Helmet>
+                <title>Email Extract Online</title>
+            </Helmet>
+            }
             
                 {this.props.user===undefined
                 ?
@@ -54,41 +96,30 @@ export class Body extends Component {
                 :
                 <>
                 <Navbar user={this.props.user} />
-                {/* <div className="upgradewarning">
-                    <center>
-                    <p>You reached your monthly quota of searches. <Link exact to='/account/subscription/view'><b>Upgrade</b></Link> your subscription to continue.</p>
-                    </center>
-                </div> */}
-                <Container>
-                
-                <br />
-                {/* <Online> */}
-                {this.props.children}
+                    <Container>
+                        
+                            
+                            {this.state.multipleTab
+                            ?
+                            <center>
+                                <br/>
+                                <br/>
+                                <br/>
 
-                {/* </Online>
-                <Offline>
-                    <center>
-                    <img src="/images/im-offline-right-now.jpg" alt="nointernet" />
-                    <h2>
-                    Please check your internet connection
-                    </h2>
-                    </center>
-                </Offline> */}
-
-
-                </Container>
+                                <h2>Multiple Tab / Login are not allowed.</h2>
+                            </center>
+                            :
+                            <>
+                                <br />
+                                {this.props.children}
+                            </>
+                            }
+                        
+                        
+                        
+                    </Container>
                 </>
                 }
-
-            {/* </>
-            } */}
-
-
-                
-
-                
-
-
                 <br />
             </>
         )

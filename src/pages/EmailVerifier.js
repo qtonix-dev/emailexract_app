@@ -183,15 +183,10 @@ export class EmailVerifier extends Component {
                                                     {this.state.recentsearches.map((rs, key)=>{
 
                                                         return(
-                                                            <>
                                                             <Label as='a' key={key} >
                                                                 <span onClick={()=>this.handleSetEmail(rs.email)}>{rs.email}</span>
                                                                     <Icon name='delete' onClick={()=>this.handleDelete(rs._id,rs.email)} />
                                                             </Label>
-
-                                                            
-
-                                                            </>
                                                         )
                                                     })} 
                                                     </h4>   
