@@ -9,11 +9,16 @@ import Loader from "react-loader-spinner";
 import socketIoClient from 'socket.io-client'
 import {Helmet} from "react-helmet";
 
-const socket = socketIoClient(process.env.REACT_APP_BACKENDURL,{     
-    query: {
-        userid: cookie.load('qtonixemailextractweb_userdata')._id,
-    }              
-})
+
+if(cookie.load('qtonixemailextractweb_userdata')!==undefined){
+    const socket = socketIoClient(process.env.REACT_APP_BACKENDURL,{     
+        query: {
+            userid: cookie.load('qtonixemailextractweb_userdata')._id,
+        }              
+    })
+}
+
+
 
 export class Body extends Component {
 
@@ -30,7 +35,7 @@ export class Body extends Component {
         this.props.setUserDetails(cookie.load('qtonixemailextractweb_userdata'))
         this.props.navbarProgressInfo();
 
-
+        if(cookie.load('qtonixemailextractweb_userdata')!==undefined){
         
         socket.emit('loginbulkextract',cookie.load('qtonixemailextractweb_userdata')._id);
 
@@ -61,6 +66,11 @@ export class Body extends Component {
             console.log(socket.id);
 
         });
+
+
+    }
+
+
 
     }
 
