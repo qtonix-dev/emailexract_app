@@ -30,6 +30,18 @@ export class Body extends Component {
         this.props.setUserDetails(cookie.load('qtonixemailextractweb_userdata'))
         this.props.navbarProgressInfo();
 
+        const logindata = cookie.load('qtonixemailextractweb_userlogin') === 'true';
+        if (logindata) {
+          
+  
+          } else {
+              window.location.href = process.env.REACT_APP_APPURL+'/login';
+  
+          }
+
+
+        console.log(123)
+
 
         // if(this.props.socketid===null){
         //     this.props.setSocketID(this.state.uuid)
@@ -80,6 +92,9 @@ export class Body extends Component {
 
 
     }
+
+
+    
 
 
     
