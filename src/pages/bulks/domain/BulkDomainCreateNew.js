@@ -14,16 +14,21 @@ import API3 from '../../../api/API3';
 import API from '../../../api/API';
 import {navbarProgressInfo,setSocketID} from '../../../actions';
 import _ from 'lodash'
-
+import ClientCaptcha from "react-client-captcha";
 
 export class BulkDomainCreate extends Component {
 
     constructor(props){
         super(props)
         this.state={
+            verifycode:'000',
+            verifycodeentry:'',
+            auth:true,
+            pageloading:true,
             modalStatus:false,
             loadSubmitButton:false,
             uuid:uuidv4(),
+            domainextractcode:uuidv4(),
             maxupload:0,
             extractleft:0,
             totalcredits:0,
@@ -54,6 +59,30 @@ export class BulkDomainCreate extends Component {
     }
 
     componentDidMount(){
+
+        //UPDATE EXTRACT CODE
+        var datasx={
+            _id:this.state.user._id,
+            domainextractcode:this.state.domainextractcode
+        }
+        API.post('/user/update_domainextractcode',datasx)
+        .then(response=>{
+            console.log(response.data.userinfo)
+            if(response.data.response){
+                this.setState({
+                    pageloading:false,
+                    auth:true
+                })
+            }else{
+                this.setState({
+                    pageloading:true,
+                    auth:false
+                })
+            }
+        })
+
+
+    
         this.props.navbarProgressInfo();
         if(this.props.navbarprogress){
             this.setState({
@@ -109,17 +138,38 @@ export class BulkDomainCreate extends Component {
     // }
 
     componentWillUnmount(){
-        if(this.props.socketid===null){
+        // if(this.props.socketid===null){
             
-        }else{
-            if(this.props.socketid===this.state.uuid){
-                this.props.setSocketID(null)
-            }
-        }
+        // }else{
+        //     if(this.props.socketid===this.state.uuid){
+        //         this.props.setSocketID(null)
+        //     }
+        // }
 
     }
 
+
+
+    clearinformation=()=>{
+
+        console.log('Called')
+
+        var datasxx={
+            _id:this.state.user._id,
+            domainextractcode:'-'
+        }
+        API.post('/user/clear_domainextractcode',datasxx)
+        .then(response=>{
+            console.log('Cleared');
+        })
+    }
+
+
+
     componentWillReceiveProps(props){
+        console.log(123);
+
+        
 
         // console.log(props.navbarprogress.packageinfo)
         
@@ -206,12 +256,12 @@ export class BulkDomainCreate extends Component {
             }else{
 
 
-                    ///====EXTRACT DATA====///
-                    this.setState({
-                        domainCreate:domainCreateX,
-                        totaldomains:domainCreateX.length,
-                        domainextractprocess:'extracting...'
-                    })
+                        ///====EXTRACT DATA====///
+                        this.setState({
+                            domainCreate:domainCreateX,
+                            totaldomains:domainCreateX.length,
+                            domainextractprocess:'extracting...'
+                        })
 
                         //SPEED
                         var num = domainCreateX.length/this.state.displayspeed;
@@ -239,24 +289,36 @@ export class BulkDomainCreate extends Component {
                             
                             
                                 try {
-                                    const response = await this.fetchWithTimeout(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extract/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, {
+                                    // const response = await this.fetchWithTimeout(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extract/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, {
+                                    const response = await this.fetchWithTimeout(`http://localhost:5004/extractsecure/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}/${this.state.user._id}/${this.state.domainextractcode}`, {
+                                    
+                                    
                                     timeout: 10000
                                     });
                                     const todo = await response.json()
                                     console.log(todo.response)
 
-
-                                    this.setState(prevState => ({
-                                        datas: [...prevState.datas, { ...todo.response, uuid: this.state.uuid ,userid: this.state.user._id}]
-                                    }))
-
-
-                                    if(this.state.datas.length===this.state.totaldomains){
+                                    if(todo.auth){
+                                        this.setState(prevState => ({
+                                            datas: [...prevState.datas, { ...todo.response, uuid: this.state.uuid ,userid: this.state.user._id}]
+                                        }))
+    
+    
+                                        if(this.state.datas.length===this.state.totaldomains){
+                                            this.setState({
+                                                domainextractprocess:'saving'
+                                            })
+                                            this.storeRecordinDB();
+                                        }
+                                    }else{
                                         this.setState({
-                                            domainextractprocess:'saving'
+                                            auth:false,
+                                            pageloading:true
                                         })
-                                        this.storeRecordinDB();
                                     }
+
+
+                                    
 
 
 
@@ -301,7 +363,7 @@ export class BulkDomainCreate extends Component {
                             }
                         });
 
-                     ///====EXTRACT DATA====///
+                        ///====EXTRACT DATA====///
 
 
 
@@ -537,7 +599,7 @@ export class BulkDomainCreate extends Component {
 
         API.post('/bulkdomainextract/storeextractdata',tmpData)
         .then(response=>{
-            
+            this.clearinformation();
             this.props.history.push(`/bulks/domainextract/view/${response.data.data.uuid}`)
             this.props.navbarProgressInfo();
         })
@@ -583,14 +645,47 @@ export class BulkDomainCreate extends Component {
     // }
 
 
+
+    handleSubmitCodeVerify=()=>{
+        if(this.state.verifycode===this.state.verifycodeentry){
+
+            var datasxx={
+                _id:this.state.user._id,
+                domainextractcode:'-'
+            }
+            API.post('/user/clear_domainextractcode',datasxx)
+            .then(response=>{
+                if(response.data.response){
+                    // this.props.history.push('/bulks')
+                    window.location.href='/bulks/domainextract/new'
+                }
+            })
+
+
+        }else{
+            alert('Wrong Code.')
+        }
+    }
+
+
     render() {
 
         console.log(this.state)
   
         return (
             <Body>
+                {this.state.auth
+                ?
                 <section>
                     <div className="cuscontainer">
+
+                    {this.state.pageloading
+                    ?<Loader active inline='centered' />
+                    :
+                    <>
+                    
+                    
+
                     {this.props.navbarprogress===null || this.props.navbarprogress===undefined
                     ?<Loader active inline='centered' />
                     :
@@ -887,9 +982,46 @@ websitetwo.com' />
 
 
 
-                    
+                    </>
+                    }
+
+
+                        
+
                     </div>
                 </section>
+                :
+                <>
+                    <br />
+                    <ClientCaptcha captchaCode={code => this.setState({verifycode:code})} width='100' charsCount={4} />
+                    <br />
+                    <Form onSubmit={this.handleSubmitCodeVerify}>
+
+                        
+
+                        <Form.Group>
+                            <Form.Input  placeholder='Enter Code' value={this.state.verifycodeentry} onChange={this.handleChange} name='verifycodeentry' required />
+
+                            <Form.Button primary>Verify</Form.Button>
+
+                        </Form.Group>
+
+
+                    </Form>
+                    
+
+                    <br />
+
+                    <h5>You can't bulk extract in multiple tab. Please verify your account.</h5>
+                    <br />
+
+                </>
+                }
+                
+                    
+
+                
+                
             </Body>
         )
     }

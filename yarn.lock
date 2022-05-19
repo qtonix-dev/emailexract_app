@@ -10664,6 +10664,11 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
+react-client-captcha@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-client-captcha/-/react-client-captcha-1.0.3.tgz#7c31e084fe2b1506f5b6c2c944c3346aaebc9bf6"
+  integrity sha512-uPnU6W/lYg3oEAwK+wo0MYUWWr24gv6QiILGprrDlk6Y/NjJiMOGItBtrDloysGLl0Mz+d1mbc99IWCsVQYWkg==
+
 react-cookies@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/react-cookies/-/react-cookies-0.1.1.tgz#2a35807e04f5a13f58ccd1a9fb66574506873c88"
