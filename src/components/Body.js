@@ -8,6 +8,7 @@ import {setUserDetails,navbarProgressInfo,setSocketID} from '../actions'
 import Loader from "react-loader-spinner";
 // import socketIoClient from 'socket.io-client'
 import {Helmet} from "react-helmet";
+// import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -18,6 +19,7 @@ export class Body extends Component {
     constructor(props){
         super(props)
         this.state={
+            uuid:'9658667287',
             loading:false,
             multipleTab:false,
         }
@@ -27,6 +29,22 @@ export class Body extends Component {
     componentDidMount(){
         this.props.setUserDetails(cookie.load('qtonixemailextractweb_userdata'))
         this.props.navbarProgressInfo();
+
+
+        // if(this.props.socketid===null){
+        //     this.props.setSocketID(this.state.uuid)
+        // }else{
+
+        //     if(this.props.socketid===this.state.uuid){
+
+        //     }else{
+        //         alert(`You can't open multiple tabs at a time.`)
+        //         // this.props.history.push('/bulks')
+        //         window.location.href = "https://emailextractonline.com";
+        //     }            
+        // }
+
+
 
         //============DO NOT DELETE============//
         // const socket = socketIoClient(process.env.REACT_APP_BACKENDURL,{     
@@ -131,6 +149,7 @@ export class Body extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    socketid:state.socketid,
     user:state.users,
     navbarprogress:state.navbarprogress
 })

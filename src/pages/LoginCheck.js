@@ -4,6 +4,8 @@ import { Grid } from 'semantic-ui-react'
 import API from '../api/API'
 import { toast } from 'react-toastify';
 import cookie from 'react-cookies'
+import {setSocketID} from '../actions'
+
 
 export const LoginCheck = (props) => {
 
@@ -20,6 +22,9 @@ export const LoginCheck = (props) => {
             
 
             if(response.data.response){
+                props.setSocketID('9658667287')
+
+
                 toast.success('Login Success', {
                     position: "top-right",
                     autoClose: 5000,
@@ -46,8 +51,8 @@ export const LoginCheck = (props) => {
                 cookie.save('qtonixemailextractweb_emailverification', response.data.user.emailverification, { path: '/' });
 
 
-                // props.history.push('/')
-                window.location.href = '/'
+                props.history.push('/')
+                // window.location.href = '/'
                 // console.log(response.data.user)
 
 
@@ -95,8 +100,4 @@ const mapStateToProps = (state) => ({
     
 })
 
-const mapDispatchToProps = {
-    
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginCheck)
+export default connect(mapStateToProps, {setSocketID})(LoginCheck)
