@@ -62,7 +62,7 @@ export class BulkDomainCreate extends Component {
 
         //UPDATE EXTRACT CODE
         var datasx={
-            _id:this.state.user._id,
+            _id:cookie.load('qtonixemailextractweb_userdata')._id,
             domainextractcode:this.state.domainextractcode
         }
         API.post('/user/update_domainextractcode',datasx)
