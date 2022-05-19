@@ -51,8 +51,8 @@ export const LoginCheck = (props) => {
                 cookie.save('qtonixemailextractweb_emailverification', response.data.user.emailverification, { path: '/' });
 
 
-                props.history.push('/')
-                // window.location.href = '/'
+                // props.history.push('/')
+                window.location.href = '/'
                 // console.log(response.data.user)
 
 
