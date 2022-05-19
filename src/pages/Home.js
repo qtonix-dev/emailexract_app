@@ -408,7 +408,7 @@ export class Home extends Component {
                             Recent Searches &nbsp;
                             {this.state.recentsearches.map((rs, key) => {
                               return (
-                                <>
+                               
                                   <Label as="a" key={key}>
                                     <span
                                       onClick={() =>
@@ -424,7 +424,7 @@ export class Home extends Component {
                                       }
                                     />
                                   </Label>
-                                </>
+                               
                               );
                             })}
                           </h4>

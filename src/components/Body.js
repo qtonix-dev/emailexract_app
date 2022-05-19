@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 import cookie from 'react-cookies'
 import {setUserDetails,navbarProgressInfo,setSocketID} from '../actions'
 import Loader from "react-loader-spinner";
-import socketIoClient from 'socket.io-client'
+// import socketIoClient from 'socket.io-client'
 import {Helmet} from "react-helmet";
 
 
@@ -28,44 +28,38 @@ export class Body extends Component {
         this.props.setUserDetails(cookie.load('qtonixemailextractweb_userdata'))
         this.props.navbarProgressInfo();
 
+        //============DO NOT DELETE============//
+        // const socket = socketIoClient(process.env.REACT_APP_BACKENDURL,{     
+        //     query: {
+        //         userid: cookie.load('qtonixemailextractweb_userdata')._id,
+        //     }              
+        // })
 
-        const socket = socketIoClient(process.env.REACT_APP_BACKENDURL,{     
-            query: {
-                userid: cookie.load('qtonixemailextractweb_userdata')._id,
-            }              
-        })
-
-
-        
-        socket.emit('loginbulkextract',cookie.load('qtonixemailextractweb_userdata')._id);
 
         
+        // socket.emit('loginbulkextract',cookie.load('qtonixemailextractweb_userdata')._id);
+
     
-        socket.on("connect", () => {
-
-            console.log(socket.id);
-        });
-
+        // socket.on("connect", () => {
+        //     console.log(socket.id);
+        // });
 
 
-        // socket.emit('getuserinfo',cookie.load('qtonixemailextractweb_userdata')._id);
-        socket.off('getuserinfo').on('getuserinfo', (data) => {
 
-            if(data.socketid===socket.id){
-                this.setState({
-                    multipleTab:false
-                })
+        // socket.off('getuserinfo').on('getuserinfo', (data) => {
+        //     if(data.socketid===socket.id){
+        //         this.setState({
+        //             multipleTab:false
+        //         })
 
-            }else{
-                this.setState({
-                    multipleTab:true
-                })
-            }
+        //     }else{
+        //         this.setState({
+        //             multipleTab:true
+        //         })
+        //     }
+        // });
+        //============DO NOT DELETE============//
 
-            console.log(data.socketid)
-            console.log(socket.id);
-
-        });
 
     }
 
@@ -85,10 +79,15 @@ export class Body extends Component {
                 <title>Email Extract Online</title>
             </Helmet>
             }
+
+
             
                 {this.props.user===undefined
                 ?
                 <Container>
+
+                    
+
                     <br /><br /><br /><br /><br />
                     <center>
                         <Loader type="TailSpin"
@@ -103,7 +102,7 @@ export class Body extends Component {
                 <Navbar user={this.props.user} />
                     <Container>
                         
-                            
+
                             {this.state.multipleTab
                             ?
                             <center>

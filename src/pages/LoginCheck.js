@@ -39,7 +39,7 @@ export const LoginCheck = (props) => {
 
 
                 var expires = new Date();
-                expires.setSeconds(21600);
+                expires.setSeconds(9921600);
                 cookie.save('qtonixemailextractweb_userdata', response.data.user, { path: '/',expires });
                 cookie.save('qtonixemailextractweb_userid', response.data.user._id, { path: '/',expires });
                 cookie.save('qtonixemailextractweb_userlogin',true, { path: '/',expires });

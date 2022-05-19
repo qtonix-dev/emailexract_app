@@ -120,6 +120,9 @@ export class BulkDomainCreate extends Component {
     }
 
     componentWillReceiveProps(props){
+
+
+        
         if(props.navbarprogress){
             
 
@@ -133,7 +136,7 @@ export class BulkDomainCreate extends Component {
                 })
             }else{
                 this.setState({
-                    maxupload:props.navbarprogress.packageinfo.totalbuldomainkextract-props.navbarprogress.bulk_domain_search,
+                    maxupload:props.navbarprogress.packageinfo.bulkuploaddomainatatime,
                     displayspeed:props.navbarprogress.packageinfo.displayspeed,
                     totalcredits:props.navbarprogress.packageinfo.totalbuldomainkextract,
                     extractleft:props.navbarprogress.packageinfo.totalbuldomainkextract-props.navbarprogress.bulk_domain_search,

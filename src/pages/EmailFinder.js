@@ -236,15 +236,10 @@ export class EmailFinder extends Component {
                                         {this.state.recentsearches.map((rs, key)=>{
 
                                             return(
-                                                <>
                                                 <Label as='a' key={key} >
                                                     <span onClick={()=>this.handleSetEmail(rs.fullname,rs.domain)}>{rs.fullname}</span>
                                                         <Icon name='delete' onClick={()=>this.handleDelete(rs._id,rs.fullname)} />
                                                 </Label>
-
-                                                
-
-                                                </>
                                             )
                                         })} 
                                         </h4>   
