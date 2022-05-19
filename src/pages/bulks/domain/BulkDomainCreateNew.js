@@ -138,6 +138,7 @@ export class BulkDomainCreate extends Component {
     // }
 
     componentWillUnmount(){
+        this.storeRecordinDB();
         // if(this.props.socketid===null){
             
         // }else{
@@ -263,105 +264,112 @@ export class BulkDomainCreate extends Component {
                             domainextractprocess:'extracting...'
                         })
 
-                        //SPEED
-                        var num = domainCreateX.length/this.state.displayspeed;
-                    
+                       
 
-                        var perChunk = num // items per chunk    
-                        var inputArray = domainCreateX;
-
-                        var result = inputArray.reduce((resultArray, item, index) => { 
-                        const chunkIndex = Math.floor(index/perChunk)
-
-                        if(!resultArray[chunkIndex]) {
-                            resultArray[chunkIndex] = [] // start a new chunk
-                        }
-                        resultArray[chunkIndex].push(item)
-                        return resultArray
-                        }, [])
-
-                        console.log(result); // result: [['a','b'], ['c','d'], ['e']]
-
-
-                        result.forEach(async(element) => {
-                            const DomainList = element
-                            for (const domain of DomainList) {
+                            //SPEED
+                                var num = domainCreateX.length/this.state.displayspeed;
                             
-                            
-                                try {
-                                    const response = await this.fetchWithTimeout(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extractsecure/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}/${this.state.user._id}/${this.state.domainextractcode}`, {
-                                    // const response = await this.fetchWithTimeout(`http://localhost:5004/extractsecure/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}/${this.state.user._id}/${this.state.domainextractcode}`, {
-                                    
-                                    
-                                    timeout: 10000
-                                    });
-                                    const todo = await response.json()
-                                    console.log(todo.response)
 
-                                    if(todo.auth){
-                                        this.setState(prevState => ({
-                                            datas: [...prevState.datas, { ...todo.response, uuid: this.state.uuid ,userid: this.state.user._id}]
-                                        }))
-    
-    
-                                        if(this.state.datas.length===this.state.totaldomains){
-                                            this.setState({
-                                                domainextractprocess:'saving'
-                                            })
-                                            this.storeRecordinDB();
-                                        }
-                                    }else{
-                                        this.setState({
-                                            auth:false,
-                                            pageloading:true
-                                        })
-                                    }
+                                var perChunk = num // items per chunk    
+                                var inputArray = domainCreateX;
 
+                                var result = inputArray.reduce((resultArray, item, index) => { 
+                                const chunkIndex = Math.floor(index/perChunk)
 
-                                    
-
-
-
-                                } catch (error) {
-                                    // Timeouts if the request takes
-                                    // longer than 6 seconds
-                                    const msdata= {
-                                        response: true,
-                                        // domain: this.state.domainCreate[this.state.count].domain,
-                                        domain: domain,
-                                        status: "Not Found",
-                                        emails: [],
-                                        tel: [],
-                                        facebook: [],
-                                        instagram: [],
-                                        twitter: [],
-                                        linkedin: [],
-                                        googleplus: [],
-                                        youtube: [],
-                                        whatsapp: [],
-                                        printrest: [],
-                                        skype: []
-                                    }
-
-                                    this.setState(prevState => ({
-                                        datas: [...prevState.datas, { ...msdata, uuid: this.state.uuid ,userid: this.state.user._id}]
-                                    }))
-
-
-                                    if(this.state.datas.length===this.state.totaldomains){
-                                        this.setState({
-                                            domainextractprocess:'saving'
-                                        })
-                                        this.storeRecordinDB();
-                                    }
-
-
+                                if(!resultArray[chunkIndex]) {
+                                    resultArray[chunkIndex] = [] // start a new chunk
                                 }
+                                resultArray[chunkIndex].push(item)
+                                return resultArray
+                                }, [])
+
+                                console.log(result); // result: [['a','b'], ['c','d'], ['e']]
+
+
+                                result.forEach(async(element) => {
+                                    const DomainList = element
+                                    for (const domain of DomainList) {
+                                    
+                                        
+                                        if(this.state.domainextractprocess==='extracting...' || this.state.domainextractprocess==='Waiting'){
+                                            try {
+                                                const response = await this.fetchWithTimeout(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extractsecure/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}/${this.state.user._id}/${this.state.domainextractcode}`, {
+                                                // const response = await this.fetchWithTimeout(`http://localhost:5004/extractsecure/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}/${this.state.user._id}/${this.state.domainextractcode}`, {
+                                                
+                                                
+                                                timeout: 10000
+                                                });
+                                                const todo = await response.json()
+                                                console.log(todo.response)
+    
+                                                if(todo.auth){
+                                                    this.setState(prevState => ({
+                                                        datas: [...prevState.datas, { ...todo.response, uuid: this.state.uuid ,userid: this.state.user._id}]
+                                                    }))
+                
+                
+                                                    if(this.state.datas.length===this.state.totaldomains){
+                                                        this.setState({
+                                                            domainextractprocess:'saving'
+                                                        })
+                                                        this.storeRecordinDB();
+                                                    }
+                                                }else{
+                                                    this.setState({
+                                                        auth:false,
+                                                        pageloading:true
+                                                    })
+                                                }
+                                            } catch (error) {
+                                                // Timeouts if the request takes
+                                                // longer than 6 seconds
+                                                const msdata= {
+                                                    response: true,
+                                                    // domain: this.state.domainCreate[this.state.count].domain,
+                                                    domain: domain,
+                                                    status: "Not Found",
+                                                    emails: [],
+                                                    tel: [],
+                                                    facebook: [],
+                                                    instagram: [],
+                                                    twitter: [],
+                                                    linkedin: [],
+                                                    googleplus: [],
+                                                    youtube: [],
+                                                    whatsapp: [],
+                                                    printrest: [],
+                                                    skype: []
+                                                }
+    
+                                                this.setState(prevState => ({
+                                                    datas: [...prevState.datas, { ...msdata, uuid: this.state.uuid ,userid: this.state.user._id}]
+                                                }))
+    
+    
+                                                if(this.state.datas.length===this.state.totaldomains){
+                                                    this.setState({
+                                                        domainextractprocess:'saving'
+                                                    })
+                                                    this.storeRecordinDB();
+                                                }
+                                            }
+
+                                        }else{
+
+
+                                        }
+
+
+                                        
 
 
 
-                            }
-                        });
+                                    }
+                                });
+
+                       
+
+                        
 
                         ///====EXTRACT DATA====///
 
