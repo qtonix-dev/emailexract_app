@@ -37,7 +37,6 @@ export class BulkDomainView extends Component {
     componentDidMount(){
         API.get(`/bulkdomainextract/viewdetail/${this.props.match.params.id}/${cookie.load('qtonixemailextractweb_userid')}`)
         .then(response=>{
-            console.log(response.data)
             if(response.data.response){
                 this.setState({
                     pageLoading:false,
@@ -51,7 +50,6 @@ export class BulkDomainView extends Component {
 
 
     render() {
-        console.log(this.state)
         return (
             <Body>
                 <Popup
