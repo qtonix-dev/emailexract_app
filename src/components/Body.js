@@ -9,8 +9,8 @@ import Loader from "react-loader-spinner";
 // import socketIoClient from 'socket.io-client'
 import {Helmet} from "react-helmet";
 // import { v4 as uuidv4 } from 'uuid';
-
-
+import Idle from 'react-idle'
+// const { default: Idle } = ReactIdle
 
 
 
@@ -94,6 +94,15 @@ export class Body extends Component {
     }
 
 
+    handleLogout=e=>{
+        cookie.remove('qtonixemailextractweb_userdata', { path: '/' })
+        cookie.remove('qtonixemailextractweb_userlogin', { path: '/' })
+        cookie.remove('qtonixemailextractweb_userid', { path: '/' })
+
+        window.location.href = process.env.REACT_APP_APPURL+'/login';
+    }
+
+
     
 
 
@@ -134,9 +143,13 @@ export class Body extends Component {
                 <>
                 <Navbar user={this.props.user} />
                     <Container>
-                        
 
-                            {this.state.multipleTab
+                        
+                            <Idle timeout={1800000} onChange={({ idle }) => this.handleLogout()} />
+
+                            {this.props.children}
+
+                            {/* {this.state.multipleTab
                             ?
                             <center>
                                 <br/>
@@ -150,7 +163,7 @@ export class Body extends Component {
                                 <br />
                                 {this.props.children}
                             </>
-                            }
+                            } */}
                         
                         
                         
