@@ -340,7 +340,7 @@ export class BulkDomainCreate extends Component {
                                         if(window.location.pathname==='/bulks/domainextract/new'){
                                             if(this.state.domainextractprocess==='extracting...' || this.state.domainextractprocess==='Waiting'){
                                                 try {
-                                                    const response = await this.fetchWithTimeout(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extract/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, {
+                                                    const response = await this.fetchWithTimeout(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extractsecure/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}/${this.state.user._id}/${this.state.socketid}`, {
                                                     // const response = await this.fetchWithTimeout(`http://localhost:5004/extractsecure/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}/${this.state.user._id}/${this.state.socketid}`, {
                                                     
                                                     
@@ -797,8 +797,8 @@ export class BulkDomainCreate extends Component {
   
         return (
             <Body>
-                {this.state.auth
-                ?
+                {/* {this.state.auth
+                ? */}
                 <section>
                     <div className="cuscontainer">
 
@@ -1139,8 +1139,8 @@ websitetwo.com' />
                     <h5>You can't bulk extract in multiple tab. Please verify your account.</h5>
                     <br />
 
-                </>
-                }
+                {/* </>
+                } */}
                 
                     
 
