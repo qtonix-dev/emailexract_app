@@ -6,6 +6,8 @@
 
 ---Features---
 -> Faster Page Change / Data Loading
+   Page Change Time -> 0.001 to 0.010 second. (avg 0.002 second)
+   Data Loading Time -> 1.000 to 3.000 second. (avg 2 second)
 
 -> Advance Bulk Search System
     - Speed regulation
