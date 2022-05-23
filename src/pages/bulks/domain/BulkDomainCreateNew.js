@@ -15,6 +15,7 @@ import API from '../../../api/API';
 import {navbarProgressInfo,setSocketID} from '../../../actions';
 import _ from 'lodash'
 import ClientCaptcha from "react-client-captcha";
+import { toast } from 'react-toastify';
 // import socketIoClient from 'socket.io-client'
 
 
@@ -55,7 +56,8 @@ export class BulkDomainCreate extends Component {
             extractPhone:false,
             extractSocial:false,
             extractType:'deep',
-            displayspeed:0
+            displayspeed:0,
+            storeRecordinDB:false
 
         }
         this.handleChange=this.handleChange.bind(this)
@@ -102,7 +104,6 @@ export class BulkDomainCreate extends Component {
             }
             API.post('/user/update_domainextractcode',datasx)
             .then(response=>{
-                console.log('Component Mounted')
                 if(response.data.response){
                     this.setState({
                         pageloading:false,
@@ -176,7 +177,14 @@ export class BulkDomainCreate extends Component {
     // }
 
     componentWillUnmount(){
-        this.stopAndSave();
+        
+
+
+        if(this.state.datas.length===this.state.totaldomains){
+            this.resetSocketCode();
+        }else{
+            this.stopAndSave();
+        }
        
         // if(this.props.socketid===null){
             
@@ -327,7 +335,7 @@ export class BulkDomainCreate extends Component {
                                     const DomainList = element
                                     for (const domain of DomainList) {
                                         
-                                        console.log(window.location.href)
+                                        
 
                                         if(window.location.pathname==='/bulks/domainextract/new'){
                                             if(this.state.domainextractprocess==='extracting...' || this.state.domainextractprocess==='Waiting'){
@@ -352,13 +360,22 @@ export class BulkDomainCreate extends Component {
                                                                 domainextractprocess:'saving'
                                                             })
                                                             this.storeRecordinDB();
+                                                            this.resetSocketCode();
                                                         }
                                                     }else{
+                                                        // this.setState({
+                                                        //     auth:false,
+                                                        //     pageloading:true
+                                                        // })
                                                         this.setState({
+                                                            domainextractprocess:'saving',
                                                             auth:false,
                                                             pageloading:true
                                                         })
                                                         this.storeRecordinDB();
+                                                        // this.storeRecordinDB();
+                                                        // this.stopAndSave();
+                                                        
     
                                                     }
                                                 } catch (error) {
@@ -392,6 +409,8 @@ export class BulkDomainCreate extends Component {
                                                             domainextractprocess:'saving'
                                                         })
                                                         this.storeRecordinDB();
+                                                        this.resetSocketCode();
+
                                                     }
                                                 }
     
@@ -643,31 +662,62 @@ export class BulkDomainCreate extends Component {
         this.storeRecordinDB();
     }
 
+
+    resetSocketCode=()=>{
+        var datasxx={
+            _id:this.state.user._id,
+            socketid:'-'
+        }
+        API.post('/user/clear_domainextractcode',datasxx)
+        .then(response=>{
+                console.log('reset completed');
+        })
+    }
+
     
     storeRecordinDB=()=>{
 
-        this.setState({
-            domainextractprocess:'saving'
-        })
-
-        if(this.state.datas.length===0){
-
-        }else{
-            var tmpData={
-                uuid:this.state.uuid,
-                userid:this.state.user._id,
-                listname:this.state.listname,
-                totaldomains:_.uniqBy(this.state.datas, 'domain').length,
-                datas:_.uniqBy(this.state.datas, 'domain')
-            }
-    
-            API.post('/bulkdomainextract/storeextractdata',tmpData)
-            .then(response=>{
-                // this.clearinformation();
-                this.props.history.push(`/bulks/domainextract/view/${response.data.data.uuid}`)
-                this.props.navbarProgressInfo();
+        if(this.state.storeRecordinDB===false){
+            this.setState({
+                domainextractprocess:'saving',
+                storeRecordinDB:true
             })
+
+            if(this.state.datas.length===0){
+
+            }else{
+                var tmpData={
+                    uuid:this.state.uuid,
+                    userid:this.state.user._id,
+                    listname:this.state.listname,
+                    totaldomains:_.uniqBy(this.state.datas, 'domain').length,
+                    datas:_.uniqBy(this.state.datas, 'domain')
+                }
+        
+                API.post('/bulkdomainextract/storeextractdata',tmpData)
+                .then(response=>{
+                    // this.clearinformation();
+
+                    toast.success('Data saved', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        });
+
+
+
+                    this.props.history.push(`/bulks/domainextract/view/${response.data.data.uuid}`)
+                    this.props.navbarProgressInfo();
+                })
+            }
         }
+
+
+            
 
         
     }
@@ -727,7 +777,16 @@ export class BulkDomainCreate extends Component {
                 }
             })
         }else{
-            alert('Wrong Code.')
+            // alert('Wrong Code.')
+            toast.error('Wrong code', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
         }
     }
 
@@ -1057,7 +1116,10 @@ websitetwo.com' />
                 :
                 <>
                     <br />
-                    <ClientCaptcha captchaCode={code => this.setState({verifycode:code})} charsCount={4} />
+                    <ClientCaptcha captchaCode={code => this.setState({verifycode:code})} charsCount={6}
+                    chars="ABCD123456789"
+                    width='180'
+                    />
                     <br />
                     <Form onSubmit={this.handleSubmitCodeVerify}>
 
@@ -1065,9 +1127,7 @@ websitetwo.com' />
 
                         <Form.Group>
                             <Form.Input  placeholder='Enter Code' value={this.state.verifycodeentry} onChange={this.handleChange} name='verifycodeentry' required />
-
-                            <Form.Button primary>Verify</Form.Button>
-
+                            <Button className="bgmblue text-white" type='submit'>Verify</Button>
                         </Form.Group>
 
 

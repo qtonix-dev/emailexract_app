@@ -57,7 +57,7 @@ export const LoginCheck = (props) => {
 
 
             }else{
-                toast.success('Login Failed', {
+                toast.warning('Login Failed', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
