@@ -14,7 +14,7 @@ import API3 from '../../../api/API3';
 import API from '../../../api/API';
 import {navbarProgressInfo,setSocketID} from '../../../actions';
 import _ from 'lodash'
-import ClientCaptcha from "react-client-captcha";
+// import ClientCaptcha from "react-client-captcha";
 import { toast } from 'react-toastify';
 // import socketIoClient from 'socket.io-client'
 
@@ -1113,7 +1113,7 @@ websitetwo.com' />
 
                     </div>
                 </section>
-                :
+                {/* :
                 <>
                     <br />
                     <ClientCaptcha captchaCode={code => this.setState({verifycode:code})} charsCount={6}
@@ -1139,7 +1139,7 @@ websitetwo.com' />
                     <h5>You can't bulk extract in multiple tab. Please verify your account.</h5>
                     <br />
 
-                {/* </>
+                </>
                 } */}
                 
                     
