@@ -92,31 +92,35 @@ export class BulkDomainCreate extends Component {
         //     }
         // });
 
+                this.setState({
+                    pageloading:false,
+                    auth:true,
+                    updatedCode:true
+                })
 
 
 
-
-        // UPDATE EXTRACT CODE
+            // UPDATE EXTRACT CODE
         
-            var datasx={
-                _id:cookie.load('qtonixemailextractweb_userdata')._id,
-                socketid:this.state.socketid
-            }
-            API.post('/user/update_domainextractcode',datasx)
-            .then(response=>{
-                if(response.data.response){
-                    this.setState({
-                        pageloading:false,
-                        auth:true,
-                        updatedCode:true
-                    })
-                }else{
-                    this.setState({
-                        pageloading:true,
-                        auth:false
-                    })
-                }
-            })
+            // var datasx={
+            //     _id:cookie.load('qtonixemailextractweb_userdata')._id,
+            //     socketid:this.state.socketid
+            // }
+            // API.post('/user/update_domainextractcode',datasx)
+            // .then(response=>{
+            //     if(response.data.response){
+            //         this.setState({
+            //             pageloading:false,
+            //             auth:true,
+            //             updatedCode:true
+            //         })
+            //     }else{
+            //         this.setState({
+            //             pageloading:true,
+            //             auth:false
+            //         })
+            //     }
+            // })
         
         
 
@@ -340,7 +344,7 @@ export class BulkDomainCreate extends Component {
                                         if(window.location.pathname==='/bulks/domainextract/new'){
                                             if(this.state.domainextractprocess==='extracting...' || this.state.domainextractprocess==='Waiting'){
                                                 try {
-                                                    const response = await this.fetchWithTimeout(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extractsecure/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}/${this.state.user._id}/${this.state.socketid}`, {
+                                                    const response = await this.fetchWithTimeout(`https://server-2-bulkextract-getinfo-mi83t.ondigitalocean.app/extract/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}`, {
                                                     // const response = await this.fetchWithTimeout(`http://localhost:5004/extractsecure/${domain}/${this.state.extractType}/${this.state.extractPhone}/${this.state.extractSocial}/${this.state.user._id}/${this.state.socketid}`, {
                                                     
                                                     
@@ -349,7 +353,7 @@ export class BulkDomainCreate extends Component {
                                                     const todo = await response.json()
                                                    
         
-                                                    if(todo.auth){
+                                                    // if(todo.auth){
                                                         this.setState(prevState => ({
                                                             datas: [...prevState.datas, { ...todo.response, uuid: this.state.uuid ,userid: this.state.user._id}]
                                                         }))
@@ -362,22 +366,15 @@ export class BulkDomainCreate extends Component {
                                                             this.storeRecordinDB();
                                                             this.resetSocketCode();
                                                         }
-                                                    }else{
-                                                        // this.setState({
-                                                        //     auth:false,
-                                                        //     pageloading:true
-                                                        // })
-                                                        this.setState({
-                                                            domainextractprocess:'saving',
-                                                            auth:false,
-                                                            pageloading:true
-                                                        })
-                                                        this.storeRecordinDB();
-                                                        // this.storeRecordinDB();
-                                                        // this.stopAndSave();
+                                                    // }else{
+                                                    //     this.setState({
+                                                    //         domainextractprocess:'saving',
+                                                    //         auth:false,
+                                                    //         pageloading:true
+                                                    //     })
+                                                    //     this.storeRecordinDB();
                                                         
-    
-                                                    }
+                                                    // }
                                                 } catch (error) {
                                                     // Timeouts if the request takes
                                                     // longer than 6 seconds
